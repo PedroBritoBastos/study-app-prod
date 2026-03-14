@@ -3,6 +3,7 @@
 import { connectDB } from "@/src/lib/mongodb";
 import { findUserByUsername, createUser } from "../repositories/userRepository";
 import { createPasswordHash } from "../utils/createPasswordHash";
+import { redirect } from "next/navigation";
 
 interface RegisterSuccess {
   user: {
@@ -31,17 +32,9 @@ export async function register(
     if (existingUser) {
       return { error: "Este usuário já existe." };
     }
-
     const hashedPassword = await createPasswordHash(password);
-
     const user = await createUser(username, hashedPassword);
-
-    return {
-      user: {
-        id: user._id.toString(),
-        username: user.username,
-      },
-    };
+    redirect("/login");
   } catch {
     return { error: "Erro ao criar usuário." };
   }
