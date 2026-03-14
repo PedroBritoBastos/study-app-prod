@@ -24,7 +24,7 @@ export default function RegisterPage() {
 
       try {
          await register(username, password);
-         router.push("/");
+         router.push("/login");
          router.refresh();
       } catch (error) {
          if (error instanceof Error) {
