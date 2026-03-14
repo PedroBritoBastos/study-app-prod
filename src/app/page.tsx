@@ -4,7 +4,7 @@ import { Flex } from "@chakra-ui/react"
 import { redirect } from "next/navigation";
 
 export default async function Home() {
-  redirect("/login");
+
   return <>
     <Flex flex={1} w={"100%"}>
       <Navbar />

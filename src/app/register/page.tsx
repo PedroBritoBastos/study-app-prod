@@ -21,13 +21,12 @@ export default function RegisterPage() {
 
    const handleSubmit = async () => {
       setError("");
-
       try {
-         await register(username, password);
+         const result = await register(username, password, confirmPassword);
          router.replace("/login");
-      } catch (error) {
-         if (error instanceof Error) {
-            setError(error.message);
+      } catch (err) {
+         if (err instanceof Error) {
+            setError(err.message);
          } else {
             setError("Erro inesperado ao registrar.");
          }
@@ -67,6 +66,7 @@ export default function RegisterPage() {
             />
          </Fieldset.Root>
 
+         {/* mensagem de erro */}
          {error && (
             <Text color="red.400" textAlign="center" mb={3}>
                {error}

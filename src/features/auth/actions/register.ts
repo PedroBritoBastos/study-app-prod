@@ -5,37 +5,32 @@ import { findUserByUsername, createUser } from "../repositories/userRepository";
 import { createPasswordHash } from "../utils/createPasswordHash";
 import { redirect } from "next/navigation";
 
-interface RegisterSuccess {
-  user: {
-    id: string;
-    username: string;
-  };
-}
-
-interface RegisterError {
-  error: string;
-}
-
 export async function register(
   username: string,
   password: string,
-): Promise<RegisterSuccess | RegisterError> {
-  try {
-    await connectDB();
+  confirmPassword: string,
+): Promise<void> {
+  await connectDB();
 
-    if (!username || !password) {
-      return { error: "Usuário e senha obrigatórios." };
-    }
-
-    const existingUser = await findUserByUsername(username);
-
-    if (existingUser) {
-      return { error: "Este usuário já existe." };
-    }
-    const hashedPassword = await createPasswordHash(password);
-    const user = await createUser(username, hashedPassword);
-    redirect("/login");
-  } catch {
-    return { error: "Erro ao criar usuário." };
+  if (!username || !password) {
+    throw new Error("Usuário e senha obrigatórios.");
   }
+
+  if (password.length < 6) {
+    throw new Error("A senha deve ter pelo menos 6 caracteres.");
+  }
+
+  if (password !== confirmPassword) {
+    throw new Error("As senhas não conferem.");
+  }
+
+  const existingUser = await findUserByUsername(username);
+  if (existingUser) {
+    throw new Error("Este usuário já existe.");
+  }
+
+  const hashedPassword = await createPasswordHash(password);
+  const user = await createUser(username, hashedPassword);
+
+  redirect("/login");
 }
