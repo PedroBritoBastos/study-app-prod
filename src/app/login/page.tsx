@@ -35,7 +35,7 @@ export default function LoginPage() {
    };
 
    return (
-      <Suspense fallback={<Loading />}>
+      <Suspense>
          <Stack {...styles.container}>
             <Heading {...styles.heading}>
                <Span {...styles.span}>Study</Span> App
