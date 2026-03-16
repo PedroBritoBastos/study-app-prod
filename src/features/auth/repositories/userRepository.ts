@@ -1,4 +1,4 @@
-import { User } from "../models/UserModel";
+import { User } from "@/features/auth/models/UserModel";
 
 export async function findUserByUsername(username: string) {
   return User.findOne({ username });
