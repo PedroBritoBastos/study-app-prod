@@ -11,3 +11,7 @@ export async function createSubject(
     userId,
   });
 }
+
+export async function getUserSubjects(userId: string) {
+  return Subject.find({ userId });
+}
