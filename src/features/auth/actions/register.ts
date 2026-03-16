@@ -31,6 +31,5 @@ export async function register(
 
   const hashedPassword = await createPasswordHash(password);
   const user = await createUser(username, hashedPassword);
-
   redirect("/login");
 }

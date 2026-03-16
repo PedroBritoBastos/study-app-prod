@@ -1,36 +1,78 @@
-"use server";
+"use client"
 
-import { connectDB } from "@/src/lib/mongodb";
-import { findUserByUsername, createUser } from "@/features/auth/repositories/userRepository";
-import { createPasswordHash } from "@/features/auth/utils/createPasswordHash";
-import { redirect } from "next/navigation";
+// styles
+import { styles } from "@/styles/register/registerPage.styles";
 
-export async function register(
-   username: string,
-   password: string,
-   confirmPassword: string
-) {
-   try {
-      console.log("Register started", { username }); // <-- log inicial
+import { Stack, Heading, Text, Fieldset, Button, Flex } from "@chakra-ui/react";
+import { Input } from "@/components/ui/form/Input";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { register } from "@/features/auth/actions/register";
 
-      await connectDB();
-      console.log("Database connected");
 
-      if (!username || !password) throw new Error("Usuário e senha obrigatórios.");
-      if (password.length < 6) throw new Error("A senha deve ter pelo menos 6 caracteres.");
-      if (password !== confirmPassword) throw new Error("As senhas não conferem.");
+export default function RegisterPage() {
+   const router = useRouter();
+   const [username, setUsername] = useState("");
+   const [password, setPassword] = useState("");
+   const [confirmPassword, setConfirmPassword] = useState("");
+   const [error, setError] = useState("");
 
-      const existingUser = await findUserByUsername(username);
-      if (existingUser) throw new Error("Este usuário já existe.");
+   // tenta fazer o registro e trata os possíveis erros
+   const handleSubmit = async (e: React.FormEvent) => {
+      e.preventDefault();
 
-      const hashedPassword = await createPasswordHash(password);
-      const user = await createUser(username, hashedPassword);
+      // tenta registrar um usuário e recebe um erro caso tenha
+      try {
+         const user = await register(username, password, confirmPassword);
+         router.push("/");
+         router.refresh();
+      } catch (error) {
+         if (error instanceof Error) {
+            setError(error.message);
+         } else {
+            setError("Erro inesperado ao registrar.");
+         }
+      }
+   };
 
-      console.log("User created", user);
+   return <Stack {...styles.container}>
+      <Fieldset.Root {...styles.fieldset}>
+         <Heading {...styles.heading}>Cadastro</Heading>
 
-      redirect("/login");
-   } catch (err) {
-      console.error("Register error:", err); // <-- log do erro completo
-      throw err; // relança o erro para o componente client capturar
-   }
+         <Text>Usuário</Text>
+         <Input
+            type="text"
+            name="username"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+         />
+
+         <Text>Senha</Text>
+         <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+         />
+
+         <Text>Confirmação de senha</Text>
+         <Input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={confirmPassword}
+            onChange={(e) => setConfirmPassword(e.target.value)}
+         />
+      </Fieldset.Root>
+
+      {/* mensagem de erro, se houver */}
+      {error && <Text color="red.400" textAlign="center" mb={3}>{error}</Text>}
+
+      <Flex {...styles.buttons}>
+         <Button {...styles.submitButton} onClick={handleSubmit}>Cadastrar</Button>
+         <Button {...styles.registerButton} onClick={(e) => router.push("/login")}>Fazer Login</Button>
+      </Flex>
+   </Stack>
 }

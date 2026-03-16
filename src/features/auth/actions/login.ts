@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 import { connectDB } from "@/src/lib/mongodb";
 import { findUserByUsername } from "../repositories/userRepository";
 
-export async function login(formData: FormData) {
+export async function login(formData: FormData): Promise<void> {
   await connectDB();
 
   const username = formData.get("username") as string;
@@ -45,8 +45,8 @@ export async function login(formData: FormData) {
   cookieStore.set("token", token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === "production",
-    path: "/",
+    path: "subjects/",
   });
 
-  redirect("/");
+  redirect("/subjects");
 }
