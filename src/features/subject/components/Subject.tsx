@@ -25,6 +25,9 @@ export function Subject({ subject }: SubjectProps) {
          {/* data */}
          <Flex {...styles.date.container}>
             <Calendar1 />
+            <Text {...styles.date.text}>
+               {formatDate(subject.currentDate)}
+            </Text>
          </Flex>
 
          {/* conteudo */}
