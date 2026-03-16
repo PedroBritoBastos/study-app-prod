@@ -13,5 +13,5 @@ export async function createSubject(
 }
 
 export async function getUserSubjects(userId: string) {
-  return Subject.find({ userId });
+  return Subject.find({ userId }).lean();
 }

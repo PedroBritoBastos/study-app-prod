@@ -6,11 +6,10 @@ import { getUserSubjectsAction } from "@/src/features/subject/actions/getUserSub
 
 export default async function SubjectsPage() {
   const subjects = await getUserSubjectsAction();
-  console.log(subjects);
   return <>
     <Flex flex={1} w={"100%"}>
       <Navbar />
-      <SubjectsClient />
+      <SubjectsClient subjects={subjects} />
     </Flex>
   </>
 }

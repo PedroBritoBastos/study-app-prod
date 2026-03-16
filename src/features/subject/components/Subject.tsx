@@ -1,0 +1,36 @@
+import { Card, Box, Text, Flex, Tooltip } from "@chakra-ui/react";
+
+import { styles } from "@/styles/subject/subject.styles";
+import { Calendar1 } from "lucide-react";
+
+// utils
+import { formatDate } from "@/utilities/dateUtils";
+
+import { Subject as SubjectType } from "@/features/subject/types/Subject";
+
+type SubjectProps = {
+   subject: SubjectType;
+}
+
+export function Subject({ subject }: SubjectProps) {
+
+   return <Card.Root {...styles.card.root}>
+      <Card.Body {...styles.card.body}>
+         <Box {...styles.header.container}>
+            <Text {...styles.header.title}>
+               {subject.title}
+            </Text>
+         </Box>
+
+         {/* data */}
+         <Flex {...styles.date.container}>
+            <Calendar1 />
+         </Flex>
+
+         {/* conteudo */}
+         <Text {...styles.content.text}>
+            {subject.content}
+         </Text>
+      </Card.Body>
+   </Card.Root>
+}

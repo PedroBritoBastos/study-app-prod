@@ -3,6 +3,7 @@
 import { connectDB } from "@/src/lib/mongodb";
 import { getUserFromToken } from "@/src/lib/auth/getUserFromToken";
 import { createSubject } from "../repositories/subjectRepository";
+import { revalidatePath } from "next/cache";
 
 export async function createSubjectAction(formData: FormData): Promise<void> {
   await connectDB();
@@ -21,4 +22,5 @@ export async function createSubjectAction(formData: FormData): Promise<void> {
   }
 
   await createSubject(title, content, user.id);
+  revalidatePath("/subjects");
 }
