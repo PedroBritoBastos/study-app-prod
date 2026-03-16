@@ -20,7 +20,13 @@ type SubjectsClientProps = {
 
 export function SubjectsClient({ subjects }: SubjectsClientProps) {
    // state de materia selecionada
-   const [selectedSubject, setSelectedSubject] = useState<SubjectType | null>(null);
+   const [selectedSubject, setSelectedSubject] = useState<SubjectType>({
+      id: "",
+      title: "",
+      content: "",
+      userId: "",
+      currentDate: new Date()
+   });
 
    const sidebarHook = useSidebar();
 
