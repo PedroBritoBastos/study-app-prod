@@ -10,11 +10,23 @@ import { Subject as SubjectType } from "@/features/subject/types/Subject";
 
 type SubjectProps = {
    subject: SubjectType;
+   onOpenSidebar: () => void;
+   onSelectSubject: (subject: SubjectType) => void;
 }
 
-export function Subject({ subject }: SubjectProps) {
+export function Subject({
+   subject,
+   onOpenSidebar,
+   onSelectSubject
+}: SubjectProps) {
 
-   return <Card.Root {...styles.card.root}>
+   const handleSelectSubject = (e: React.MouseEvent<HTMLDivElement>): void => {
+      e.preventDefault();
+      onOpenSidebar();
+      onSelectSubject(subject);
+   }
+
+   return <Card.Root {...styles.card.root} onClick={handleSelectSubject}>
       <Card.Body {...styles.card.body}>
          <Box {...styles.header.container}>
             <Text {...styles.header.title}>
