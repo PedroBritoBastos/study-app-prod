@@ -18,4 +18,4 @@ const GoalSchema = new Schema({
   },
 });
 
-export const Goal = models.Goal || model("Goal", GoalSchema);
+export const GoalModel = models.Goal || model("Goal", GoalSchema);
