@@ -7,17 +7,17 @@ import { getTasksAction } from "@/features/goal/actions/tasks/getTasks";
 
 type ContextType = {
    setTasksAction: (goalId: string) => Promise<void>;
+   tasks: TaskType[];
 };
 
 export const GoalContext = createContext<ContextType | null>(null);
 
 export function GoalContextProvider({ children }: { children: React.ReactNode }) {
-   /* 
-      estados globais compartilhados entre Goal e GoalSidebar
-   */
-   const [tasks, setTasks] = useState<TaskType[] | null>(null);
 
-   // atualiza estado global de tasks
+   // estados globais compartilhados entre Goal e GoalSidebar
+   const [tasks, setTasks] = useState<TaskType[]>([]);
+
+   // atualiza estado global de tasks -> vai ser usado pelo Goal
    async function setTasksAction(goalId: string): Promise<void> {
       const tasks = await getTasksAction(goalId);
       setTasks(tasks);
@@ -25,7 +25,8 @@ export function GoalContextProvider({ children }: { children: React.ReactNode })
 
    return (
       <GoalContext.Provider value={{
-         setTasksAction
+         setTasksAction,
+         tasks
       }}>
          {children}
       </GoalContext.Provider>

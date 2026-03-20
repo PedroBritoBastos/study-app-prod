@@ -5,8 +5,8 @@ import { GoalType } from "@/features/goal/types/Goal";
 import { TaskType } from "@/features/goal/types/Task";
 import { diffInDays } from "@/src/utilities/dateUtils";
 
-import { getTasksAction } from "@/features/goal/actions/tasks/getTasks";
 import { getGoalDeadlineAction } from "@/features/goal/actions/goals/getGoalDeadline";
+import { useGoalContext } from "./useGoalContext";
 
 type UseGoalProps = {
   goal: GoalType;
@@ -21,8 +21,19 @@ export function useGoal({
   refresh,
   updatedDeadline,
 }: UseGoalProps) {
-  const [tasks, setTasks] = useState<TaskType[] | []>([]);
+  // recuperando dados do context
+  const { setTasksAction, tasks } = useGoalContext();
+
   const [deadline, setDeadline] = useState("");
+
+  // fetch tasks -> context
+  // faz fetch na primeira vez que o componente é renderizado
+  useEffect(() => {
+    async function fetchTasks() {
+      await setTasksAction(goal.id);
+    }
+    fetchTasks();
+  }, []);
 
   // fetch deadline
   useEffect(() => {
@@ -33,15 +44,6 @@ export function useGoal({
     }
     fetchDeadline();
   }, [updatedDeadline, goal.id]);
-
-  // fetch tasks
-  useEffect(() => {
-    async function fetchTasks() {
-      const goalTasks = await getTasksAction(goal.id);
-      setTasks(goalTasks);
-    }
-    fetchTasks();
-  }, [checkedTask, refresh, goal.id]);
 
   const allTasks = tasks;
   const checkedTasks = tasks.filter((task) => task.isChecked).length;
