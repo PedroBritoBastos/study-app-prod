@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from "react";
 import { GoalType } from "@/features/goal/types/Goal";
 
@@ -7,7 +9,6 @@ export function useGoalsClient() {
     id: "",
     title: "",
     userId: "",
-    tasks: [],
     deadline: new Date(),
   });
 
@@ -29,18 +30,22 @@ export function useGoalsClient() {
     newDeadline: "",
   });
 
+  // seleciona a meta
   function selectGoal(goal: GoalType): void {
     setSelectedGoal(goal);
   }
 
+  // atualiza a meta quando uma task é adicionada ou excluida
   function refreshGoal(taskId: string, action: string): void {
     setRefresh({ taskId, action });
   }
 
+  // atualiza a meta quando uma task é marcada
   function updateCheckedTask(taskId: string, isChecked: boolean): void {
     setCheckedTask({ taskId, isChecked });
   }
 
+  // atualiza o prazo da meta
   function updateDeadlineState(goalId: string, newDeadline: string): void {
     setUpdatedDeadline({ goalId, newDeadline });
   }

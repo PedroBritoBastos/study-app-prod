@@ -5,6 +5,7 @@ import scrollStyles from "@/src/styles/sidebar/scroll.module.css";
 
 import { Box, Heading, Grid } from "@chakra-ui/react";
 import { CreateGoalButton } from "@/features/goal/components/CreateGoalButton";
+import { Goal } from "@/features/goal/components/Goal";
 
 import { GoalType } from "@/features/goal/types/Goal";
 
@@ -19,13 +20,36 @@ export function GoalsClient({
    goals
 }: GoalsClientProps) {
 
-   console.log(goals)
+   const { openSidebar, closeSidebar, isSidebarOpen } = useSidebar();
+
+   const {
+      selectedGoal,
+      selectGoal,
+      refreshGoal,
+      updateCheckedTask,
+      updateDeadlineState,
+      checkedTask,
+      refresh,
+      updatedDeadline,
+   } = useGoalsClient();
+
    return (
       <Box {...styles.container}>
          <Heading {...styles.heading}>Minhas metas</Heading>
 
          {/* grid de metas */}
          <Grid {...styles.grid} className={scrollStyles["scrollbar"]}>
+            {goals.map((goal) => (
+               <Goal
+                  key={goal.id}
+                  goal={goal}
+                  selectGoal={selectGoal}
+                  openSidebar={openSidebar}
+                  checkedTask={checkedTask}
+                  refresh={refresh}
+                  updatedDeadline={updatedDeadline}
+               />
+            ))}
             <CreateGoalButton />
          </Grid>
       </Box>
