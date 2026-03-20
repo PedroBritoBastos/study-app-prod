@@ -36,7 +36,11 @@ export function useGoalsSidebar({
     setDeletedTask(taskId);
   }
 
-  function handleAddTask(task: TaskType) {
+  function handleAddTask(task: {
+    title: string;
+    goalId: string;
+    action: string;
+  }) {
     setAddedTask(task);
   }
 
@@ -47,7 +51,15 @@ export function useGoalsSidebar({
     }
 
     fetchTasks();
-  }, [goal.id, addedTask, deletedTask, checkedTask]);
+  }, [goal.id]);
+
+  useEffect(() => {
+    async function fetchTasks() {
+      const tasks = await getTasksAction(goal.id);
+      setGoalTasks(tasks);
+    }
+    fetchTasks();
+  }, [addedTask]);
 
   /*   useEffect(() => {
     async function fetchTasks() {

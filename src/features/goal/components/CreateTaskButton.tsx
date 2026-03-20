@@ -13,15 +13,17 @@ import { TaskType } from "@/features/goal/types/Task";
 
 interface Props {
    goalId: string;
-   updateAddedTask: (task: TaskType) => void;
+   onAddTask: (task: {
+      title: string;
+      goalId: string;
+      action: string;
+   }) => void;
    refreshGoal: (taskId: string, action: string) => void;
 }
 
-export function CreateTaskButton({ goalId, updateAddedTask, refreshGoal }: Props) {
+export function CreateTaskButton({ goalId, onAddTask, refreshGoal }: Props) {
    const [open, setOpen] = useState(false);
    const [title, setTitle] = useState("");
-
-   const router = useRouter();
 
    async function handleCreateTask() {
       try {
@@ -32,7 +34,11 @@ export function CreateTaskButton({ goalId, updateAddedTask, refreshGoal }: Props
 
          // chamando a action e adicionando a resposta para atualizar o componente
          const response = await createTaskAction(formData);
-         updateAddedTask(response);
+         onAddTask({
+            title,
+            goalId,
+            action: "add"
+         });
          console.log("response: ", response)
          refreshGoal(response.id, "create");
 

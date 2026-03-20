@@ -79,7 +79,7 @@ export function GoalsSidebar({
                <Stack {...styles.createTaskStack}>
                   <CreateTaskButton
                      goalId={goal.id}
-                     updateAddedTask={handleAddTask}
+                     onAddTask={handleAddTask}
                      refreshGoal={refreshGoal}
                   />
                </Stack>
