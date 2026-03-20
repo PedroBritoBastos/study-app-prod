@@ -5,6 +5,7 @@ import { getUserFromToken } from "@/src/lib/auth/getUserFromToken";
 import { createTask } from "@/features/goal/repositories/tasksRepository";
 import { getGoalByUserId } from "../../repositories/goalsRepository";
 import { revalidatePath } from "next/cache";
+import { TaskType } from "../../types/Task";
 
 export async function createTaskAction(formData: FormData) {
   await connectDB();
@@ -28,7 +29,7 @@ export async function createTaskAction(formData: FormData) {
     throw new Error("Não autorizado.");
   }
 
-  const task = await createTask(title, goalId);
+  const task: TaskType = await createTask(title, goalId);
   revalidatePath("/goals");
   return task;
 }

@@ -2,7 +2,10 @@ import { TaskModel } from "@/features/goal/models/Task";
 import { TaskType } from "@/features/goal/types/Task";
 import { ObjectId } from "mongoose";
 
-export async function createTask(title: string, goalId: string) {
+export async function createTask(
+  title: string,
+  goalId: string,
+): Promise<TaskType> {
   return TaskModel.create({
     title,
     goalId,
@@ -10,7 +13,7 @@ export async function createTask(title: string, goalId: string) {
   });
 }
 
-export async function getTasks(goalId: string) {
+export async function getTasks(goalId: string): Promise<TaskType[]> {
   function mapTaskModel(task: {
     _id: ObjectId;
     title: string;
@@ -29,7 +32,7 @@ export async function getTasks(goalId: string) {
   return tasks.map(mapTaskModel);
 }
 
-export async function deleteTaskById(taskId: string) {
+export async function deleteTaskById(taskId: string): Promise<string> {
   const deletedTask: TaskType | null =
     await TaskModel.findByIdAndDelete(taskId);
 
@@ -39,18 +42,18 @@ export async function deleteTaskById(taskId: string) {
   return deletedTaskId;
 }
 
-export async function toggleTaskCheckedStatus(taskId: string) {
+export async function toggleTaskCheckedStatus(taskId: string): Promise<void> {
   const task = await TaskModel.findById(taskId);
   task.isChecked = !task.isChecked;
   await task.save();
 }
 
-export async function getTaskById(taskId: string) {
+export async function getTaskById(taskId: string): Promise<TaskType | null> {
   const task = await TaskModel.findById(taskId);
   return task;
 }
 
-export async function getTaskStatus(taskId: string) {
+export async function getTaskStatus(taskId: string): Promise<boolean> {
   const task = await TaskModel.findById(taskId).select("isChecked").lean();
   return task.isChecked;
 }
