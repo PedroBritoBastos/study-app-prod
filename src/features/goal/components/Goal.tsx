@@ -47,10 +47,10 @@ export function Goal({
    }
 
    const progressValue =
-      allTasks === 0 ? 0 : (checkedTasks / allTasks) * 100;
+      allTasks.length === 0 ? 0 : (checkedTasks / allTasks.length) * 100;
 
    const isCompleted =
-      allTasks > 0 && checkedTasks === allTasks;
+      allTasks.length > 0 && checkedTasks === allTasks.length;
 
    return (
       <Card.Root {...styles.cardRoot} onClick={handleClick}>
@@ -125,7 +125,7 @@ export function Goal({
                   {checkedTasks}
                </Span>
                {" / "}
-               {allTasks}
+               {allTasks.length}
             </Text>
          </Flex>
 

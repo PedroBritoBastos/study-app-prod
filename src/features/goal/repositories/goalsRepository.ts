@@ -47,3 +47,10 @@ export async function getGoalDealine(id: string) {
   const deadline = await GoalModel.findById(id).select("deadline").lean();
   return deadline;
 }
+
+export async function updateGoalDeadline(id: string, newDate: string) {
+  const result = await GoalModel.updateOne(
+    { _id: id },
+    { $set: { deadline: new Date(newDate) } },
+  );
+}

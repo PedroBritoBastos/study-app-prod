@@ -1,0 +1,150 @@
+"use client"
+
+import { SidebarContainer } from "@/components/ui/sidebar/SidebarContainer";
+import { CreateTaskButton } from "@/features/goal/components/CreateTaskButton";
+import { GoalSidebarTask } from "@/features/goal/components/GoalSidebarTask";
+import { DatePicker } from "@/features/goal/components/DatePicker";
+import { Trash } from "lucide-react";
+
+import { GoalType } from "@/features/goal/types/Goal";
+import { Text, Stack, Button, Icon, Progress, Span } from "@chakra-ui/react";
+
+import { styles } from "@/styles/sidebar/goalsSidebar.styles";
+import scrollbarStyles from "@/styles/sidebar/scroll.module.css";
+
+import { useGoalsSidebar } from "@/features/goal/hooks/useGoalSidebar";
+
+interface Props {
+   closeSidebar: () => void;
+   goal: GoalType;
+   updateCheckedTask: (taskId: string, isChecked: boolean) => void;
+   refreshGoal: (taskId: string, action: string) => void;
+   updateDeadlineState: (goalId: string, newDeadline: string) => void;
+   isSidebarOpen?: boolean;
+}
+
+export function GoalsSidebar({
+   closeSidebar,
+   goal,
+   updateCheckedTask,
+   refreshGoal,
+   updateDeadlineState,
+   isSidebarOpen
+}: Props) {
+
+   const {
+      goalTasks,
+      handleCheckedTask,
+      updateDeletedTask,
+      handleAddTask,
+      handleDeleteGoal,
+      allTasks,
+      checkedTasks,
+   } = useGoalsSidebar({
+      closeSidebar,
+      goal,
+      updateCheckedTask,
+   });
+
+   return (
+      <SidebarContainer
+         header={goal.title}
+         closeSidebar={closeSidebar}
+         isSidebarOpen={isSidebarOpen}
+      >
+         <Stack {...styles.container}>
+
+            <DatePicker
+               goalId={goal.id}
+               updateDeadlineState={updateDeadlineState}
+            />
+
+            <Stack>
+               <Text {...styles.statusText}>Em andamento</Text>
+
+               <Stack {...styles.tasksStack} className={scrollbarStyles["scrollbar"]}>
+                  {(goalTasks.filter((task) => !task.isChecked).map(
+                     (task) => (
+                        <GoalSidebarTask
+                           key={task.id}
+                           task={task}
+                           updateDeletedTask={updateDeletedTask}
+                           updateCheckedTask={handleCheckedTask}
+                           refreshGoal={refreshGoal}
+                        />
+                     )
+                  ))}
+               </Stack>
+
+               <Stack {...styles.createTaskStack}>
+                  <CreateTaskButton
+                     goalId={goal.id}
+                     updateAddedTask={handleAddTask}
+                     refreshGoal={refreshGoal}
+                  />
+               </Stack>
+            </Stack>
+
+            <Stack>
+               <Text {...styles.statusText}>Concluídas</Text>
+
+               <Stack {...styles.tasksStack} className={scrollbarStyles["scrollbar"]}>
+                  {(goalTasks.filter((task) => task.isChecked).map((task) => (
+                     <GoalSidebarTask
+                        key={task.id}
+                        task={task}
+                        updateDeletedTask={updateDeletedTask}
+                        updateCheckedTask={handleCheckedTask}
+                        refreshGoal={refreshGoal}
+                     />
+                  )))}
+               </Stack>
+            </Stack>
+
+            <Stack {...styles.progressContainer}>
+               <Text {...styles.statusText}>Progresso</Text>
+
+               <Text
+                  {...styles.progressIndicator}
+                  {...((checkedTasks / allTasks) === 1 && styles.progressIndicatorCompleted)}
+               >
+                  {checkedTasks} de {allTasks}
+               </Text>
+
+               <Progress.Root value={(checkedTasks / allTasks) * 100}>
+                  <Progress.Track {...styles.progressBar.track}>
+                     <Progress.Range
+                        {...styles.progressBar.range}
+                        {...((checkedTasks / allTasks) === 1 && styles.progressBar.completed)}
+                     >
+                        <Text>
+                           {goalTasks.length > 0 && (Math.round((checkedTasks / allTasks) * 100) || 0)}
+                           {goalTasks.length > 0 && "%"}
+                        </Text>
+                     </Progress.Range>
+                  </Progress.Track>
+               </Progress.Root>
+
+               <Text {...styles.statusIndicator}>
+                  Status:{" "}
+                  <Span
+                     {...(checkedTasks / allTasks === 1
+                        ? styles.progressIndicatorCompleted
+                        : styles.statusIndicatorInProgress)}
+                  >
+                     {(checkedTasks / allTasks === 1 ? "concluído" : "em andamento")}
+                  </Span>
+               </Text>
+            </Stack>
+
+            <Button {...styles.deleteButton} onClick={handleDeleteGoal}>
+               <Icon size="sm">
+                  <Trash />
+               </Icon>
+               Excluir meta
+            </Button>
+
+         </Stack>
+      </SidebarContainer>
+   );
+}

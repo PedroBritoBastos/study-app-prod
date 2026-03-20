@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 
 import { createGoalAction } from "@/src/features/goal/actions/goals/createGoal";
 
@@ -9,8 +8,6 @@ export function useCreateGoalButton() {
   const [createMode, setCreateMode] = useState(false);
   const [goalTitle, setGoalTitle] = useState("");
   const [deadline, setDeadline] = useState("");
-
-  const router = useRouter();
 
   async function handleCreate(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();

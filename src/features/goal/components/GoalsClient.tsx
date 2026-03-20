@@ -6,11 +6,13 @@ import scrollStyles from "@/src/styles/sidebar/scroll.module.css";
 import { Box, Heading, Grid } from "@chakra-ui/react";
 import { CreateGoalButton } from "@/features/goal/components/CreateGoalButton";
 import { Goal } from "@/features/goal/components/Goal";
+import { GoalsSidebar } from "@/features/goal/components/GoalSidebar";
 
 import { GoalType } from "@/features/goal/types/Goal";
 
 import { useSidebar } from "@/src/hooks/useSidebar";
 import { useGoalsClient } from "@/features/goal/hooks/useGoalsClient";
+import { Backdrop } from "@/src/components/ui/backdrop/Backdrop";
 
 type GoalsClientProps = {
    goals: GoalType[]
@@ -52,6 +54,20 @@ export function GoalsClient({
             ))}
             <CreateGoalButton />
          </Grid>
+
+         <Backdrop
+            isOpen={isSidebarOpen}
+            onClick={closeSidebar}
+         />
+
+         <GoalsSidebar
+            closeSidebar={closeSidebar}
+            goal={selectedGoal}
+            updateCheckedTask={updateCheckedTask}
+            refreshGoal={refreshGoal}
+            updateDeadlineState={updateDeadlineState}
+            isSidebarOpen={isSidebarOpen}
+         />
       </Box>
    )
 }
