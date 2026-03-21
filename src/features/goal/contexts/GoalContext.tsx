@@ -1,9 +1,9 @@
 "use client";
 
 import { createContext } from "react";
-import { useEffect, useState } from "react";
 import { TaskType } from "@/features/goal/types/Task";
-import { getTasksAction } from "@/features/goal/actions/tasks/getTasks";
+
+import { useState } from "react";
 
 type ContextType = {
    selectedGoalTasks: TaskType[];
@@ -30,7 +30,6 @@ export function GoalContextProvider({ children }: { children: React.ReactNode })
    function addTaskToSelectedGoal(task: TaskType) {
       setSelectedGoalTasks((prev) => [...prev, task]);
    }
-
 
    return (
       <GoalContext.Provider value={{

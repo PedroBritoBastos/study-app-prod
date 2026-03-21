@@ -11,16 +11,10 @@ import { useGoalSidebarTask } from "@/features/goal/hooks/useGoalSidebarTask";
 
 interface Props {
    task: TaskType;
-   updateDeletedTask: (taskId: string) => void;
-   updateCheckedTask: (taskId: string, isChecked: boolean) => void;
-   refreshGoal: (taskId: string, action: string) => void;
 }
 
 export function GoalSidebarTask({
    task,
-   updateDeletedTask,
-   updateCheckedTask,
-   refreshGoal,
 }: Props) {
 
    const {
@@ -29,8 +23,6 @@ export function GoalSidebarTask({
       handleCheckTask,
    } = useGoalSidebarTask({
       task,
-      updateDeletedTask,
-      refreshGoal,
    });
 
    return (
