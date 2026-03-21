@@ -15,11 +15,11 @@ import { useGoalsClient } from "@/features/goal/hooks/useGoalsClient";
 import { Backdrop } from "@/src/components/ui/backdrop/Backdrop";
 
 type GoalsClientProps = {
-   goals: GoalType[]
+   goalsProp: GoalType[]
 }
 
 export function GoalsClient({
-   goals
+   goalsProp
 }: GoalsClientProps) {
 
    const { openSidebar, closeSidebar, isSidebarOpen } = useSidebar();
@@ -27,13 +27,13 @@ export function GoalsClient({
    const {
       selectedGoal,
       selectGoal,
-      refreshGoal,
       updateCheckedTask,
       updateDeadlineState,
       checkedTask,
       refresh,
       updatedDeadline,
-   } = useGoalsClient();
+      goals
+   } = useGoalsClient(goalsProp);
 
    return (
       <Box {...styles.container}>
@@ -64,7 +64,6 @@ export function GoalsClient({
             closeSidebar={closeSidebar}
             goal={selectedGoal}
             updateCheckedTask={updateCheckedTask}
-            refreshGoal={refreshGoal}
             updateDeadlineState={updateDeadlineState}
             isSidebarOpen={isSidebarOpen}
          />

@@ -6,19 +6,16 @@ import { Plus } from "lucide-react";
 import { styles } from "@/styles/button/createTaskButton.styles";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useGoalContext } from "../hooks/useGoalContext";
 
 import { createTaskAction } from "@/features/goal/actions/tasks/createTask";
-import { TaskType } from "@/features/goal/types/Task";
 
 
 interface Props {
    goalId: string;
-   refreshGoal: (taskId: string, action: string) => void;
 }
 
-export function CreateTaskButton({ goalId, refreshGoal }: Props) {
+export function CreateTaskButton({ goalId }: Props) {
    const [open, setOpen] = useState(false);
    const [title, setTitle] = useState("");
 

@@ -18,7 +18,6 @@ interface Props {
    closeSidebar: () => void;
    goal: GoalType;
    updateCheckedTask: (taskId: string, isChecked: boolean) => void;
-   refreshGoal: (taskId: string, action: string) => void;
    updateDeadlineState: (goalId: string, newDeadline: string) => void;
    isSidebarOpen?: boolean;
 }
@@ -27,14 +26,11 @@ export function GoalsSidebar({
    closeSidebar,
    goal,
    updateCheckedTask,
-   refreshGoal,
    updateDeadlineState,
    isSidebarOpen
 }: Props) {
 
    const {
-      handleCheckedTask,
-      updateDeletedTask,
       allTasks,
       checkedTasks,
       selectedGoalTasks
@@ -66,9 +62,6 @@ export function GoalsSidebar({
                         <GoalSidebarTask
                            key={task.id}
                            task={task}
-                           updateDeletedTask={updateDeletedTask}
-                           updateCheckedTask={handleCheckedTask}
-                           refreshGoal={refreshGoal}
                         />
                      )
                   ))}
@@ -77,7 +70,6 @@ export function GoalsSidebar({
                <Stack {...styles.createTaskStack}>
                   <CreateTaskButton
                      goalId={goal.id}
-                     refreshGoal={refreshGoal}
                   />
                </Stack>
             </Stack>
@@ -90,9 +82,6 @@ export function GoalsSidebar({
                      <GoalSidebarTask
                         key={task.id}
                         task={task}
-                        updateDeletedTask={updateDeletedTask}
-                        updateCheckedTask={handleCheckedTask}
-                        refreshGoal={refreshGoal}
                      />
                   )))}
                </Stack>

@@ -15,7 +15,7 @@ export default async function GoalsPage() {
    return (
       <Flex {...styles.container}>
          <Navbar />
-         <GoalsClient goals={goals} />
+         <GoalsClient goalsProp={goals} />
       </Flex>
    )
 }

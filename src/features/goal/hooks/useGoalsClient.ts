@@ -1,9 +1,20 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { GoalType } from "@/features/goal/types/Goal";
 
-export function useGoalsClient() {
+import { useGoalContext } from "./useGoalContext";
+
+export function useGoalsClient(goalsProp: GoalType[]) {
+  // dados do context
+  const { updateGlobalGoalsState, goals } = useGoalContext();
+
+  // refatorado
+  // salva os dados vindo do server component no estado global quando renderizado pela primeira vez
+  useEffect(() => {
+    updateGlobalGoalsState(goalsProp);
+  }, []);
+
   // meta selecionada
   const [selectedGoal, setSelectedGoal] = useState<GoalType>({
     id: "",
@@ -59,5 +70,6 @@ export function useGoalsClient() {
     checkedTask,
     refresh,
     updatedDeadline,
+    goals,
   };
 }
