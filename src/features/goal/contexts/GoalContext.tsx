@@ -16,8 +16,8 @@ type ContextType = {
 export const GoalContext = createContext<ContextType | null>(null);
 
 export function GoalContextProvider({ children }: { children: React.ReactNode }) {
-   const [selectedGoalTasks, setSelectedGoalTasks] = useState<TaskType[]>([]);
-   const [selectedGoalId, setSelectedGoalId] = useState<string>("");
+   const [selectedGoalTasks, setSelectedGoalTasks] = useState<TaskType[]>([]); // estado global do goal selecionado
+   const [selectedGoalId, setSelectedGoalId] = useState<string>(""); // estado global que guarda o id do goal selecionado
 
    function updateSelectedGoalTasks(tasks: TaskType[]): void {
       setSelectedGoalTasks(tasks);
@@ -30,6 +30,7 @@ export function GoalContextProvider({ children }: { children: React.ReactNode })
    function addTaskToSelectedGoal(task: TaskType) {
       setSelectedGoalTasks((prev) => [...prev, task]);
    }
+
 
    return (
       <GoalContext.Provider value={{

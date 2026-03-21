@@ -30,7 +30,6 @@ export function GoalSidebarTask({
    } = useGoalSidebarTask({
       task,
       updateDeletedTask,
-      updateCheckedTask,
       refreshGoal,
    });
 

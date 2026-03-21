@@ -46,11 +46,12 @@ export function useGoal({ goal, updatedDeadline }: UseGoalProps) {
     fetchTasks();
   }, []);
 
+  // refatorado
+  // atualiza apenas o goal selecionado (pelo id) quando tasks sao adicionadas ou removidas
   useEffect(() => {
     function updateTasksState() {
       setTasks(selectedGoalTasks);
     }
-
     if (selectedGoalId === goal.id) {
       updateTasksState();
     }
