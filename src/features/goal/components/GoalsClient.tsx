@@ -27,10 +27,7 @@ export function GoalsClient({
    const {
       selectedGoal,
       selectGoal,
-      updateCheckedTask,
       updateDeadlineState,
-      checkedTask,
-      refresh,
       updatedDeadline,
       goals
    } = useGoalsClient(goalsProp);
@@ -47,8 +44,6 @@ export function GoalsClient({
                   goal={goal}
                   selectGoal={selectGoal}
                   openSidebar={openSidebar}
-                  checkedTask={checkedTask}
-                  refresh={refresh}
                   updatedDeadline={updatedDeadline}
                />
             ))}
@@ -63,7 +58,6 @@ export function GoalsClient({
          <GoalsSidebar
             closeSidebar={closeSidebar}
             goal={selectedGoal}
-            updateCheckedTask={updateCheckedTask}
             updateDeadlineState={updateDeadlineState}
             isSidebarOpen={isSidebarOpen}
          />

@@ -17,7 +17,6 @@ import { useGoalsSidebar } from "@/features/goal/hooks/useGoalSidebar";
 interface Props {
    closeSidebar: () => void;
    goal: GoalType;
-   updateCheckedTask: (taskId: string, isChecked: boolean) => void;
    updateDeadlineState: (goalId: string, newDeadline: string) => void;
    isSidebarOpen?: boolean;
 }
@@ -25,7 +24,6 @@ interface Props {
 export function GoalsSidebar({
    closeSidebar,
    goal,
-   updateCheckedTask,
    updateDeadlineState,
    isSidebarOpen
 }: Props) {
@@ -34,11 +32,7 @@ export function GoalsSidebar({
       allTasks,
       checkedTasks,
       selectedGoalTasks
-   } = useGoalsSidebar({
-      closeSidebar,
-      goal,
-      updateCheckedTask,
-   });
+   } = useGoalsSidebar();
 
    return (
       <SidebarContainer

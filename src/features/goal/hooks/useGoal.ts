@@ -12,8 +12,6 @@ import { useGoalContext } from "./useGoalContext";
 
 type UseGoalProps = {
   goal: GoalType;
-  checkedTask: { taskId: string; isChecked: boolean };
-  refresh: { taskId: string; action: string };
   updatedDeadline: { goalId: string; newDeadline: string };
 };
 

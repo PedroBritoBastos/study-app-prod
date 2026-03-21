@@ -29,8 +29,6 @@ interface Props {
    goal: GoalType;
    selectGoal: (goal: GoalType) => void;
    openSidebar: () => void;
-   checkedTask: { taskId: string; isChecked: boolean };
-   refresh: { taskId: string; action: string };
    updatedDeadline: { goalId: string; newDeadline: string };
 }
 
@@ -38,8 +36,6 @@ export function Goal({
    goal,
    selectGoal,
    openSidebar,
-   checkedTask,
-   refresh,
    updatedDeadline,
 }: Props) {
    const {
@@ -52,8 +48,6 @@ export function Goal({
       isLoading,
    } = useGoal({
       goal,
-      checkedTask,
-      refresh,
       updatedDeadline,
    });
 
