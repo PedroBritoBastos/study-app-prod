@@ -30,6 +30,5 @@ export async function createTaskAction(formData: FormData) {
   }
 
   const task: TaskType = await createTask(title, goalId);
-  revalidatePath("/goals");
   return task;
 }

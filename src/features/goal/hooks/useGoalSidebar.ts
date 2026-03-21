@@ -1,3 +1,5 @@
+"use client";
+
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
@@ -5,6 +7,9 @@ import { GoalType } from "@/features/goal/types/Goal";
 import { TaskType } from "@/features/goal/types/Task";
 
 import { getTasksAction } from "@/features/goal/actions/tasks/getTasks";
+import { createTaskAction } from "@/features/goal/actions/tasks/createTask";
+
+import { useGoalContext } from "./useGoalContext";
 
 interface UseGoalsSidebarProps {
   closeSidebar: () => void;
@@ -19,7 +24,9 @@ export function useGoalsSidebar({
 }: UseGoalsSidebarProps) {
   const router = useRouter();
 
-  const [goalTasks, setGoalTasks] = useState<TaskType[]>([]);
+  // recuperando estados do context
+  const { selectedGoalTasks } = useGoalContext();
+
   const [addedTask, setAddedTask] = useState({});
   const [deletedTask, setDeletedTask] = useState({});
   const [checkedTask, setCheckedTask] = useState<{
@@ -36,82 +43,16 @@ export function useGoalsSidebar({
     setDeletedTask(taskId);
   }
 
-  function handleAddTask(task: {
-    title: string;
-    goalId: string;
-    action: string;
-  }) {
-    setAddedTask(task);
-  }
-
-  useEffect(() => {
-    async function fetchTasks() {
-      const tasks = await getTasksAction(goal.id);
-      setGoalTasks(tasks);
-    }
-
-    fetchTasks();
-  }, [goal.id]);
-
-  useEffect(() => {
-    async function fetchTasks() {
-      const tasks = await getTasksAction(goal.id);
-      setGoalTasks(tasks);
-    }
-    fetchTasks();
-  }, [addedTask]);
-
-  /*   useEffect(() => {
-    async function fetchTasks() {
-      const tasks = await getTasksAction(goal.id);
-      setGoalTasks(tasks);
-    }
-    fetchTasks();
-  }, [goal]); */
-
-  /*   useEffect(() => {
-    async function fetchTasks() {
-      const tasks = await getTasksAction(goal.id);
-      setGoalTasks(tasks);
-    }
-    fetchTasks();
-  }, [addedTask]); */
-
-  /*   useEffect(() => {
-    async function fetchTasks() {
-      const tasks = await getTasksAction(goal.id);
-      setGoalTasks(tasks);
-    }
-    fetchTasks();
-  }, [deletedTask]); */
-
-  /*   useEffect(() => {
-    if (!checkedTask) return;
-
-    async function fetchTasks() {
-      const tasks = await getTasksAction(goal.id);
-      setGoalTasks(tasks);
-    }
-
-    fetchTasks();
-  }, [checkedTask]); */
-
-  async function handleDeleteGoal() {
-    //   const response = await deleteGoal(goal.id);
-    router.refresh();
-    closeSidebar();
-  }
-
-  const allTasks = goalTasks.length;
-  const checkedTasks = goalTasks.filter((task) => task.isChecked).length;
+  const allTasks = selectedGoalTasks.length;
+  const checkedTasks = selectedGoalTasks.filter(
+    (task) => task.isChecked,
+  ).length;
 
   return {
-    goalTasks,
     handleCheckedTask,
     updateDeletedTask,
-    handleAddTask,
-    handleDeleteGoal,
     allTasks,
     checkedTasks,
+    selectedGoalTasks,
   };
 }

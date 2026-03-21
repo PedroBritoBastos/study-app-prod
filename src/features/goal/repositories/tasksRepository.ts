@@ -6,11 +6,20 @@ export async function createTask(
   title: string,
   goalId: string,
 ): Promise<TaskType> {
-  return TaskModel.create({
+  const task = await TaskModel.create({
     title,
     goalId,
     isChecked: false,
   });
+
+  const obj = task.toObject();
+
+  return {
+    id: obj._id.toString(),
+    title: obj.title,
+    isChecked: obj.isChecked,
+    goalId: obj.goalId.toString(),
+  };
 }
 
 export async function getTasks(goalId: string): Promise<TaskType[]> {

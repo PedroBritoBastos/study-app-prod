@@ -6,6 +6,8 @@ import { TaskType } from "@/features/goal/types/Task";
 import { diffInDays } from "@/src/utilities/dateUtils";
 
 import { getGoalDeadlineAction } from "@/features/goal/actions/goals/getGoalDeadline";
+import { getTasksAction } from "../actions/tasks/getTasks";
+
 import { useGoalContext } from "./useGoalContext";
 
 type UseGoalProps = {
@@ -15,25 +17,44 @@ type UseGoalProps = {
   updatedDeadline: { goalId: string; newDeadline: string };
 };
 
-export function useGoal({
-  goal,
-  checkedTask,
-  refresh,
-  updatedDeadline,
-}: UseGoalProps) {
-  // recuperando dados do context
-  const { setTasksAction, tasks } = useGoalContext();
+export function useGoal({ goal, updatedDeadline }: UseGoalProps) {
+  // state de tasks
+  const [tasks, setTasks] = useState<TaskType[]>([]);
+
+  // loading
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  // dados do context
+  const { selectedGoalTasks, selectedGoalId } = useGoalContext();
 
   const [deadline, setDeadline] = useState("");
 
-  // fetch tasks -> context
+  // fetch tasks
   // faz fetch na primeira vez que o componente é renderizado
   useEffect(() => {
     async function fetchTasks() {
-      await setTasksAction(goal.id);
+      setIsLoading(true);
+      try {
+        const tasks = await getTasksAction(goal.id);
+        setTasks(tasks);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
     fetchTasks();
   }, []);
+
+  useEffect(() => {
+    function updateTasksState() {
+      setTasks(selectedGoalTasks);
+    }
+
+    if (selectedGoalId === goal.id) {
+      updateTasksState();
+    }
+  }, [selectedGoalTasks]);
 
   // fetch deadline
   useEffect(() => {
@@ -64,5 +85,6 @@ export function useGoal({
     visibleTasks,
     remainingTasks,
     daysRemaining,
+    isLoading,
   };
 }

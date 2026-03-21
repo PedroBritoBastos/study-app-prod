@@ -33,13 +33,11 @@ export function GoalsSidebar({
 }: Props) {
 
    const {
-      goalTasks,
       handleCheckedTask,
       updateDeletedTask,
-      handleAddTask,
-      handleDeleteGoal,
       allTasks,
       checkedTasks,
+      selectedGoalTasks
    } = useGoalsSidebar({
       closeSidebar,
       goal,
@@ -63,7 +61,7 @@ export function GoalsSidebar({
                <Text {...styles.statusText}>Em andamento</Text>
 
                <Stack {...styles.tasksStack} className={scrollbarStyles["scrollbar"]}>
-                  {(goalTasks.filter((task) => !task.isChecked).map(
+                  {(selectedGoalTasks.filter((task) => !task.isChecked).map(
                      (task) => (
                         <GoalSidebarTask
                            key={task.id}
@@ -79,7 +77,6 @@ export function GoalsSidebar({
                <Stack {...styles.createTaskStack}>
                   <CreateTaskButton
                      goalId={goal.id}
-                     onAddTask={handleAddTask}
                      refreshGoal={refreshGoal}
                   />
                </Stack>
@@ -89,7 +86,7 @@ export function GoalsSidebar({
                <Text {...styles.statusText}>Concluídas</Text>
 
                <Stack {...styles.tasksStack} className={scrollbarStyles["scrollbar"]}>
-                  {(goalTasks.filter((task) => task.isChecked).map((task) => (
+                  {(selectedGoalTasks.filter((task) => task.isChecked).map((task) => (
                      <GoalSidebarTask
                         key={task.id}
                         task={task}
@@ -118,8 +115,8 @@ export function GoalsSidebar({
                         {...((checkedTasks / allTasks) === 1 && styles.progressBar.completed)}
                      >
                         <Text>
-                           {goalTasks.length > 0 && (Math.round((checkedTasks / allTasks) * 100) || 0)}
-                           {goalTasks.length > 0 && "%"}
+                           {selectedGoalTasks.length > 0 && (Math.round((checkedTasks / allTasks) * 100) || 0)}
+                           {selectedGoalTasks.length > 0 && "%"}
                         </Text>
                      </Progress.Range>
                   </Progress.Track>
@@ -137,7 +134,7 @@ export function GoalsSidebar({
                </Text>
             </Stack>
 
-            <Button {...styles.deleteButton} onClick={handleDeleteGoal}>
+            <Button {...styles.deleteButton}>
                <Icon size="sm">
                   <Trash />
                </Icon>

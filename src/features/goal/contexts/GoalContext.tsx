@@ -6,27 +6,38 @@ import { TaskType } from "@/features/goal/types/Task";
 import { getTasksAction } from "@/features/goal/actions/tasks/getTasks";
 
 type ContextType = {
-   setTasksAction: (goalId: string) => Promise<void>;
-   tasks: TaskType[];
+   selectedGoalTasks: TaskType[];
+   selectedGoalId: string;
+   updateSelectedGoalTasks: (tasks: TaskType[]) => void;
+   updateSelectedGoalId: (goalId: string) => void;
+   addTaskToSelectedGoal: (task: TaskType) => void;
 };
 
 export const GoalContext = createContext<ContextType | null>(null);
 
 export function GoalContextProvider({ children }: { children: React.ReactNode }) {
+   const [selectedGoalTasks, setSelectedGoalTasks] = useState<TaskType[]>([]);
+   const [selectedGoalId, setSelectedGoalId] = useState<string>("");
 
-   // estados globais compartilhados entre Goal e GoalSidebar
-   const [tasks, setTasks] = useState<TaskType[]>([]);
+   function updateSelectedGoalTasks(tasks: TaskType[]): void {
+      setSelectedGoalTasks(tasks);
+   }
 
-   // atualiza estado global de tasks -> vai ser usado pelo Goal
-   async function setTasksAction(goalId: string): Promise<void> {
-      const tasks = await getTasksAction(goalId);
-      setTasks(tasks);
+   function updateSelectedGoalId(goalId: string) {
+      setSelectedGoalId(goalId);
+   }
+
+   function addTaskToSelectedGoal(task: TaskType) {
+      setSelectedGoalTasks((prev) => [...prev, task]);
    }
 
    return (
       <GoalContext.Provider value={{
-         setTasksAction,
-         tasks
+         updateSelectedGoalTasks,
+         updateSelectedGoalId,
+         addTaskToSelectedGoal,
+         selectedGoalTasks,
+         selectedGoalId,
       }}>
          {children}
       </GoalContext.Provider>
