@@ -31,8 +31,9 @@ export function GoalsSidebar({
    const {
       allTasks,
       checkedTasks,
-      selectedGoalTasks
-   } = useGoalsSidebar();
+      selectedGoalTasks,
+      handleDeleteGoalById
+   } = useGoalsSidebar(goal, closeSidebar);
 
    return (
       <SidebarContainer
@@ -117,7 +118,7 @@ export function GoalsSidebar({
                </Text>
             </Stack>
 
-            <Button {...styles.deleteButton}>
+            <Button {...styles.deleteButton} onClick={handleDeleteGoalById}>
                <Icon size="sm">
                   <Trash />
                </Icon>

@@ -1,5 +1,4 @@
 import { GoalModel } from "@/features/goal/models/Goal";
-import { GoalType } from "@/features/goal/types/Goal";
 import { ObjectId } from "mongoose";
 
 export async function getUserGoals(userId: string) {
@@ -53,4 +52,8 @@ export async function updateGoalDeadline(id: string, newDate: string) {
     { _id: id },
     { $set: { deadline: new Date(newDate) } },
   );
+}
+
+export async function deleteGoalById(id: string): Promise<void> {
+  await GoalModel.findByIdAndDelete(id);
 }
