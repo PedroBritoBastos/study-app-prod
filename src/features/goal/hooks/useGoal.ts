@@ -22,10 +22,11 @@ export function useGoal({ goal, updatedDeadline }: UseGoalProps) {
   // loading
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
+  // state de prazo
+  const [deadline, setDeadline] = useState("");
+
   // dados do context
   const { selectedGoalTasks, selectedGoalId } = useGoalContext();
-
-  const [deadline, setDeadline] = useState("");
 
   // fetch tasks
   // faz fetch na primeira vez que o componente é renderizado
@@ -55,15 +56,14 @@ export function useGoal({ goal, updatedDeadline }: UseGoalProps) {
     }
   }, [selectedGoalTasks]);
 
-  // fetch deadline
+  // refatorado
+  // armazena a deadline no estado local assim que o componente é renderizado
   useEffect(() => {
-    async function fetchDeadline() {
-      const response = await getGoalDeadlineAction(goal.id);
-      const isoDate = new Date(response.deadline).toISOString().split("T")[0];
-      setDeadline(isoDate);
-    }
-    fetchDeadline();
-  }, [updatedDeadline, goal.id]);
+    const formatedDeadline = new Date(goal.deadline)
+      .toISOString()
+      .split("T")[0];
+    setDeadline(formatedDeadline);
+  }, []);
 
   const allTasks = tasks;
   const checkedTasks = tasks.filter((task) => task.isChecked).length;
@@ -71,6 +71,7 @@ export function useGoal({ goal, updatedDeadline }: UseGoalProps) {
   const visibleTasks = tasks.slice(0, 3);
   const remainingTasks = tasks.length - 3;
 
+  // faz a subtração da data de hoje com a data do prazo para retornar os dias restantes
   const daysRemaining = diffInDays(
     new Date().toISOString().split("T")[0],
     deadline,
@@ -78,7 +79,6 @@ export function useGoal({ goal, updatedDeadline }: UseGoalProps) {
 
   return {
     tasks,
-    deadline,
     allTasks,
     checkedTasks,
     visibleTasks,

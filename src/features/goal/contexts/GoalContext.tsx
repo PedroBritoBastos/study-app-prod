@@ -23,6 +23,7 @@ export function GoalContextProvider({ children }: { children: React.ReactNode })
    const [selectedGoalTasks, setSelectedGoalTasks] = useState<TaskType[]>([]); // estado global do goal selecionado
    const [selectedGoalId, setSelectedGoalId] = useState<string>(""); // estado global que guarda o id do goal selecionado
    const [goals, setGoals] = useState<GoalType[]>([]); // estado global com todas as metas vindas da api
+   const [globalDeadline, setGlobalDeadline] = useState<string>(""); // estado global para salvar o prazo
 
    function updateSelectedGoalTasks(tasks: TaskType[]): void {
       setSelectedGoalTasks(tasks);
