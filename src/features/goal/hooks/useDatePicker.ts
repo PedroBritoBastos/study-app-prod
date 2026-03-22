@@ -7,13 +7,9 @@ import { updateDeadlineAction } from "@/features/goal/actions/goals/updateDeadli
 
 type UseDatePickerProps = {
   goalId: string;
-  updateDeadlineState: (goalId: string, newDeadline: string) => void;
 };
 
-export function useDatePicker({
-  goalId,
-  updateDeadlineState,
-}: UseDatePickerProps) {
+export function useDatePicker({ goalId }: UseDatePickerProps) {
   const { globalDeadline, updateGlobalDeadlineStateWithSelectedGoalDeadline } =
     useGoalContext();
 

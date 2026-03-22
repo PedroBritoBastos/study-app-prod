@@ -29,14 +29,12 @@ interface Props {
    goal: GoalType;
    selectGoal: (goal: GoalType) => void;
    openSidebar: () => void;
-   updatedDeadline: { goalId: string; newDeadline: string };
 }
 
 export function Goal({
    goal,
    selectGoal,
    openSidebar,
-   updatedDeadline,
 }: Props) {
    const {
       tasks,
@@ -47,10 +45,7 @@ export function Goal({
       daysRemaining,
       isLoading,
       deadline
-   } = useGoal({
-      goal,
-      updatedDeadline,
-   });
+   } = useGoal({ goal });
 
    const { updateSelectedGoalTasks, updateSelectedGoalId, updateGlobalDeadlineStateWithSelectedGoalDeadline } =
       useGoalContext();

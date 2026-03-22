@@ -4,18 +4,15 @@ import { useState, useEffect } from "react";
 import { GoalType } from "@/features/goal/types/Goal";
 import { TaskType } from "@/features/goal/types/Task";
 import { diffInDays } from "@/src/utilities/dateUtils";
-
-import { getGoalDeadlineAction } from "@/features/goal/actions/goals/getGoalDeadline";
 import { getTasksAction } from "../actions/tasks/getTasks";
 
 import { useGoalContext } from "./useGoalContext";
 
 type UseGoalProps = {
   goal: GoalType;
-  updatedDeadline: { goalId: string; newDeadline: string };
 };
 
-export function useGoal({ goal, updatedDeadline }: UseGoalProps) {
+export function useGoal({ goal }: UseGoalProps) {
   // state de tasks
   const [tasks, setTasks] = useState<TaskType[]>([]);
 

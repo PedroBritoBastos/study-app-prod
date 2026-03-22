@@ -27,8 +27,6 @@ export function GoalsClient({
    const {
       selectedGoal,
       selectGoal,
-      updateDeadlineState,
-      updatedDeadline,
       goals
    } = useGoalsClient(goalsProp);
 
@@ -44,7 +42,6 @@ export function GoalsClient({
                   goal={goal}
                   selectGoal={selectGoal}
                   openSidebar={openSidebar}
-                  updatedDeadline={updatedDeadline}
                />
             ))}
             <CreateGoalButton />
@@ -58,7 +55,6 @@ export function GoalsClient({
          <GoalsSidebar
             closeSidebar={closeSidebar}
             goal={selectedGoal}
-            updateDeadlineState={updateDeadlineState}
             isSidebarOpen={isSidebarOpen}
          />
       </Box>

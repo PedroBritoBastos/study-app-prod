@@ -6,23 +6,18 @@ import { Stack, Text, Flex, Input } from "@chakra-ui/react";
 import { styles } from "@/styles/datePicker/datePicker.styles";
 import { useDatePicker } from "@/features/goal/hooks/useDatePicker";
 
-interface Props {
+type Props = {
    goalId: string;
-   updateDeadlineState: (goalId: string, newDeadline: string) => void;
 }
 
 export function DatePicker({
-   goalId,
-   updateDeadlineState
+   goalId
 }: Props) {
 
    const {
       globalDeadline,
       handleDateChange
-   } = useDatePicker({
-      goalId,
-      updateDeadlineState
-   });
+   } = useDatePicker({ goalId });
 
    return (
       <Stack {...styles.container}>

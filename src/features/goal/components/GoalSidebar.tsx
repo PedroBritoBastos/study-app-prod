@@ -17,14 +17,12 @@ import { useGoalsSidebar } from "@/features/goal/hooks/useGoalSidebar";
 interface Props {
    closeSidebar: () => void;
    goal: GoalType;
-   updateDeadlineState: (goalId: string, newDeadline: string) => void;
    isSidebarOpen?: boolean;
 }
 
 export function GoalsSidebar({
    closeSidebar,
    goal,
-   updateDeadlineState,
    isSidebarOpen
 }: Props) {
 
@@ -45,7 +43,6 @@ export function GoalsSidebar({
 
             <DatePicker
                goalId={goal.id}
-               updateDeadlineState={updateDeadlineState}
             />
 
             <Stack>
