@@ -17,7 +17,7 @@ export function useGoalsSidebar(goal: GoalType, closeSidebar: () => void) {
   ).length;
 
   async function handleDeleteGoalById(e: MouseEvent<HTMLButtonElement>) {
-    e.preventDefault(); // se necessário
+    e.preventDefault();
     try {
       await deleteGoalByIdAction(goal.id);
       const updatedGlobalGoalsState = goals.filter((g) => g.id !== goal.id);
