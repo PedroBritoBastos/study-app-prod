@@ -46,18 +46,20 @@ export function Goal({
       remainingTasks,
       daysRemaining,
       isLoading,
+      deadline
    } = useGoal({
       goal,
       updatedDeadline,
    });
 
-   const { updateSelectedGoalTasks, updateSelectedGoalId } =
+   const { updateSelectedGoalTasks, updateSelectedGoalId, updateGlobalDeadlineStateWithSelectedGoalDeadline } =
       useGoalContext();
 
    function handleClick() {
       selectGoal(goal);
       updateSelectedGoalTasks(tasks);
       updateSelectedGoalId(goal.id);
+      updateGlobalDeadlineStateWithSelectedGoalDeadline(deadline);
       openSidebar();
    }
 

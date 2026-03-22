@@ -85,5 +85,6 @@ export function useGoal({ goal, updatedDeadline }: UseGoalProps) {
     remainingTasks,
     daysRemaining,
     isLoading,
+    deadline,
   };
 }

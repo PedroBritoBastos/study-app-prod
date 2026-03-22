@@ -17,7 +17,7 @@ export function DatePicker({
 }: Props) {
 
    const {
-      deadline,
+      globalDeadline,
       handleDateChange
    } = useDatePicker({
       goalId,
@@ -31,7 +31,7 @@ export function DatePicker({
             <Input
                {...styles.dateInput}
                type="date"
-               value={deadline}
+               value={globalDeadline}
                onChange={handleDateChange}
             />
          </Flex>

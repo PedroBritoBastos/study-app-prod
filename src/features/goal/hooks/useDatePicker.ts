@@ -1,5 +1,8 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import { getGoalDeadlineAction } from "@/features/goal/actions/goals/getGoalDeadline";
+import { useGoalContext } from "@/features/goal/hooks/useGoalContext";
+
 import { updateDeadlineAction } from "@/features/goal/actions/goals/updateDeadline";
 
 type UseDatePickerProps = {
@@ -11,19 +14,7 @@ export function useDatePicker({
   goalId,
   updateDeadlineState,
 }: UseDatePickerProps) {
-  const [deadline, setDeadline] = useState("");
-
-  useEffect(() => {
-    async function fetchDeadline() {
-      const response = await getGoalDeadlineAction(goalId);
-
-      const isoDate = new Date(response.deadline).toISOString().split("T")[0];
-
-      setDeadline(isoDate);
-    }
-
-    fetchDeadline();
-  }, [goalId]);
+  const { globalDeadline } = useGoalContext();
 
   async function handleDateChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newDate = e.target.value;
@@ -40,7 +31,7 @@ export function useDatePicker({
   }
 
   return {
-    deadline,
+    globalDeadline,
     handleDateChange,
   };
 }

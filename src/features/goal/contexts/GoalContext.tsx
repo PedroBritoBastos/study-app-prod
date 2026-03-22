@@ -10,11 +10,13 @@ type ContextType = {
    selectedGoalTasks: TaskType[];
    selectedGoalId: string;
    goals: GoalType[];
+   globalDeadline: string;
    updateSelectedGoalTasks: (tasks: TaskType[]) => void;
    updateSelectedGoalId: (goalId: string) => void;
    addTaskToSelectedGoal: (task: TaskType) => void;
    updateGlobalGoalsState: (goals: GoalType[]) => void;
    addGoalToGlobalGoalsState: (goal: GoalType) => void;
+   updateGlobalDeadlineStateWithSelectedGoalDeadline: (selectedGoalDeadline: string) => void
 };
 
 export const GoalContext = createContext<ContextType | null>(null);
@@ -45,6 +47,10 @@ export function GoalContextProvider({ children }: { children: React.ReactNode })
       setGoals(prev => [...prev, goal]);
    }
 
+   function updateGlobalDeadlineStateWithSelectedGoalDeadline(selectedGoalDeadline: string): void {
+      setGlobalDeadline(selectedGoalDeadline);
+   }
+
    return (
       <GoalContext.Provider value={{
          updateSelectedGoalTasks,
@@ -52,9 +58,11 @@ export function GoalContextProvider({ children }: { children: React.ReactNode })
          addTaskToSelectedGoal,
          updateGlobalGoalsState,
          addGoalToGlobalGoalsState,
+         updateGlobalDeadlineStateWithSelectedGoalDeadline,
          selectedGoalTasks,
          selectedGoalId,
-         goals
+         goals,
+         globalDeadline
       }}>
          {children}
       </GoalContext.Provider>
