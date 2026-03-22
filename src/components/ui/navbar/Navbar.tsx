@@ -26,7 +26,7 @@ export function Navbar() {
       <NavbarOption name="Metas" url="/goals">
         <Goal />
       </NavbarOption>
-      <NavbarOption name="Cronograma" url="/schedule">
+      <NavbarOption name="Cronograma" url="/schedules">
         <Calendar />
       </NavbarOption>
     </Stack>
