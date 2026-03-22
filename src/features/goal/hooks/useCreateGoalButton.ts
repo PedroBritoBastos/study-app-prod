@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useGoalContext } from "@/features/goal/hooks/useGoalContext";
 
 import { createGoalAction } from "@/src/features/goal/actions/goals/createGoal";
 
@@ -8,6 +9,9 @@ export function useCreateGoalButton() {
   const [createMode, setCreateMode] = useState(false);
   const [goalTitle, setGoalTitle] = useState("");
   const [deadline, setDeadline] = useState("");
+
+  // context
+  const { addGoalToGlobalGoalsState } = useGoalContext();
 
   async function handleCreate(e: React.MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
@@ -18,7 +22,8 @@ export function useCreateGoalButton() {
     formData.append("deadline", deadline);
 
     try {
-      await createGoalAction(formData);
+      const createdGoal = await createGoalAction(formData);
+      addGoalToGlobalGoalsState(createdGoal);
       setGoalTitle("");
       setCreateMode(false);
       setDeadline("");

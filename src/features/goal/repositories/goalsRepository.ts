@@ -1,4 +1,5 @@
 import { GoalModel } from "@/features/goal/models/Goal";
+import { GoalType } from "../types/Goal";
 import { ObjectId } from "mongoose";
 
 export async function getUserGoals(userId: string) {
@@ -24,12 +25,21 @@ export async function createGoal(
   title: string,
   deadline: Date,
   userId: string,
-) {
-  return GoalModel.create({
+): Promise<GoalType> {
+  const goal = await GoalModel.create({
     title,
     deadline,
     userId,
   });
+
+  const obj = goal.toObject();
+
+  return {
+    id: obj._id,
+    title: obj.title,
+    userId: obj.userId,
+    deadline: obj.deadline,
+  };
 }
 
 export async function getGoalByUserId(userId: string) {

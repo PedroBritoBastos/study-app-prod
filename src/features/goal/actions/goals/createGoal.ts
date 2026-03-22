@@ -3,9 +3,9 @@
 import { connectDB } from "@/src/lib/mongodb";
 import { getUserFromToken } from "@/src/lib/auth/getUserFromToken";
 import { createGoal } from "@/features/goal/repositories/goalsRepository";
-import { revalidatePath } from "next/cache";
+import { GoalType } from "../../types/Goal";
 
-export async function createGoalAction(formData: FormData): Promise<void> {
+export async function createGoalAction(formData: FormData): Promise<GoalType> {
   await connectDB();
 
   const user = await getUserFromToken();
@@ -21,6 +21,6 @@ export async function createGoalAction(formData: FormData): Promise<void> {
     throw new Error("Título ou prazo não podem estar vazios.");
   }
 
-  await createGoal(title, new Date(deadline), user.id);
-  revalidatePath("/goals");
+  const createdGoal = await createGoal(title, new Date(deadline), user.id);
+  return createdGoal;
 }
