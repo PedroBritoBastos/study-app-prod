@@ -16,7 +16,7 @@ import { Plus } from "lucide-react"
 export function PageCreateScheduleDialog() {
    return (
       <Dialog.Root size="md" placement="center" motionPreset="slide-in-bottom">
-         <Dialog.Trigger>
+         <Dialog.Trigger asChild>
             <Button
                bg={"purple.600"}
                _hover={{ bg: "purple.500" }}
