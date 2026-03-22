@@ -13,7 +13,15 @@ import {
 } from "@chakra-ui/react"
 import { Plus } from "lucide-react"
 
+import { usePageCreateScheduleDialog } from "@/features/schedule/hooks/usePageCreateScheduleDialog";
+
 export function PageCreateScheduleDialog() {
+
+   const {
+      scheduleDay,
+      handleScheduleDayInputChange
+   } = usePageCreateScheduleDialog();
+
    return (
       <Dialog.Root size="md" placement="center" motionPreset="slide-in-bottom">
          <Dialog.Trigger asChild>
@@ -47,12 +55,13 @@ export function PageCreateScheduleDialog() {
                         <Input
                            type="date"
                            w={"fit-content"}
-
-
+                           onChange={handleScheduleDayInputChange}
                         />
                      </Field.Root>
 
                      <Flex mb={5} alignItems={"center"} justifyContent={"space-between"} gap={4}>
+
+                        {/* input de criar tarefa */}
                         <Field.Root flex={3}>
                            <Field.Label
 
@@ -63,14 +72,17 @@ export function PageCreateScheduleDialog() {
                            <Input
                               type="text"
                               placeholder="nome da tarefa"
+                              disabled={scheduleDay ? false : true}
                            />
                         </Field.Root>
 
+                        {/* input de horário */}
                         <Field.Root width={"fit-content"} flex={1}>
                            <Field.Label
                            >{"Horário (opcional)"}</Field.Label>
                            <Input
                               type="time"
+                              disabled={scheduleDay ? false : true}
                            />
                         </Field.Root>
                      </Flex>
