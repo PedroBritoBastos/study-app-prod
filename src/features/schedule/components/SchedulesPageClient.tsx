@@ -1,12 +1,24 @@
 "use client";
 
 import { styles } from "@/features/schedule/styles/schedulesPageClient.styles";
+import scrollStyles from "@/styles/sidebar/scroll.module.css";
 
 import { Stack, Grid, Flex, Button, Text, IconButton } from "@chakra-ui/react"
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { PageCreateScheduleDialog } from "@/features/schedule/components/PageCreateScheduleDialog";
+import { Column } from "@/features/schedule/components/Column";
+
+import { useSchedulesPageClient } from "@/features/schedule/hooks/useSchedulesPageClient";
+import { formatDate } from "@/src/utilities/dateUtils";
 
 export function SchedulesPageClient() {
+   const {
+      year,
+      month,
+      monthName,
+      monthDays
+   } = useSchedulesPageClient();
+
    return (
       <Stack {...styles.container}>
          {/* Criar Schedule */}
@@ -28,6 +40,21 @@ export function SchedulesPageClient() {
             </Flex>
             {/* ///// */}
          </Flex>
+
+
+         {/* Grid de colunas */}
+         <Grid {...styles.grid} className={scrollStyles["scrollbar"]}>
+            {
+               monthDays.map((day, index) => {
+                  return (
+                     <Column
+                        key={index}
+                        day={formatDate(day.toISOString())}
+                        dayOfWeek={day.toLocaleDateString("pt-BR", { weekday: "long" }).slice(0, 3).toUpperCase()}
+                     />)
+               })
+            }
+         </Grid>
 
       </Stack>
    )
