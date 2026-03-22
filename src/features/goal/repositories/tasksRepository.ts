@@ -66,3 +66,7 @@ export async function getTaskStatus(taskId: string): Promise<boolean> {
   const task = await TaskModel.findById(taskId).select("isChecked").lean();
   return task.isChecked;
 }
+
+export async function deleteTasksByGoalId(goalId: string): Promise<void> {
+  await TaskModel.deleteMany({ goalId: goalId });
+}
