@@ -20,7 +20,13 @@ const ScheduleTaskSchema = new Schema({
     ref: "Schedule",
     required: true,
   },
+
+  userId: {
+    type: Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
 });
 
-export const ScheduleTask =
+export const ScheduleTaskModel =
   models.ScheduleTask || model("ScheduleTask", ScheduleTaskSchema);

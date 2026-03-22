@@ -18,4 +18,5 @@ const ScheduleSchema = new Schema({
   },
 });
 
-export const Schedule = models.Schedule || model("Schedule", ScheduleSchema);
+export const ScheduleModel =
+  models.Schedule || model("Schedule", ScheduleSchema);

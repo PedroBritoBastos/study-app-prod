@@ -7,6 +7,7 @@ export default async function SchedulesPage() {
    return (
       <>
          <Navbar />
+         <SchedulesPageClient />
       </>
    )
 }
