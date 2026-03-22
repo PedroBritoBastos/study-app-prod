@@ -18,7 +18,6 @@ export function GoalSidebarTask({
 }: Props) {
 
    const {
-      checked,
       handleDeleteTask,
       handleCheckTask,
    } = useGoalSidebarTask({
@@ -26,7 +25,7 @@ export function GoalSidebarTask({
    });
 
    return (
-      <Flex {...styles.container} {...(checked && styles.checkedContainer)}>
+      <Flex {...styles.container} {...(task.isChecked && styles.checkedContainer)}>
 
          <Text>{task.title}</Text>
 
@@ -34,7 +33,7 @@ export function GoalSidebarTask({
             <IconButton
                size="xs"
                {...styles.buttons.deleteButton}
-               {...(checked && styles.buttons.checkedStyle)}
+               {...(task.isChecked && styles.buttons.checkedStyle)}
                onClick={handleDeleteTask}
             >
                <X />
@@ -43,10 +42,10 @@ export function GoalSidebarTask({
             <IconButton
                size="xs"
                {...styles.buttons.checkButton}
-               {...(checked && styles.buttons.checkedStyle)}
+               {...(task.isChecked && styles.buttons.checkedStyle)}
                onClick={handleCheckTask}
             >
-               {checked && <Check />}
+               {task.isChecked && <Check />}
             </IconButton>
          </Flex>
 

@@ -14,8 +14,6 @@ type UseGoalSidebarTaskProps = {
 };
 
 export function useGoalSidebarTask({ task }: UseGoalSidebarTaskProps) {
-  const [checked, setChecked] = useState(false);
-
   // dados do context
   const { selectedGoalTasks, updateSelectedGoalTasks } = useGoalContext();
 
@@ -41,8 +39,7 @@ export function useGoalSidebarTask({ task }: UseGoalSidebarTaskProps) {
   // faz o goal correspondente ao goalId selecionado re-renderizar
   async function handleCheckTask() {
     try {
-      const newCheckedStatus = toggleTaskCheckedStatusAction(task.id);
-      setChecked((prev) => !prev);
+      const newCheckedStatus = await toggleTaskCheckedStatusAction(task.id);
 
       // atualizando a task no estado global
       const updatedTasks = selectedGoalTasks.map((t) => {
@@ -61,7 +58,6 @@ export function useGoalSidebarTask({ task }: UseGoalSidebarTaskProps) {
   }
 
   return {
-    checked,
     handleDeleteTask,
     handleCheckTask,
   };
