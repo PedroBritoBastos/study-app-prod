@@ -16,7 +16,9 @@ export function SchedulesPageClient() {
       year,
       month,
       monthName,
-      monthDays
+      monthDays,
+      handleNextMonth,
+      handlePreviousMonth
    } = useSchedulesPageClient();
 
    return (
@@ -30,11 +32,11 @@ export function SchedulesPageClient() {
 
             {/* month control */}
             <Flex {...styles.monthControlContainer}>
-               <IconButton size={"xs"} rounded={"full"} colorPalette={"purple"}>
+               <IconButton size={"xs"} rounded={"full"} colorPalette={"purple"} onClick={handlePreviousMonth}>
                   <ChevronLeft />
                </IconButton>
-               <Text fontSize={"2xl"}>{`mes ano`}</Text>
-               <IconButton size={"xs"} rounded={"full"} colorPalette={"purple"}>
+               <Text fontSize={"2xl"}>{`${monthName}, ${year}`}</Text>
+               <IconButton size={"xs"} rounded={"full"} colorPalette={"purple"} onClick={handleNextMonth}>
                   <ChevronRight />
                </IconButton>
             </Flex>
