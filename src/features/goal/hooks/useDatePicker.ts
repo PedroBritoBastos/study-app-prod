@@ -14,20 +14,22 @@ export function useDatePicker({
   goalId,
   updateDeadlineState,
 }: UseDatePickerProps) {
-  const { globalDeadline } = useGoalContext();
+  const { globalDeadline, updateGlobalDeadlineStateWithSelectedGoalDeadline } =
+    useGoalContext();
 
+  // refatorado
+  // atualiza o estado global da deadline
   async function handleDateChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newDate = e.target.value;
     const today = new Date().toISOString().split("T")[0];
 
     if (newDate < today) {
-      setDeadline(today);
+      updateGlobalDeadlineStateWithSelectedGoalDeadline(today);
       return;
     }
 
     await updateDeadlineAction(goalId, newDate);
-    updateDeadlineState(goalId, newDate);
-    setDeadline(newDate);
+    updateGlobalDeadlineStateWithSelectedGoalDeadline(newDate);
   }
 
   return {

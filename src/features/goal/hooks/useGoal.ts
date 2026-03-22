@@ -26,7 +26,8 @@ export function useGoal({ goal, updatedDeadline }: UseGoalProps) {
   const [deadline, setDeadline] = useState("");
 
   // dados do context
-  const { selectedGoalTasks, selectedGoalId } = useGoalContext();
+  const { selectedGoalTasks, selectedGoalId, globalDeadline } =
+    useGoalContext();
 
   // fetch tasks
   // faz fetch na primeira vez que o componente é renderizado
@@ -64,6 +65,12 @@ export function useGoal({ goal, updatedDeadline }: UseGoalProps) {
       .split("T")[0];
     setDeadline(formatedDeadline);
   }, []);
+
+  // refatorado
+  // atualiza o estado local quando o estado global é atualizado
+  useEffect(() => {
+    if (selectedGoalId === goal.id) setDeadline(globalDeadline);
+  }, [globalDeadline]);
 
   const allTasks = tasks;
   const checkedTasks = tasks.filter((task) => task.isChecked).length;
