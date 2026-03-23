@@ -12,7 +12,7 @@ const ScheduleTaskSchema = new Schema({
   },
 
   executionTime: {
-    type: Date,
+    type: String,
   },
 
   scheduleId: {

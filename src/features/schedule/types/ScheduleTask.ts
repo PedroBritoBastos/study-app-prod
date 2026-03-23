@@ -2,7 +2,7 @@ export type ScheduleTaskType = {
   id: string;
   title: string;
   isChecked: boolean;
-  executionTime: Date;
+  executionTime: string;
   scheduleId: string;
   userId: string;
 };

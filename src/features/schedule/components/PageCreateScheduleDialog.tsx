@@ -21,12 +21,14 @@ import { usePageCreateScheduleDialog } from "@/features/schedule/hooks/usePageCr
 export function PageCreateScheduleDialog() {
 
    const {
+      open,
       scheduleDay,
       isSaveDialogOpen,
       title,
       executionTime,
       invalid,
       tasks,
+      handleOpenDialog,
       handleScheduleDayInputChange,
       handleCreateSchedule,
       handleTitleInputChange,
@@ -37,17 +39,16 @@ export function PageCreateScheduleDialog() {
    } = usePageCreateScheduleDialog();
 
    return (
-      <Dialog.Root size="md" placement="center" motionPreset="slide-in-bottom">
-         <Dialog.Trigger asChild>
-            <Button
-               bg={"purple.600"}
-               _hover={{ bg: "purple.500" }}
-               mb={5}
-            >
-               <Plus />
-               Criar cronograma
-            </Button>
-         </Dialog.Trigger>
+      <Dialog.Root size="md" placement="center" motionPreset="slide-in-bottom" open={open}>
+         <Button
+            bg={"purple.600"}
+            _hover={{ bg: "purple.500" }}
+            mb={5}
+            onClick={handleOpenDialog}
+         >
+            <Plus />
+            Criar cronograma
+         </Button>
          <Portal>
             <Dialog.Backdrop />
 
@@ -59,6 +60,7 @@ export function PageCreateScheduleDialog() {
                      <Dialog.CloseTrigger asChild>
                         <CloseButton
                            size="sm"
+                           onClick={handleOpenDialog}
                         />
                      </Dialog.CloseTrigger>
                   </Dialog.Header>

@@ -26,6 +26,6 @@ export async function createScheduleTasks(
     executionTime: task.executionTime,
     scheduleId: task.scheduleId.toString(),
     isChecked: task.isChecked,
-    userId: task.userId,
+    userId: task.userId.toString(),
   }));
 }
