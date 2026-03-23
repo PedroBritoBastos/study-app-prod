@@ -45,7 +45,7 @@ export function Column({
 
          {/* create schedule dialog */}
          <ColumnCreateScheduleDialog
-            open={open}
+            openDialog={open}
             onOpenDialog={handleOpenDialog}
             day={formatDateForInput(day)}
          />
