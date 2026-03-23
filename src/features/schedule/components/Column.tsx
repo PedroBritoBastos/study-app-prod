@@ -8,6 +8,8 @@ import { ColumnTask } from "@/features/schedule/components/ColumnTask";
 
 import { useColumn } from "@/features/schedule/hooks/useColumn";
 
+import { formatDateForInput } from "@/src/utilities/dateUtils";
+
 type ColumnProps = {
    day: string;
    dayOfWeek: string;
@@ -45,6 +47,7 @@ export function Column({
          <ColumnCreateScheduleDialog
             open={open}
             onOpenDialog={handleOpenDialog}
+            day={formatDateForInput(day)}
          />
       </Stack>
    )

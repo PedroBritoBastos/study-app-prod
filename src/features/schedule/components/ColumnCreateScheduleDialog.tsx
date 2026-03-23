@@ -17,11 +17,13 @@ import { MouseEvent } from "react"
 type ColumnCreateScheduleDialogProps = {
    open: boolean;
    onOpenDialog: (e: MouseEvent<HTMLElement>) => void;
+   day: string;
 }
 
 export function ColumnCreateScheduleDialog({
    open,
-   onOpenDialog
+   onOpenDialog,
+   day
 }: ColumnCreateScheduleDialogProps) {
    return (
       <Dialog.Root size="md" placement="center" motionPreset="slide-in-bottom" open={open}>
@@ -46,8 +48,8 @@ export function ColumnCreateScheduleDialog({
                         <Input
                            type="date"
                            w={"fit-content"}
-
-
+                           value={day}
+                           disabled
                         />
                      </Field.Root>
 
