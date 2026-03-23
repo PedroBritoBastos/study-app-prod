@@ -7,11 +7,22 @@ export function useColumn() {
 
   function handleOpenDialog(e: MouseEvent<HTMLElement>): void {
     e.stopPropagation();
-    setOpen((prev) => !prev);
+    setOpen(true);
+  }
+
+  function handleCloseDialog(e: MouseEvent<HTMLElement>): void {
+    e.stopPropagation();
+    setOpen(false);
+  }
+
+  function closeDialog(): void {
+    setOpen(false);
   }
 
   return {
     open,
     handleOpenDialog,
+    handleCloseDialog,
+    closeDialog,
   };
 }

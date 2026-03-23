@@ -84,7 +84,6 @@ export function usePageCreateScheduleDialog() {
     try {
       const createdSchedule: CreateScheduleActionReturn =
         await createScheduleAction(formData);
-      console.log(createdSchedule);
     } catch (error) {
       console.log(error);
     }

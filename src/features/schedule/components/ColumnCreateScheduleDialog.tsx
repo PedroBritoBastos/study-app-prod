@@ -21,13 +21,15 @@ import { useColumnCreateScheduleDialog } from "@/features/schedule/hooks/useColu
 
 type ColumnCreateScheduleDialogProps = {
    openDialog: boolean;
-   onOpenDialog: (e: MouseEvent<HTMLElement>) => void;
+   onCloseDialog: (e: MouseEvent<HTMLElement>) => void;
+   closeDialog: () => void;
    day: string;
 }
 
 export function ColumnCreateScheduleDialog({
    openDialog,
-   onOpenDialog,
+   onCloseDialog,
+   closeDialog,
    day
 }: ColumnCreateScheduleDialogProps) {
 
@@ -43,7 +45,7 @@ export function ColumnCreateScheduleDialog({
       handleOpenSaveCreateScheduleDialog,
       handleCreateTask,
       handleRemoveTask
-   } = useColumnCreateScheduleDialog(day);
+   } = useColumnCreateScheduleDialog(day, closeDialog);
 
    return (
       <Dialog.Root size="md" placement="center" motionPreset="slide-in-bottom" open={openDialog}>
@@ -58,7 +60,7 @@ export function ColumnCreateScheduleDialog({
                      <Dialog.CloseTrigger asChild>
                         <CloseButton
                            size="sm"
-                           onClick={onOpenDialog}
+                           onClick={onCloseDialog}
                         />
                      </Dialog.CloseTrigger>
                   </Dialog.Header>

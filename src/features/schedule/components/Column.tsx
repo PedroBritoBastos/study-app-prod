@@ -22,7 +22,9 @@ export function Column({
 
    const {
       open,
-      handleOpenDialog
+      handleOpenDialog,
+      handleCloseDialog,
+      closeDialog
    } = useColumn();
 
    return (
@@ -46,7 +48,8 @@ export function Column({
          {/* create schedule dialog */}
          <ColumnCreateScheduleDialog
             openDialog={open}
-            onOpenDialog={handleOpenDialog}
+            onCloseDialog={handleCloseDialog}
+            closeDialog={closeDialog}
             day={formatDateForInput(day)}
          />
       </Stack>

@@ -7,7 +7,10 @@ import { useSaveScheduleWarning } from "@/features/schedule/hooks/useSaveSchedul
 import { createScheduleAction } from "@/features/schedule/actions/schedules/createSchedule";
 import { CreateScheduleActionReturn } from "../types/scheduleActions/CreateScheduleActionReturn";
 
-export function useColumnCreateScheduleDialog(day: string) {
+export function useColumnCreateScheduleDialog(
+  day: string,
+  closeDialog: () => void,
+) {
   const { handleOpenSaveCreateScheduleDialog, isSaveDialogOpen } =
     useSaveScheduleWarning();
 
@@ -71,7 +74,9 @@ export function useColumnCreateScheduleDialog(day: string) {
     try {
       const createdSchedule: CreateScheduleActionReturn =
         await createScheduleAction(formData);
-      console.log(createdSchedule);
+      setTitle("");
+      setTasks([]);
+      closeDialog();
     } catch (error) {
       console.log(error);
     }
