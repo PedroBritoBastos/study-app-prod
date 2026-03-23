@@ -13,13 +13,24 @@ import {
 } from "@chakra-ui/react"
 import { Plus } from "lucide-react"
 
+import { SaveScheduleWarning } from "@/features/schedule/components/SaveScheduleWarning";
+
 import { usePageCreateScheduleDialog } from "@/features/schedule/hooks/usePageCreateScheduleDialog";
 
 export function PageCreateScheduleDialog() {
 
    const {
       scheduleDay,
-      handleScheduleDayInputChange
+      isSaveDialogOpen,
+      title,
+      executionTime,
+      invalid,
+      handleScheduleDayInputChange,
+      handleCreateSchedule,
+      handleTitleInputChange,
+      handleExecutionTimeInputChange,
+      handleOpenSaveCreateScheduleDialog,
+      handleCreateTask
    } = usePageCreateScheduleDialog();
 
    return (
@@ -62,27 +73,33 @@ export function PageCreateScheduleDialog() {
                      <Flex mb={5} alignItems={"center"} justifyContent={"space-between"} gap={4}>
 
                         {/* input de criar tarefa */}
-                        <Field.Root flex={3}>
+                        <Field.Root flex={3} invalid={invalid}>
                            <Field.Label
-
+                              color={scheduleDay ? "black" : "gray.200"}
                            >
                               Criar tarefa
 
                            </Field.Label>
+                           <Field.ErrorText>Este campo não pode estar vazio.</Field.ErrorText>
                            <Input
                               type="text"
                               placeholder="nome da tarefa"
                               disabled={scheduleDay ? false : true}
+                              onChange={handleTitleInputChange}
+                              value={title}
                            />
                         </Field.Root>
 
                         {/* input de horário */}
                         <Field.Root width={"fit-content"} flex={1}>
                            <Field.Label
+                              color={scheduleDay ? "black" : "gray.200"}
                            >{"Horário (opcional)"}</Field.Label>
                            <Input
                               type="time"
                               disabled={scheduleDay ? false : true}
+                              onChange={handleExecutionTimeInputChange}
+                              value={executionTime}
                            />
                         </Field.Root>
                      </Flex>
@@ -98,6 +115,8 @@ export function PageCreateScheduleDialog() {
                            _hover={{ bg: "purple.500" }}
                            size="sm"
                            flex={1}
+                           disabled={scheduleDay ? false : true}
+                           onClick={handleCreateTask}
                         >
                            Adicionar tarefa
                         </Button>
@@ -110,6 +129,8 @@ export function PageCreateScheduleDialog() {
                            size="sm"
                            flex={1}
                            boxShadow={"md"}
+                           onClick={handleCreateSchedule}
+                           disabled={scheduleDay ? false : true}
                         >
                            Salvar
                         </Button>
@@ -125,6 +146,12 @@ export function PageCreateScheduleDialog() {
                </Dialog.Content>
             </Dialog.Positioner>
          </Portal>
+
+         {/* Warning caso não tenham tarefas criadas ao tentar salvar */}
+         <SaveScheduleWarning
+            open={isSaveDialogOpen}
+            onClose={handleOpenSaveCreateScheduleDialog}
+         />
       </Dialog.Root >
    )
 }
