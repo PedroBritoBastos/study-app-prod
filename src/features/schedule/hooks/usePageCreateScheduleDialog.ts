@@ -59,10 +59,16 @@ export function usePageCreateScheduleDialog() {
 
   function handleCreateSchedule(e: MouseEvent<HTMLButtonElement>): void {
     e.stopPropagation();
+
     if (tasks.length === 0) {
       handleOpenSaveCreateScheduleDialog();
       return;
     }
+
+    // criando formData para o backend
+    const formData = new FormData();
+    formData.append("scheduleDay", scheduleDay);
+    formData.append("tasks", JSON.stringify(tasks));
   }
 
   return {
