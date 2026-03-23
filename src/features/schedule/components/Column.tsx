@@ -3,6 +3,11 @@
 import { styles } from "@/features/schedule/styles/column.styles";
 import { Stack, Text, Box, Separator, Center, Flex } from "@chakra-ui/react"
 
+import { ColumnCreateScheduleDialog } from "@/features/schedule/components/ColumnCreateScheduleDialog";
+import { ColumnTask } from "@/features/schedule/components/ColumnTask";
+
+import { useColumn } from "@/features/schedule/hooks/useColumn";
+
 type ColumnProps = {
    day: string;
    dayOfWeek: string;
@@ -12,8 +17,14 @@ export function Column({
    day,
    dayOfWeek
 }: ColumnProps) {
+
+   const {
+      open,
+      handleOpenDialog
+   } = useColumn();
+
    return (
-      <Stack {...styles.container}>
+      <Stack {...styles.container} onClick={handleOpenDialog}>
          {/* date container */}
          <Box {...styles.dateContainer}>
             <Separator {...styles.separator} />
@@ -22,6 +33,19 @@ export function Column({
             <Box {...styles.decorativeCircle} {...styles.decorativeCircleRight}></Box>
          </Box>
          <Text {...styles.dayOfWeek}>{dayOfWeek}</Text>
+
+         {/* schedule tasks container */}
+         <Stack {...styles.scheduleTasksContainer}
+            cursor={"pointer"}
+            _hover={{ bg: "gray.100" }}
+         >
+         </Stack>
+
+         {/* create schedule dialog */}
+         <ColumnCreateScheduleDialog
+            open={open}
+            onOpenDialog={handleOpenDialog}
+         />
       </Stack>
    )
 }

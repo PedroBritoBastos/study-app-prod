@@ -12,13 +12,21 @@ import {
    Span
 } from "@chakra-ui/react"
 import { Plus } from "lucide-react"
+import { MouseEvent } from "react"
 
-export function ColumnCreateScheduleDialog() {
+type ColumnCreateScheduleDialogProps = {
+   open: boolean;
+   onOpenDialog: (e: MouseEvent<HTMLElement>) => void;
+}
+
+export function ColumnCreateScheduleDialog({
+   open,
+   onOpenDialog
+}: ColumnCreateScheduleDialogProps) {
    return (
-      <Dialog.Root size="md" placement="center" motionPreset="slide-in-bottom">
+      <Dialog.Root size="md" placement="center" motionPreset="slide-in-bottom" open={open}>
          <Portal>
             <Dialog.Backdrop />
-
             <Dialog.Positioner >
                {/* adicionar info */}
                <Dialog.Content >
@@ -27,6 +35,7 @@ export function ColumnCreateScheduleDialog() {
                      <Dialog.CloseTrigger asChild>
                         <CloseButton
                            size="sm"
+                           onClick={onOpenDialog}
                         />
                      </Dialog.CloseTrigger>
                   </Dialog.Header>
