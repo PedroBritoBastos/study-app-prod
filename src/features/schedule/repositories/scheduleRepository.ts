@@ -17,6 +17,6 @@ export async function createSchedule(
     id: obj._id.toString(),
     scheduleDay: obj.scheduleDay,
     createdAt: obj.createdAt,
-    userId: obj.userId,
+    userId: obj.userId.toString(),
   };
 }
