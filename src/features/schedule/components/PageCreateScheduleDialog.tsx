@@ -14,6 +14,7 @@ import {
 import { Plus } from "lucide-react"
 
 import { SaveScheduleWarning } from "@/features/schedule/components/SaveScheduleWarning";
+import { CreateScheduleDialogTask } from "@/features/schedule/components/CreateScheduleDialogTask";
 
 import { usePageCreateScheduleDialog } from "@/features/schedule/hooks/usePageCreateScheduleDialog";
 
@@ -25,12 +26,14 @@ export function PageCreateScheduleDialog() {
       title,
       executionTime,
       invalid,
+      tasks,
       handleScheduleDayInputChange,
       handleCreateSchedule,
       handleTitleInputChange,
       handleExecutionTimeInputChange,
       handleOpenSaveCreateScheduleDialog,
-      handleCreateTask
+      handleCreateTask,
+      handleRemoveTask
    } = usePageCreateScheduleDialog();
 
    return (
@@ -78,7 +81,6 @@ export function PageCreateScheduleDialog() {
                               color={scheduleDay ? "black" : "gray.200"}
                            >
                               Criar tarefa
-
                            </Field.Label>
                            <Field.ErrorText>Este campo não pode estar vazio.</Field.ErrorText>
                            <Input
@@ -140,6 +142,15 @@ export function PageCreateScheduleDialog() {
 
                      {/* tarefas adicionadas */}
                      <Stack h={"300px"} bg={"gray.200"} borderRadius={"md"} p={3} overflowY={"auto"}>
+                        {tasks.map((task, index) => (
+                           <CreateScheduleDialogTask
+                              key={index}
+                              title={task.title}
+                              executionTime={task.executionTime}
+                              taskIndex={index}
+                              onRemoveTask={handleRemoveTask}
+                           />
+                        ))}
                      </Stack>
                   </Dialog.Body>
 

@@ -44,6 +44,17 @@ export function usePageCreateScheduleDialog() {
       setInvalid(true);
       return;
     }
+
+    setTasks((prev) => [
+      ...prev,
+      { title: title, executionTime: executionTime },
+    ]);
+    setTitle("");
+    setExecutionTime("");
+  }
+
+  function handleRemoveTask(taskIndex: number): void {
+    setTasks((prev) => prev.filter((_, index) => index !== taskIndex));
   }
 
   function handleCreateSchedule(e: MouseEvent<HTMLButtonElement>): void {
@@ -60,11 +71,13 @@ export function usePageCreateScheduleDialog() {
     title,
     executionTime,
     invalid,
+    tasks,
     handleScheduleDayInputChange,
     handleCreateSchedule,
     handleTitleInputChange,
     handleExecutionTimeInputChange,
     handleOpenSaveCreateScheduleDialog,
     handleCreateTask,
+    handleRemoveTask,
   };
 }
