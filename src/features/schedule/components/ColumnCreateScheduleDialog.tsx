@@ -9,9 +9,7 @@ import {
    Input,
    Stack,
    Flex,
-   Span
 } from "@chakra-ui/react"
-import { Plus } from "lucide-react"
 import { MouseEvent } from "react"
 
 import { SaveScheduleWarning } from "@/features/schedule/components/SaveScheduleWarning";

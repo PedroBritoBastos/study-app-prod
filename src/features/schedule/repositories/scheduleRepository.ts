@@ -20,3 +20,18 @@ export async function createSchedule(
     userId: obj.userId.toString(),
   };
 }
+
+export async function getUserSchedules(
+  userId: string,
+): Promise<ScheduleType[]> {
+  const schedules = await ScheduleModel.find({ userId: userId });
+
+  return schedules.map((schedule) => {
+    return {
+      id: schedule._id.toString(),
+      scheduleDay: schedule.scheduleDay,
+      createdAt: schedule.createdAt,
+      userId: schedule.userId.toString(),
+    };
+  });
+}

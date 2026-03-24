@@ -29,3 +29,19 @@ export async function createScheduleTasks(
     userId: task.userId.toString(),
   }));
 }
+
+export async function getUserScheduleTasks(
+  userId: string,
+): Promise<ScheduleTaskType[]> {
+  const scheduleTasks = await ScheduleTaskModel.find({ userId: userId });
+  return scheduleTasks.map((scheduleTask) => {
+    return {
+      id: scheduleTask._id.toString(),
+      title: scheduleTask.title,
+      isChecked: scheduleTask.isChecked,
+      executionTime: scheduleTask.executionTime,
+      scheduleId: scheduleTask.scheduleId.toString(),
+      userId: scheduleTask.userId.toString(),
+    };
+  });
+}
