@@ -1,14 +1,20 @@
 "use client";
 
 import { useState, MouseEvent } from "react";
+import { useRouter } from "next/navigation";
+
 import { SchedulesDataType } from "../types/GlobalScheduleData";
 
 export function useColumn(schedule: SchedulesDataType | null | undefined) {
+  const router = useRouter();
+
   const [open, setOpen] = useState<boolean>(false);
 
   function handleOpenDialog(e: MouseEvent<HTMLElement>): void {
     e.stopPropagation();
-    if (schedule) return;
+    if (schedule) {
+      router.replace(`/schedules/${schedule.schedule.id}`);
+    }
     setOpen(true);
   }
 
