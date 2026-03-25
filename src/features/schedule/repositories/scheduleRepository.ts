@@ -35,3 +35,16 @@ export async function getUserSchedules(
     };
   });
 }
+
+export async function getScheduleById(
+  scheduleId: string,
+): Promise<ScheduleType> {
+  const schedule = await ScheduleModel.findById(scheduleId);
+
+  return {
+    id: schedule._id.toString(),
+    scheduleDay: schedule.scheduleDay,
+    createdAt: schedule.createdAt,
+    userId: schedule.userId.toString(),
+  };
+}

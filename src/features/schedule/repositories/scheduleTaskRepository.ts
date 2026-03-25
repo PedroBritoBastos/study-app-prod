@@ -45,3 +45,22 @@ export async function getUserScheduleTasks(
     };
   });
 }
+
+export async function getScheduleTasksByScheduleId(
+  scheduleId: string,
+): Promise<ScheduleTaskType[]> {
+  const scheduleTasks = await ScheduleTaskModel.find({
+    scheduleId: scheduleId,
+  });
+
+  return scheduleTasks.map((scheduleTask) => {
+    return {
+      id: scheduleTask._id.toString(),
+      title: scheduleTask.title,
+      isChecked: scheduleTask.isChecked,
+      executionTime: scheduleTask.executionTime,
+      scheduleId: scheduleTask.scheduleId.toString(),
+      userId: scheduleTask.userId.toString(),
+    };
+  });
+}

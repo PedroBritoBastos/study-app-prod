@@ -11,7 +11,14 @@ import { Column } from "@/features/schedule/components/Column";
 import { useSchedulesPageClient } from "@/features/schedule/hooks/useSchedulesPageClient";
 import { formatDate } from "@/src/utilities/dateUtils";
 
-export function SchedulesPageClient() {
+import { ScheduleType } from "../types/Schedule";
+import { ScheduleTaskType } from "../types/ScheduleTask";
+
+type SchedulesPageClientProps = {
+   data: { schedule: ScheduleType, currentScheduleTasks: ScheduleTaskType[] }[];
+}
+
+export function SchedulesPageClient({ data }: SchedulesPageClientProps) {
    const {
       year,
       month,
@@ -20,6 +27,8 @@ export function SchedulesPageClient() {
       handleNextMonth,
       handlePreviousMonth
    } = useSchedulesPageClient();
+
+   console.log(data)
 
    return (
       <Stack {...styles.container}>

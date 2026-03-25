@@ -15,14 +15,16 @@ export default async function SchedulesPage() {
    // para cada schedule, retornar as tasks que possuem scheduleId igual ao id da schedule
    const data = schedules.map((schedule) => {
       // cria um array com todas as tasks que pertencem ao scheduleId
-      const currentScheduleTasks = scheduleTasks.map(scheduleTask => scheduleTask.id === schedule.id);
+      const currentScheduleTasks = scheduleTasks.filter(scheduleTask => {
+         if (scheduleTask.scheduleId === schedule.id) return scheduleTask;
+      });
       return { schedule, currentScheduleTasks }
    })
 
    return (
       <>
          <Navbar />
-         <SchedulesPageClient />
+         <SchedulesPageClient data={data} />
       </>
    )
 }
