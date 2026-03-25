@@ -1,5 +1,4 @@
 import { ScheduleModel } from "../models/Schedule";
-import { ObjectId } from "mongoose";
 import { ScheduleType } from "../types/Schedule";
 
 export async function createSchedule(
@@ -47,4 +46,8 @@ export async function getScheduleById(
     createdAt: schedule.createdAt,
     userId: schedule.userId.toString(),
   };
+}
+
+export async function deleteScheduleById(scheduleId: string): Promise<void> {
+  await ScheduleModel.findByIdAndDelete(scheduleId);
 }

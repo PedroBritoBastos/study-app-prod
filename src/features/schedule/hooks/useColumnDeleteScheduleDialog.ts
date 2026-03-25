@@ -1,24 +1,40 @@
 "use client";
 
 import { useState } from "react";
+import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
 
-export function useColumnDeleteScheduleDialog() {
+import { deleteScheduleByIdAction } from "@/features/schedule/actions/schedules/deleteScheduleById";
+
+export function useColumnDeleteScheduleDialog(scheduleId: string) {
   const [open, setOpen] = useState(false);
 
-  function handleOpen(e?: React.MouseEvent) {
-    e?.stopPropagation();
+  const { removeScheduleFromGlobalSchedulesData } = useScheduleContext();
+
+  function handleOpen(e: React.MouseEvent): void {
+    e.stopPropagation();
     setOpen(true);
   }
 
-  function handleClose(e?: React.MouseEvent) {
-    e?.stopPropagation();
+  function handleClose(e: React.MouseEvent): void {
+    e.stopPropagation();
     setOpen(false);
+  }
+
+  async function handleDelete(e: React.MouseEvent): Promise<void> {
+    e.stopPropagation();
+    try {
+      await deleteScheduleByIdAction(scheduleId);
+      removeScheduleFromGlobalSchedulesData(scheduleId);
+      setOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return {
     open,
-    setOpen,
     handleOpen,
     handleClose,
+    handleDelete,
   };
 }

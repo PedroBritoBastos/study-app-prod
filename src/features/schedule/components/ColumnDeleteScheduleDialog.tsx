@@ -11,21 +11,21 @@ import { SchedulesDataType } from "../types/GlobalScheduleData";
 type ColumnDeleteScheduleDialogProps = {
    scheduleDay: string;
    numberOfTasks: number;
+   scheduleId: string;
 }
 
-export function ColumnDeleteScheduleDialog({ scheduleDay, numberOfTasks }: ColumnDeleteScheduleDialogProps) {
+export function ColumnDeleteScheduleDialog({ scheduleDay, numberOfTasks, scheduleId }: ColumnDeleteScheduleDialogProps) {
 
    const {
       open,
-      setOpen,
       handleOpen,
-      handleClose
-   } = useColumnDeleteScheduleDialog();
+      handleClose,
+      handleDelete
+   } = useColumnDeleteScheduleDialog(scheduleId);
 
    return (
       <Dialog.Root
          open={open}
-         onOpenChange={(details) => setOpen(details.open)}
          closeOnInteractOutside={false}
       >
          {/* botão que abre */}
@@ -72,10 +72,7 @@ export function ColumnDeleteScheduleDialog({ scheduleDay, numberOfTasks }: Colum
                         <Button
                            colorPalette={"purple"}
                            size={"sm"}
-                           onClick={(e) => {
-                              e.stopPropagation();
-                              setOpen(false);
-                           }}
+                           onClick={handleDelete}
                         >
                            Excluir
                         </Button>

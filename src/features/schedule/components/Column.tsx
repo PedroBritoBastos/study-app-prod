@@ -62,6 +62,7 @@ export function Column({
                      <ColumnDeleteScheduleDialog
                         scheduleDay={day}
                         numberOfTasks={schedule.currentScheduleTasks.length}
+                        scheduleId={schedule.schedule.id}
                      />
                      <Center {...styles.numberOfTasksIndicator}>
                         {schedule.currentScheduleTasks.length}

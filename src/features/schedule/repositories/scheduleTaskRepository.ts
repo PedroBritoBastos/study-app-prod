@@ -64,3 +64,9 @@ export async function getScheduleTasksByScheduleId(
     };
   });
 }
+
+export async function deleteScheduleTasksByScheduleId(
+  scheduleId: string,
+): Promise<void> {
+  await ScheduleTaskModel.deleteMany({ scheduleId: scheduleId });
+}
