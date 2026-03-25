@@ -1,25 +1,24 @@
 "use client";
-import { Stack, Grid, Flex, Button, Text, IconButton } from "@chakra-ui/react";
 
 import { useState, useEffect } from "react";
 import { getDaysOfMonth, formatDate } from "@/src/utilities/dateUtils";
-import { ScheduleTaskModel } from "../models/ScheduleTask";
-import { ScheduleType } from "../types/Schedule";
 
 import { MouseEvent } from "react";
-import { ScheduleTaskType } from "../types/ScheduleTask";
+import { SchedulesDataType } from "../types/GlobalScheduleData";
 
-type DataType = {
-  schedule: ScheduleType;
-  currentScheduleTasks: ScheduleTaskType[];
-};
+import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
 
-export function useSchedulesPageClient(serverData: DataType[]) {
+export function useSchedulesPageClient(serverData: SchedulesDataType[]) {
+  const { globalSchedulesData, updateGlobalSchedulesData } =
+    useScheduleContext();
+
   // data atual
   const [currentDate, setCurrentDate] = useState(new Date());
 
-  // schedules data
-  const [data, setData] = useState<DataType[]>(serverData);
+  // atualiza o estado global
+  useEffect(() => {
+    updateGlobalSchedulesData(serverData);
+  }, []);
 
   // dia, ano e mes que será apresentado na coluna
   const year: number = currentDate.getFullYear();
@@ -50,10 +49,9 @@ export function useSchedulesPageClient(serverData: DataType[]) {
 
   return {
     year,
-    month,
     monthName,
     monthDays,
-    data,
+    globalSchedulesData,
     handleNextMonth,
     handlePreviousMonth,
   };

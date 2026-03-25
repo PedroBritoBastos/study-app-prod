@@ -3,7 +3,7 @@
 import { useContext } from "react";
 import { ScheduleContext } from "@/features/schedule/contexts/ScheduleContext";
 
-export function useGoalContext() {
+export function useScheduleContext() {
   const context = useContext(ScheduleContext);
 
   if (!context) {

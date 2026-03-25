@@ -11,20 +11,18 @@ import { Column } from "@/features/schedule/components/Column";
 import { useSchedulesPageClient } from "@/features/schedule/hooks/useSchedulesPageClient";
 import { formatDate } from "@/src/utilities/dateUtils";
 
-import { ScheduleType } from "../types/Schedule";
-import { ScheduleTaskType } from "../types/ScheduleTask";
+import { SchedulesDataType } from "../types/GlobalScheduleData";
 
 type SchedulesPageClientProps = {
-   serverData: { schedule: ScheduleType, currentScheduleTasks: ScheduleTaskType[] }[];
+   serverData: SchedulesDataType[];
 }
 
 export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
    const {
       year,
-      month,
       monthName,
       monthDays,
-      data,
+      globalSchedulesData,
       handleNextMonth,
       handlePreviousMonth
    } = useSchedulesPageClient(serverData);
@@ -58,7 +56,7 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
                monthDays.map((day, index) => {
 
                   // verificando se o dia da coluna possui algum cronograma correspondente
-                  const schedule = data.find((item) => formatDate(item.schedule.scheduleDay.toISOString()) === formatDate(day.toISOString()));
+                  const schedule = globalSchedulesData.find((item) => formatDate(item.schedule.scheduleDay.toISOString()) === formatDate(day.toISOString()));
 
                   return (
                      <Column

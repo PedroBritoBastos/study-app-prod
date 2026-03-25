@@ -10,13 +10,12 @@ import { useColumn } from "@/features/schedule/hooks/useColumn";
 
 import { formatDateForInput } from "@/src/utilities/dateUtils";
 
-import { ScheduleType } from "../types/Schedule";
-import { ScheduleTaskType } from "../types/ScheduleTask";
+import { SchedulesDataType } from "../types/GlobalScheduleData";
 
 type ColumnProps = {
    day: string;
    dayOfWeek: string;
-   schedule?: { schedule: ScheduleType, currentScheduleTasks: ScheduleTaskType[] } | null;
+   schedule?: SchedulesDataType | null;
 }
 
 export function Column({
@@ -24,9 +23,6 @@ export function Column({
    dayOfWeek,
    schedule
 }: ColumnProps) {
-
-   console.log("dia da coluna: ", day)
-   console.log("schedule: ", schedule)
 
    const {
       open,
