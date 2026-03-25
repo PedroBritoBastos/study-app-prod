@@ -10,15 +10,23 @@ import { useColumn } from "@/features/schedule/hooks/useColumn";
 
 import { formatDateForInput } from "@/src/utilities/dateUtils";
 
+import { ScheduleType } from "../types/Schedule";
+import { ScheduleTaskType } from "../types/ScheduleTask";
+
 type ColumnProps = {
    day: string;
    dayOfWeek: string;
+   schedule?: { schedule: ScheduleType, currentScheduleTasks: ScheduleTaskType[] } | null;
 }
 
 export function Column({
    day,
-   dayOfWeek
+   dayOfWeek,
+   schedule
 }: ColumnProps) {
+
+   console.log("dia da coluna: ", day)
+   console.log("schedule: ", schedule)
 
    const {
       open,
@@ -43,6 +51,23 @@ export function Column({
             cursor={"pointer"}
             _hover={{ bg: "gray.100" }}
          >
+            {schedule && schedule.currentScheduleTasks.map((task) => (
+               <ColumnTask
+                  key={task.id}
+                  title={task.title}
+               />
+            ))}
+
+            {/* indicador de quantidade de tasks */}
+            {
+               schedule && (
+                  <Flex {...styles.numberOfTasksIndicatorContainer}>
+                     <Center {...styles.numberOfTasksIndicator}>
+                        {schedule.currentScheduleTasks.length}
+                     </Center>
+                  </Flex>
+               )
+            }
          </Stack>
 
          {/* create schedule dialog */}

@@ -1,4 +1,4 @@
-const taskStyles = {
+export const styles = {
   task: {
     color: "gray.600",
     fontSize: "xs",

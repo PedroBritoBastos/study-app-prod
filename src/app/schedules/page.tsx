@@ -24,7 +24,7 @@ export default async function SchedulesPage() {
    return (
       <>
          <Navbar />
-         <SchedulesPageClient data={data} />
+         <SchedulesPageClient serverData={data} />
       </>
    )
 }

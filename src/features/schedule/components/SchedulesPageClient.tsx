@@ -15,20 +15,19 @@ import { ScheduleType } from "../types/Schedule";
 import { ScheduleTaskType } from "../types/ScheduleTask";
 
 type SchedulesPageClientProps = {
-   data: { schedule: ScheduleType, currentScheduleTasks: ScheduleTaskType[] }[];
+   serverData: { schedule: ScheduleType, currentScheduleTasks: ScheduleTaskType[] }[];
 }
 
-export function SchedulesPageClient({ data }: SchedulesPageClientProps) {
+export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
    const {
       year,
       month,
       monthName,
       monthDays,
+      data,
       handleNextMonth,
       handlePreviousMonth
-   } = useSchedulesPageClient();
-
-   console.log(data)
+   } = useSchedulesPageClient(serverData);
 
    return (
       <Stack {...styles.container}>
@@ -57,11 +56,16 @@ export function SchedulesPageClient({ data }: SchedulesPageClientProps) {
          <Grid {...styles.grid} className={scrollStyles["scrollbar"]}>
             {
                monthDays.map((day, index) => {
+
+                  // verificando se o dia da coluna possui algum cronograma correspondente
+                  const schedule = data.find((item) => formatDate(item.schedule.scheduleDay.toISOString()) === formatDate(day.toISOString()));
+
                   return (
                      <Column
                         key={index}
                         day={formatDate(day.toISOString())}
                         dayOfWeek={day.toLocaleDateString("pt-BR", { weekday: "long" }).slice(0, 3).toUpperCase()}
+                        schedule={schedule ? schedule : null}
                      />)
                })
             }
