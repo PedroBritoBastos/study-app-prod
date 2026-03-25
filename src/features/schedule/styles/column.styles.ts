@@ -81,6 +81,6 @@ export const styles = {
     right: 4,
     left: 4,
     justifyContent: "space-between",
-    zIndex: 20,
+    zIndex: 50,
   },
 };

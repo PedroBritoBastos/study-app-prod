@@ -4,6 +4,7 @@ import { styles } from "@/features/schedule/styles/column.styles";
 import { Stack, Text, Box, Separator, Center, Flex } from "@chakra-ui/react"
 
 import { ColumnCreateScheduleDialog } from "@/features/schedule/components/ColumnCreateScheduleDialog";
+import { ColumnDeleteScheduleDialog } from "@/features/schedule/components/ColumnDeleteScheduleDialog";
 import { ColumnTask } from "@/features/schedule/components/ColumnTask";
 
 import { useColumn } from "@/features/schedule/hooks/useColumn";
@@ -29,7 +30,7 @@ export function Column({
       handleOpenDialog,
       handleCloseDialog,
       closeDialog
-   } = useColumn();
+   } = useColumn(schedule);
 
    return (
       <Stack {...styles.container} onClick={handleOpenDialog}>
@@ -54,10 +55,14 @@ export function Column({
                />
             ))}
 
-            {/* indicador de quantidade de tasks */}
+            {/* indicador de quantidade de tasks e botao de excluir */}
             {
                schedule && (
                   <Flex {...styles.numberOfTasksIndicatorContainer}>
+                     <ColumnDeleteScheduleDialog
+                        scheduleDay={day}
+                        numberOfTasks={schedule.currentScheduleTasks.length}
+                     />
                      <Center {...styles.numberOfTasksIndicator}>
                         {schedule.currentScheduleTasks.length}
                      </Center>
