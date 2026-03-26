@@ -9,7 +9,15 @@ export function useSchedulePageTasks(currentScheduleTasks: ScheduleTaskType[]) {
   const [scheduleTasks, setScheduleTasks] =
     useState<ScheduleTaskType[]>(currentScheduleTasks);
 
+  function handleDeleteTask(taskId: string): void {
+    setScheduleTasks((prev) => {
+      const newState = prev.filter((task) => task.id !== taskId);
+      return newState;
+    });
+  }
+
   return {
     scheduleTasks,
+    handleDeleteTask,
   };
 }

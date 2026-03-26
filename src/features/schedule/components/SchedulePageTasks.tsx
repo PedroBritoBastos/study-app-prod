@@ -15,7 +15,7 @@ type SchedulePageProps = {
 }
 
 export function SchedulePageTasks({ currentScheduleTasks }: SchedulePageProps) {
-   const { scheduleTasks } = useSchedulePageTasks(currentScheduleTasks);
+   const { scheduleTasks, handleDeleteTask } = useSchedulePageTasks(currentScheduleTasks);
 
    return (
       <Stack
@@ -23,10 +23,11 @@ export function SchedulePageTasks({ currentScheduleTasks }: SchedulePageProps) {
          className={ScrollStyles["scrollbar"]}
       >
          {
-            currentScheduleTasks.map((scheduleTask) => (
+            scheduleTasks.map((scheduleTask) => (
                <SchedulePageTask
                   key={scheduleTask.id}
                   scheduleTask={scheduleTask}
+                  onDeleteTask={handleDeleteTask}
                />
             ))
          }

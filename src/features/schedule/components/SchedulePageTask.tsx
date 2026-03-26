@@ -5,6 +5,7 @@ import { styles } from "@/features/schedule/styles/schedulePageTask.styles";
 import { Flex, Text, Icon } from "@chakra-ui/react";
 import { Clock } from "lucide-react";
 import { SchedulePageTaskCheckButton } from "@/features/schedule/components/SchedulePageTaskCheckButton";
+import { SchedulePageTaskDeleteButton } from "@/features/schedule/components/SchedulePageTaskDeleteButton";
 
 import { formatTime } from "@/src/utilities/dateUtils";
 import { ScheduleTaskType } from "@/features/schedule/types/ScheduleTask";
@@ -13,9 +14,10 @@ import { useSchedulePageTask } from "@/features/schedule/hooks/useSchedulePageTa
 
 type SchedulePageTaskProps = {
    scheduleTask: ScheduleTaskType;
+   onDeleteTask: (taskId: string) => void;
 }
 
-export function SchedulePageTask({ scheduleTask }: SchedulePageTaskProps) {
+export function SchedulePageTask({ scheduleTask, onDeleteTask }: SchedulePageTaskProps) {
    const {
       isChecked,
       handleCheckTask
@@ -39,6 +41,11 @@ export function SchedulePageTask({ scheduleTask }: SchedulePageTaskProps) {
             {/* options */}
             <Flex {...styles.optionsContainer}>
                <SchedulePageTaskCheckButton onCheck={handleCheckTask} />
+               <SchedulePageTaskDeleteButton
+                  isChecked={isChecked}
+                  taskId={scheduleTask.id}
+                  onDeleteTask={onDeleteTask}
+               />
             </Flex>
          </Flex>
 
