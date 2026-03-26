@@ -1,11 +1,13 @@
 "use server";
 
-import ScrollStyles from "@/styles/sidebar/scroll.module.css"
 import { getScheduleByIdAction } from "@/src/features/schedule/actions/schedules/getScheduleById";
 
 import { Navbar } from "@/src/components/ui/navbar/Navbar";
+import { SchedulePageTasks } from "@/src/features/schedule/components/SchedulePageTasks";
+
 import { formatDate } from "@/src/utilities/dateUtils";
 import { Flex, Stack, Text, Box } from "@chakra-ui/react";
+
 
 type SchedulePageProps = {
    params: Promise<{ id: string }>
@@ -14,7 +16,7 @@ type SchedulePageProps = {
 export default async function SchedulePage({ params }: SchedulePageProps) {
    const { id } = await params;
    const schedule = await getScheduleByIdAction(id);
-   console.log(schedule)
+
    return (
       <>
          <Navbar />
@@ -60,16 +62,11 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
             >
                Tarefas
             </Text>
+
             {/* em andamento */}
-            <Stack
-               flex={1}
-               gap={4}
-               px={6}
-               minH={0}
-               overflowY={"auto"}
-               className={ScrollStyles["scrollbar"]}
-            >
-            </Stack>
+            <SchedulePageTasks
+               currentScheduleTasks={schedule.currentScheduleTasks}
+            />
          </Box>
       </>
    )
