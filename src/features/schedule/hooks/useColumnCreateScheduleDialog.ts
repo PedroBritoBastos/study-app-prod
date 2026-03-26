@@ -1,6 +1,6 @@
 "use client";
 
-import { MouseEvent, ChangeEvent, useState } from "react";
+import { useState } from "react";
 
 import { useSaveScheduleWarning } from "@/features/schedule/hooks/useSaveScheduleWarning";
 import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
@@ -25,19 +25,21 @@ export function useColumnCreateScheduleDialog(
     { title: string; executionTime: string }[]
   >([]);
 
-  function handleTitleInputChange(e: ChangeEvent<HTMLInputElement>): void {
+  function handleTitleInputChange(
+    e: React.ChangeEvent<HTMLInputElement>,
+  ): void {
     e.stopPropagation();
     setTitle(e.target.value);
   }
 
   function handleExecutionTimeInputChange(
-    e: ChangeEvent<HTMLInputElement>,
+    e: React.ChangeEvent<HTMLInputElement>,
   ): void {
     e.stopPropagation();
     setExecutionTime(e.target.value);
   }
 
-  function handleCreateTask(e: MouseEvent<HTMLButtonElement>): void {
+  function handleCreateTask(e: React.MouseEvent<HTMLButtonElement>): void {
     e.stopPropagation();
 
     setInvalid(false);
@@ -59,7 +61,7 @@ export function useColumnCreateScheduleDialog(
   }
 
   async function handleCreateSchedule(
-    e: MouseEvent<HTMLButtonElement>,
+    e: React.MouseEvent<HTMLButtonElement>,
   ): Promise<void> {
     e.stopPropagation();
 

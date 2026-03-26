@@ -31,7 +31,7 @@ export function SchedulePageTask({ scheduleTask, onDeleteTask }: SchedulePageTas
             <Icon size={"md"}>
                <Clock />
             </Icon>
-            <Text>{scheduleTask.executionTime ? formatTime(new Date(scheduleTask.executionTime)) : "--:--"}</Text>
+            <Text>{scheduleTask.executionTime ? scheduleTask.executionTime : "--:--"}</Text>
          </Flex>
 
          <Flex {...styles.taskContainer}>

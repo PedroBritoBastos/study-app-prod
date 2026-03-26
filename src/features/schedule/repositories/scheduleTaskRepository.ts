@@ -80,3 +80,27 @@ export async function updateScheduleTaskStatus(taskId: string): Promise<void> {
   task.isChecked = !task.isChecked;
   await task.save();
 }
+
+export async function createScheduleTask(
+  scheduleId: string,
+  title: string,
+  executionTime: string,
+  userId: string,
+): Promise<ScheduleTaskType> {
+  const scheduleTask = await ScheduleTaskModel.create({
+    title,
+    isChecked: false,
+    executionTime,
+    scheduleId,
+    userId,
+  });
+
+  return {
+    id: scheduleTask._id.toString(),
+    title: scheduleTask.title,
+    isChecked: scheduleTask.isChecked,
+    executionTime: scheduleTask.executionTime,
+    scheduleId: scheduleTask.scheduleId.toString(),
+    userId: scheduleTask.userId.toString(),
+  };
+}

@@ -24,8 +24,13 @@ export function useSchedulePageTasks(currentScheduleTasks: ScheduleTaskType[]) {
     }
   }
 
+  function handleAddScheduleTask(scheduleTask: ScheduleTaskType) {
+    setScheduleTasks((prev) => [...prev, scheduleTask]);
+  }
+
   return {
     scheduleTasks,
     handleDeleteTask,
+    handleAddScheduleTask,
   };
 }

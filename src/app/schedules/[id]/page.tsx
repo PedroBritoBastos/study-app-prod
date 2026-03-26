@@ -53,19 +53,10 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
                </Text>
             </Flex>
 
-            {/* tarefas */}
-            <Text
-               fontSize={"md"}
-               color={"purple.800"}
-               mb={6}
-               ml={5}
-            >
-               Tarefas
-            </Text>
-
             {/* em andamento */}
             <SchedulePageTasks
                currentScheduleTasks={schedule.currentScheduleTasks}
+               scheduleId={id}
             />
          </Box>
       </>
