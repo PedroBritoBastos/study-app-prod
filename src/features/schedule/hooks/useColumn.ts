@@ -14,6 +14,7 @@ export function useColumn(schedule: SchedulesDataType | null | undefined) {
     e.stopPropagation();
     if (schedule) {
       router.replace(`/schedules/${schedule.schedule.id}`);
+      return;
     }
     setOpen(true);
   }
