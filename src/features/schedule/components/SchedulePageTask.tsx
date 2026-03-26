@@ -21,7 +21,7 @@ export function SchedulePageTask({ scheduleTask, onDeleteTask }: SchedulePageTas
    const {
       isChecked,
       handleCheckTask
-   } = useSchedulePageTask(scheduleTask.isChecked);
+   } = useSchedulePageTask(scheduleTask.isChecked, scheduleTask.id);
 
    return (
       <Flex {...styles.container} bg={isChecked ? "gray.100" : "white"}>
@@ -40,7 +40,10 @@ export function SchedulePageTask({ scheduleTask, onDeleteTask }: SchedulePageTas
 
             {/* options */}
             <Flex {...styles.optionsContainer}>
-               <SchedulePageTaskCheckButton onCheck={handleCheckTask} />
+               <SchedulePageTaskCheckButton
+                  onCheck={handleCheckTask}
+                  isChecked={isChecked}
+               />
                <SchedulePageTaskDeleteButton
                   isChecked={isChecked}
                   taskId={scheduleTask.id}

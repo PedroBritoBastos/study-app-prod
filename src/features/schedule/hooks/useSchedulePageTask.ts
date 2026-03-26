@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 
-export function useSchedulePageTask(isCheckedValue: boolean) {
+import { updateScheduleTaskStatusAction } from "@/features/schedule/actions/scheduleTasks/updateScheduleTaskStatus";
+
+export function useSchedulePageTask(isCheckedValue: boolean, taskId: string) {
   const [isChecked, setIsChecked] = useState<boolean>(isCheckedValue);
 
   function checkTask(): void {
@@ -13,12 +15,18 @@ export function useSchedulePageTask(isCheckedValue: boolean) {
     setIsChecked(false);
   }
 
-  function handleCheckTask(): void {
-    if (!isChecked) {
-      checkTask();
-      return;
+  async function handleCheckTask() {
+    try {
+      await updateScheduleTaskStatusAction(taskId);
+
+      if (!isChecked) {
+        checkTask();
+      } else {
+        uncheckTask();
+      }
+    } catch (error) {
+      console.log(error);
     }
-    uncheckTask();
   }
 
   return {

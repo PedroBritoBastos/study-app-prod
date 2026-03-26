@@ -9,6 +9,7 @@ type ContextType = {
    globalSchedulesData: SchedulesDataType[];
    updateGlobalSchedulesData: (schedulesData: SchedulesDataType[]) => void;
    removeScheduleFromGlobalSchedulesData: (scheduleId: string) => void;
+   addScheduleToGlobalSchedulesData: (scheduleData: SchedulesDataType) => void;
 };
 
 export const ScheduleContext = createContext<ContextType | null>(null);
@@ -29,11 +30,17 @@ export function ScheduleContextProvider({ children }: { children: React.ReactNod
       })
    }
 
+   // adiciona uma schedule ao estado global
+   function addScheduleToGlobalSchedulesData(scheduleData: SchedulesDataType): void {
+      setGlobalSchedulesData(prev => [...prev, scheduleData]);
+   }
+
    return (
       <ScheduleContext.Provider value={{
          globalSchedulesData,
          updateGlobalSchedulesData,
-         removeScheduleFromGlobalSchedulesData
+         removeScheduleFromGlobalSchedulesData,
+         addScheduleToGlobalSchedulesData
       }}>
          {children}
       </ScheduleContext.Provider>

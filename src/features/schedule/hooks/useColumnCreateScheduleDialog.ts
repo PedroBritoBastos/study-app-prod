@@ -3,6 +3,7 @@
 import { MouseEvent, ChangeEvent, useState } from "react";
 
 import { useSaveScheduleWarning } from "@/features/schedule/hooks/useSaveScheduleWarning";
+import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
 
 import { createScheduleAction } from "@/features/schedule/actions/schedules/createSchedule";
 import { CreateScheduleActionReturn } from "../types/scheduleActions/CreateScheduleActionReturn";
@@ -13,6 +14,8 @@ export function useColumnCreateScheduleDialog(
 ) {
   const { handleOpenSaveCreateScheduleDialog, isSaveDialogOpen } =
     useSaveScheduleWarning();
+
+  const { addScheduleToGlobalSchedulesData } = useScheduleContext();
 
   const [title, setTitle] = useState<string>("");
   const [executionTime, setExecutionTime] = useState<string>("");
@@ -74,6 +77,11 @@ export function useColumnCreateScheduleDialog(
     try {
       const createdSchedule: CreateScheduleActionReturn =
         await createScheduleAction(formData);
+
+      addScheduleToGlobalSchedulesData({
+        schedule: createdSchedule.createdSchedule,
+        currentScheduleTasks: createdSchedule.createdTasks,
+      });
       setTitle("");
       setTasks([]);
       closeDialog();

@@ -70,3 +70,13 @@ export async function deleteScheduleTasksByScheduleId(
 ): Promise<void> {
   await ScheduleTaskModel.deleteMany({ scheduleId: scheduleId });
 }
+
+export async function deleteScheduleTaskById(taskId: string): Promise<void> {
+  await ScheduleTaskModel.findByIdAndDelete(taskId);
+}
+
+export async function updateScheduleTaskStatus(taskId: string): Promise<void> {
+  const task = await ScheduleTaskModel.findById(taskId);
+  task.isChecked = !task.isChecked;
+  await task.save();
+}
