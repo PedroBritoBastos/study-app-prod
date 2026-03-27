@@ -1,6 +1,6 @@
 "use client";
 
-import { Select, Portal, createListCollection } from "@chakra-ui/react";
+import { Select, Portal, createListCollection, Input } from "@chakra-ui/react";
 import { SchedulesDataType } from "@/features/schedule/types/GlobalScheduleData";
 
 import { useSchedulesPageClientFilter } from "@/features/schedule/hooks/useSchedulesPageClientFilter";
@@ -13,42 +13,95 @@ const options = createListCollection({
    ],
 })
 
+const months = createListCollection({
+   items: [
+      { label: "Janeiro", value: "janeiro" },
+      { label: "Fevereiro", value: "fevereiro" },
+      { label: "Março", value: "março" },
+      { label: "Abril", value: "abril" },
+      { label: "Maio", value: "maio" },
+      { label: "Junho", value: "junho" },
+      { label: "Julho", value: "julho" },
+      { label: "Agosto", value: "agosto" },
+      { label: "Setembro", value: "setembro" },
+      { label: "Outubro", value: "outubro" },
+      { label: "Novembro", value: "novembro" },
+      { label: "Dezembro", value: "dezembro" }
+   ],
+})
+
 type SchedulesPageClientFilterProps = {
    serverData: SchedulesDataType[];
 }
 
 export function SchedulesPageClientFilter({ serverData }: SchedulesPageClientFilterProps) {
 
-   const { handleFilter } = useSchedulesPageClientFilter(serverData);
+   const {
+      openMonthInput,
+      handleFilter
+   } = useSchedulesPageClientFilter(serverData);
 
    return (
-      <Select.Root
-         collection={options}
-         width="200px"
-         variant={"outline"}
-         onValueChange={handleFilter}
-      >
-         <Select.HiddenSelect />
-         <Select.Control>
-            <Select.Trigger>
-               <Select.ValueText placeholder="Filtrar por:" />
-            </Select.Trigger>
-            <Select.IndicatorGroup>
-               <Select.Indicator />
-            </Select.IndicatorGroup>
-         </Select.Control>
-         <Portal>
-            <Select.Positioner>
-               <Select.Content>
-                  {options.items.map((option) => (
-                     <Select.Item item={option} key={option.value}>
-                        {option.label}
-                        <Select.ItemIndicator />
-                     </Select.Item>
-                  ))}
-               </Select.Content>
-            </Select.Positioner>
-         </Portal>
-      </Select.Root>
+      <>
+         <Select.Root
+            collection={options}
+            width="200px"
+            variant={"outline"}
+            onValueChange={handleFilter}
+         >
+            <Select.HiddenSelect />
+            <Select.Control>
+               <Select.Trigger>
+                  <Select.ValueText placeholder="Filtrar por:" />
+               </Select.Trigger>
+               <Select.IndicatorGroup>
+                  <Select.Indicator />
+               </Select.IndicatorGroup>
+            </Select.Control>
+            <Portal>
+               <Select.Positioner>
+                  <Select.Content>
+                     {options.items.map((option) => (
+                        <Select.Item item={option} key={option.value}>
+                           {option.label}
+                           <Select.ItemIndicator />
+                        </Select.Item>
+                     ))}
+                  </Select.Content>
+               </Select.Positioner>
+            </Portal>
+         </Select.Root>
+         {
+            openMonthInput && (
+               <Select.Root
+                  collection={months}
+                  width="200px"
+                  variant={"outline"}
+               >
+                  <Select.HiddenSelect />
+                  <Select.Control>
+                     <Select.Trigger>
+                        <Select.ValueText placeholder="Selecione o mês" />
+                     </Select.Trigger>
+                     <Select.IndicatorGroup>
+                        <Select.Indicator />
+                     </Select.IndicatorGroup>
+                  </Select.Control>
+                  <Portal>
+                     <Select.Positioner>
+                        <Select.Content>
+                           {months.items.map((option) => (
+                              <Select.Item item={option} key={option.value}>
+                                 {option.label}
+                                 <Select.ItemIndicator />
+                              </Select.Item>
+                           ))}
+                        </Select.Content>
+                     </Select.Positioner>
+                  </Portal>
+               </Select.Root>
+            )
+         }
+      </>
    )
 }

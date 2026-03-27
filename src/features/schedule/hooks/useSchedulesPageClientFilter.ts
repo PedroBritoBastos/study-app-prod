@@ -2,6 +2,7 @@
 
 import { SchedulesDataType } from "@/features/schedule/types/GlobalScheduleData";
 import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
+import { useState } from "react";
 
 export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   const {
@@ -10,6 +11,11 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     enableFilterMode,
     disableFilterMode,
   } = useScheduleContext();
+
+  const [openMonthInput, setOpenMonthInput] = useState(false);
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState(0);
+  const [inputDate, setInputDate] = useState("");
 
   function filterByMonth(month: string, year: string): void {
     enableFilterMode();
@@ -60,16 +66,21 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   }
 
   function handleFilter(details: { value: string[] }): void {
+    setOpenMonthInput(false);
     switch (details.value[0]) {
       case "all":
         updateGlobalSchedulesData(serverData);
         break;
       case "month":
+        setOpenMonthInput(true);
+        break;
+      case "date":
         break;
     }
   }
 
   return {
     handleFilter,
+    openMonthInput,
   };
 }
