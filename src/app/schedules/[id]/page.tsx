@@ -4,9 +4,10 @@ import { getScheduleByIdAction } from "@/src/features/schedule/actions/schedules
 
 import { Navbar } from "@/src/components/ui/navbar/Navbar";
 import { SchedulePageTasks } from "@/src/features/schedule/components/SchedulePageTasks";
+import { SchedulePageReturnButton } from "@/src/features/schedule/components/SchedulePageReturnButton";
 
 import { formatDate } from "@/src/utilities/dateUtils";
-import { Flex, Stack, Text, Box } from "@chakra-ui/react";
+import { Flex, Text, Box } from "@chakra-ui/react";
 
 
 type SchedulePageProps = {
@@ -32,6 +33,7 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
                gap={5}
                mb={12}
             >
+               <SchedulePageReturnButton />
                <Text
                   letterSpacing={2}
                   fontSize={"2xl"}

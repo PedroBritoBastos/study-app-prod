@@ -36,7 +36,7 @@ export function SchedulePageTask({ scheduleTask, onDeleteTask }: SchedulePageTas
 
          <Flex {...styles.taskContainer}>
             {/* nome da task */}
-            <Text color={isChecked ? "gray.400" : "gray.700"} ml={3} textDecoration={isChecked ? "line-through" : "none"}>{scheduleTask.title}</Text>
+            <Text color={isChecked ? "gray.400" : "gray.700"} ml={5} textDecoration={isChecked ? "line-through" : "none"}>{scheduleTask.title}</Text>
 
             {/* options */}
             <Flex {...styles.optionsContainer}>
