@@ -2,12 +2,13 @@
 
 import { SchedulesDataType } from "@/features/schedule/types/GlobalScheduleData";
 import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   const {
     updateGlobalSchedulesData,
     globalSchedulesData,
+    filterMode,
     enableFilterMode,
     disableFilterMode,
   } = useScheduleContext();
@@ -17,9 +18,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   const [year, setYear] = useState(new Date().getFullYear());
   const [inputDate, setInputDate] = useState("");
 
-  function filterByMonth(month: string, year: string): void {
-    enableFilterMode();
-
+  function filterByMonth(month: string, year: number): SchedulesDataType[] {
     const monthsMap: Record<string, number> = {
       janeiro: 0,
       fevereiro: 1,
@@ -41,12 +40,10 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     const filtered = globalSchedulesData.filter((item) => {
       const date = new Date(item.schedule.scheduleDay);
 
-      return (
-        date.getMonth() === monthIndex && date.getFullYear() === Number(year)
-      );
+      return date.getMonth() === monthIndex && date.getFullYear() === year;
     });
 
-    updateGlobalSchedulesData(filtered);
+    return filtered;
   }
 
   function filterByDate(date: string): void {
@@ -72,8 +69,10 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     switch (details.value[0]) {
       case "all":
         updateGlobalSchedulesData(serverData);
+        disableFilterMode();
         break;
       case "month":
+        enableFilterMode();
         setOpenMonthInput(true);
         break;
       case "date":
@@ -84,6 +83,12 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   function handleSelectMonth(details: { value: string[] }): void {
     setMonth(details.value[0]);
   }
+
+  useEffect(() => {
+    if (filterMode) {
+      updateGlobalSchedulesData(filterByMonth(month, year));
+    }
+  }, [month, year]);
 
   function handleNextYear() {
     setYear((prev) => prev + 1);

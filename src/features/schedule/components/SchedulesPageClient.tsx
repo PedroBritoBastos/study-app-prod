@@ -10,6 +10,7 @@ import { Column } from "@/features/schedule/components/Column";
 import { SchedulesPageClientFilter } from "@/features/schedule/components/SchedulesPageClientFilter";
 
 import { useSchedulesPageClient } from "@/features/schedule/hooks/useSchedulesPageClient";
+import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
 import { formatDate } from "@/src/utilities/dateUtils";
 
 import { SchedulesDataType } from "../types/GlobalScheduleData";
@@ -28,6 +29,8 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
       handlePreviousMonth
    } = useSchedulesPageClient(serverData);
 
+   const { filterMode } = useScheduleContext();
+
    return (
       <Stack {...styles.container}>
          {/* Criar Schedule */}
@@ -41,23 +44,33 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
             </Flex>
 
             {/* month control */}
-            <Flex {...styles.monthControlContainer}>
-               <IconButton size={"xs"} rounded={"full"} colorPalette={"purple"} onClick={handlePreviousMonth}>
-                  <ChevronLeft />
-               </IconButton>
-               <Text fontSize={"2xl"}>{`${monthName}, ${year}`}</Text>
-               <IconButton size={"xs"} rounded={"full"} colorPalette={"purple"} onClick={handleNextMonth}>
-                  <ChevronRight />
-               </IconButton>
-            </Flex>
-            {/* ///// */}
+            {
+               !filterMode && (
+                  <Flex {...styles.monthControlContainer}>
+                     <IconButton size={"xs"} rounded={"full"} colorPalette={"purple"} onClick={handlePreviousMonth}>
+                        <ChevronLeft />
+                     </IconButton>
+                     <Text fontSize={"2xl"}>{`${monthName}, ${year}`}</Text>
+                     <IconButton size={"xs"} rounded={"full"} colorPalette={"purple"} onClick={handleNextMonth}>
+                        <ChevronRight />
+                     </IconButton>
+                  </Flex>
+               )
+            }
          </Flex>
 
 
          {/* Grid de colunas */}
          <Grid {...styles.grid} className={scrollStyles["scrollbar"]}>
-            {
-               monthDays.map((day, index) => {
+            {filterMode ?
+               globalSchedulesData.map((schedule, index) => (
+                  <Column
+                     key={index}
+                     day={formatDate(schedule.schedule.scheduleDay.toISOString())}
+                     dayOfWeek={schedule.schedule.scheduleDay.toLocaleDateString("pt-BR", { weekday: "long" }).slice(0, 3).toUpperCase()}
+                     schedule={schedule ? schedule : null}
+                  />
+               )) : monthDays.map((day, index) => {
 
                   // verificando se o dia da coluna possui algum cronograma correspondente
                   const schedule = globalSchedulesData.find((item) => formatDate(item.schedule.scheduleDay.toISOString()) === formatDate(day.toISOString()));
