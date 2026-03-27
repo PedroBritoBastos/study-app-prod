@@ -14,7 +14,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
 
   const [openMonthInput, setOpenMonthInput] = useState(false);
   const [month, setMonth] = useState("");
-  const [year, setYear] = useState(0);
+  const [year, setYear] = useState(new Date().getFullYear());
   const [inputDate, setInputDate] = useState("");
 
   function filterByMonth(month: string, year: string): void {
@@ -67,6 +67,8 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
 
   function handleFilter(details: { value: string[] }): void {
     setOpenMonthInput(false);
+    setMonth("");
+
     switch (details.value[0]) {
       case "all":
         updateGlobalSchedulesData(serverData);
@@ -79,8 +81,24 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     }
   }
 
+  function handleSelectMonth(details: { value: string[] }): void {
+    setMonth(details.value[0]);
+  }
+
+  function handleNextYear() {
+    setYear((prev) => prev + 1);
+  }
+
+  function handlePrevYear() {
+    setYear((prev) => prev - 1);
+  }
+
   return {
     handleFilter,
+    handleSelectMonth,
+    handlePrevYear,
+    handleNextYear,
     openMonthInput,
+    year,
   };
 }

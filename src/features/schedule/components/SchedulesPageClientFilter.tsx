@@ -1,6 +1,7 @@
 "use client";
 
-import { Select, Portal, createListCollection, Input } from "@chakra-ui/react";
+import { Select, Portal, createListCollection, IconButton, Flex, Text } from "@chakra-ui/react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { SchedulesDataType } from "@/features/schedule/types/GlobalScheduleData";
 
 import { useSchedulesPageClientFilter } from "@/features/schedule/hooks/useSchedulesPageClientFilter";
@@ -38,7 +39,11 @@ export function SchedulesPageClientFilter({ serverData }: SchedulesPageClientFil
 
    const {
       openMonthInput,
-      handleFilter
+      year,
+      handleFilter,
+      handleSelectMonth,
+      handleNextYear,
+      handlePrevYear
    } = useSchedulesPageClientFilter(serverData);
 
    return (
@@ -73,33 +78,43 @@ export function SchedulesPageClientFilter({ serverData }: SchedulesPageClientFil
          </Select.Root>
          {
             openMonthInput && (
-               <Select.Root
-                  collection={months}
-                  width="200px"
-                  variant={"outline"}
-               >
-                  <Select.HiddenSelect />
-                  <Select.Control>
-                     <Select.Trigger>
-                        <Select.ValueText placeholder="Selecione o mês" />
-                     </Select.Trigger>
-                     <Select.IndicatorGroup>
-                        <Select.Indicator />
-                     </Select.IndicatorGroup>
-                  </Select.Control>
-                  <Portal>
-                     <Select.Positioner>
-                        <Select.Content>
-                           {months.items.map((option) => (
-                              <Select.Item item={option} key={option.value}>
-                                 {option.label}
-                                 <Select.ItemIndicator />
-                              </Select.Item>
-                           ))}
-                        </Select.Content>
-                     </Select.Positioner>
-                  </Portal>
-               </Select.Root>
+               <>
+                  <Select.Root
+                     collection={months}
+                     width="200px"
+                     variant={"outline"}
+                     onValueChange={handleSelectMonth}
+                  >
+                     <Select.HiddenSelect />
+                     <Select.Control>
+                        <Select.Trigger>
+                           <Select.ValueText placeholder="Selecione o mês" />
+                        </Select.Trigger>
+                        <Select.IndicatorGroup>
+                           <Select.Indicator />
+                        </Select.IndicatorGroup>
+                     </Select.Control>
+                     <Portal>
+                        <Select.Positioner>
+                           <Select.Content>
+                              {months.items.map((option) => (
+                                 <Select.Item item={option} key={option.value}>
+                                    {option.label}
+                                    <Select.ItemIndicator />
+                                 </Select.Item>
+                              ))}
+                           </Select.Content>
+                        </Select.Positioner>
+                     </Portal>
+                  </Select.Root>
+                  <IconButton onClick={handlePrevYear} _hover={{ bg: "purple.200" }} variant={"ghost"} rounded={"full"} colorPalette={"purple"} size={"xs"}>
+                     <ChevronLeft />
+                  </IconButton>
+                  <Text mt={1}>{year}</Text>
+                  <IconButton onClick={handleNextYear} _hover={{ bg: "purple.200" }} variant={"ghost"} rounded={"full"} colorPalette={"purple"} size={"xs"}>
+                     <ChevronRight />
+                  </IconButton>
+               </>
             )
          }
       </>
