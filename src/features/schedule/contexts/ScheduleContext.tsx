@@ -7,15 +7,19 @@ import { SchedulesDataType } from "../types/GlobalScheduleData";
 
 type ContextType = {
    globalSchedulesData: SchedulesDataType[];
+   filterMode: boolean;
    updateGlobalSchedulesData: (schedulesData: SchedulesDataType[]) => void;
    removeScheduleFromGlobalSchedulesData: (scheduleId: string) => void;
    addScheduleToGlobalSchedulesData: (scheduleData: SchedulesDataType) => void;
+   enableFilterMode: () => void;
+   disableFilterMode: () => void;
 };
 
 export const ScheduleContext = createContext<ContextType | null>(null);
 
 export function ScheduleContextProvider({ children }: { children: React.ReactNode }) {
    const [globalSchedulesData, setGlobalSchedulesData] = useState<SchedulesDataType[]>([]);
+   const [filterMode, setFilterMode] = useState<boolean>(false);
 
    // atualiza o estado global
    function updateGlobalSchedulesData(schedulesData: SchedulesDataType[]): void {
@@ -35,12 +39,23 @@ export function ScheduleContextProvider({ children }: { children: React.ReactNod
       setGlobalSchedulesData(prev => [...prev, scheduleData]);
    }
 
+   function enableFilterMode(): void {
+      setFilterMode(true);
+   }
+
+   function disableFilterMode(): void {
+      setFilterMode(false);
+   }
+
    return (
       <ScheduleContext.Provider value={{
          globalSchedulesData,
+         filterMode,
          updateGlobalSchedulesData,
          removeScheduleFromGlobalSchedulesData,
-         addScheduleToGlobalSchedulesData
+         addScheduleToGlobalSchedulesData,
+         enableFilterMode,
+         disableFilterMode
       }}>
          {children}
       </ScheduleContext.Provider>
