@@ -3,10 +3,11 @@
 import { styles } from "@/features/schedule/styles/schedulesPageClient.styles";
 import scrollStyles from "@/styles/sidebar/scroll.module.css";
 
-import { Stack, Grid, Flex, Button, Text, IconButton } from "@chakra-ui/react"
+import { Stack, Grid, Flex, Button, Text, IconButton, Select } from "@chakra-ui/react"
 import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { PageCreateScheduleDialog } from "@/features/schedule/components/PageCreateScheduleDialog";
 import { Column } from "@/features/schedule/components/Column";
+import { SchedulesPageClientFilter } from "@/features/schedule/components/SchedulesPageClientFilter";
 
 import { useSchedulesPageClient } from "@/features/schedule/hooks/useSchedulesPageClient";
 import { formatDate } from "@/src/utilities/dateUtils";
@@ -32,8 +33,11 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
          {/* Criar Schedule */}
          <Flex {...styles.headerContainer}>
             {/* create actions */}
-            <Flex>
+            <Flex gap={5}>
                <PageCreateScheduleDialog />
+
+               {/* filtro */}
+               <SchedulesPageClientFilter serverData={serverData} />
             </Flex>
 
             {/* month control */}

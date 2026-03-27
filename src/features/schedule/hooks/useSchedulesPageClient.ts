@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { getDaysOfMonth, formatDate } from "@/src/utilities/dateUtils";
 
 import { MouseEvent } from "react";
-import { SchedulesDataType } from "../types/GlobalScheduleData";
+import { SchedulesDataType } from "@/features/schedule/types/GlobalScheduleData";
 
 import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
 
