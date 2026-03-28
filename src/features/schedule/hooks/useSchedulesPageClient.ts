@@ -9,8 +9,11 @@ import { SchedulesDataType } from "@/features/schedule/types/GlobalScheduleData"
 import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
 
 export function useSchedulesPageClient(serverData: SchedulesDataType[]) {
-  const { globalSchedulesData, updateGlobalSchedulesData } =
-    useScheduleContext();
+  const {
+    globalSchedulesData,
+    updateGlobalSchedulesData,
+    toggleCalendarViewMode,
+  } = useScheduleContext();
 
   // data atual
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -47,6 +50,11 @@ export function useSchedulesPageClient(serverData: SchedulesDataType[]) {
     });
   }
 
+  function handleToggleCalendarViewMode(e: MouseEvent<HTMLButtonElement>) {
+    e.stopPropagation();
+    toggleCalendarViewMode();
+  }
+
   return {
     year,
     monthName,
@@ -54,5 +62,6 @@ export function useSchedulesPageClient(serverData: SchedulesDataType[]) {
     globalSchedulesData,
     handleNextMonth,
     handlePreviousMonth,
+    handleToggleCalendarViewMode,
   };
 }

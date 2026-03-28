@@ -4,7 +4,7 @@ import { styles } from "@/features/schedule/styles/schedulesPageClient.styles";
 import scrollStyles from "@/styles/sidebar/scroll.module.css";
 
 import { Stack, Grid, Flex, Button, Text, IconButton, Select } from "@chakra-ui/react"
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Eye, EyeOff, Plus } from "lucide-react";
 import { PageCreateScheduleDialog } from "@/features/schedule/components/PageCreateScheduleDialog";
 import { Column } from "@/features/schedule/components/Column";
 import { SchedulesPageClientFilter } from "@/features/schedule/components/SchedulesPageClientFilter";
@@ -26,10 +26,11 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
       monthDays,
       globalSchedulesData,
       handleNextMonth,
-      handlePreviousMonth
+      handlePreviousMonth,
+      handleToggleCalendarViewMode
    } = useSchedulesPageClient(serverData);
 
-   const { filterMode, filteredGlobalSchedulesData } = useScheduleContext();
+   const { filterMode, filteredGlobalSchedulesData, calendarViewMode } = useScheduleContext();
 
    return (
       <Stack {...styles.container}>
@@ -41,6 +42,20 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
 
                {/* filtro */}
                <SchedulesPageClientFilter serverData={serverData} />
+
+               {/* botao para ativar calendarViewMode */}
+               <Button
+                  colorPalette={"purple"}
+                  variant={calendarViewMode ? "solid" : "surface"}
+                  display={"flex"}
+                  alignItems={"center"}
+                  onClick={handleToggleCalendarViewMode}
+               >
+                  {
+                     calendarViewMode ? <Eye /> : <EyeOff />
+                  }
+                  Modo calendário
+               </Button>
             </Flex>
 
             {/* month control */}

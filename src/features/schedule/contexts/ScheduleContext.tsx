@@ -9,20 +9,29 @@ type ContextType = {
    globalSchedulesData: SchedulesDataType[];
    filterMode: boolean;
    filteredGlobalSchedulesData: SchedulesDataType[];
+   calendarViewMode: boolean;
    updateGlobalSchedulesData: (schedulesData: SchedulesDataType[]) => void;
    removeScheduleFromGlobalSchedulesData: (scheduleId: string) => void;
    addScheduleToGlobalSchedulesData: (scheduleData: SchedulesDataType) => void;
    enableFilterMode: () => void;
    disableFilterMode: () => void;
    updateFilteredGlobalSchedulesData: (filtered: SchedulesDataType[]) => void;
+   toggleCalendarViewMode: () => void;
 };
 
 export const ScheduleContext = createContext<ContextType | null>(null);
 
 export function ScheduleContextProvider({ children }: { children: React.ReactNode }) {
+
+   // estado global
    const [globalSchedulesData, setGlobalSchedulesData] = useState<SchedulesDataType[]>([]);
+
+   // filtragem
    const [filterMode, setFilterMode] = useState<boolean>(false);
    const [filteredGlobalSchedulesData, setFilteredSchedulesData] = useState<SchedulesDataType[]>([]);
+
+   // visualizacao de calendario
+   const [calendarViewMode, setCalendarViewMode] = useState<boolean>(false);
 
    // atualiza o estado global
    function updateGlobalSchedulesData(schedulesData: SchedulesDataType[]): void {
@@ -54,17 +63,23 @@ export function ScheduleContextProvider({ children }: { children: React.ReactNod
       setFilteredSchedulesData(filtered);
    }
 
+   function toggleCalendarViewMode(): void {
+      setCalendarViewMode(prev => !prev);
+   }
+
    return (
       <ScheduleContext.Provider value={{
          globalSchedulesData,
          filterMode,
          filteredGlobalSchedulesData,
+         calendarViewMode,
          updateGlobalSchedulesData,
          removeScheduleFromGlobalSchedulesData,
          addScheduleToGlobalSchedulesData,
          enableFilterMode,
          disableFilterMode,
-         updateFilteredGlobalSchedulesData
+         updateFilteredGlobalSchedulesData,
+         toggleCalendarViewMode
       }}>
          {children}
       </ScheduleContext.Provider>
