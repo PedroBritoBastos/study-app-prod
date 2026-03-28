@@ -81,18 +81,22 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     switch (details.value[0]) {
       case "none":
         disableFilterMode();
+        setSelectedFilter(details.value);
         break;
       case "month":
         enableFilterMode();
         setOpenMonthInput(true);
+        setSelectedFilter(details.value);
         break;
       case "date":
         enableFilterMode();
         setOpenDateInput(true);
+        setSelectedFilter(details.value);
         break;
       case "all":
         enableFilterMode();
         updateFilteredGlobalSchedulesData(globalSchedulesData);
+        setSelectedFilter(details.value);
         setAll(true);
         break;
     }
