@@ -8,6 +8,7 @@ import { ChevronLeft, ChevronRight, Eye, EyeOff } from "lucide-react";
 import { PageCreateScheduleDialog } from "@/features/schedule/components/PageCreateScheduleDialog";
 import { Column } from "@/features/schedule/components/Column";
 import { SchedulesPageClientFilter } from "@/features/schedule/components/SchedulesPageClientFilter";
+import { SchedulesPageClientCalendarView } from "@/features/schedule/components/SchedulesPageClientCalendarView";
 
 import { useSchedulesPageClient } from "@/features/schedule/hooks/useSchedulesPageClient";
 import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
