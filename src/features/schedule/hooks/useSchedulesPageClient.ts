@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getDaysOfMonth, formatDate } from "@/src/utilities/dateUtils";
+import { getDaysOfMonth } from "@/src/utilities/dateUtils";
 
 import { MouseEvent } from "react";
 import { SchedulesDataType } from "@/features/schedule/types/GlobalScheduleData";
@@ -13,6 +13,8 @@ export function useSchedulesPageClient(serverData: SchedulesDataType[]) {
     globalSchedulesData,
     updateGlobalSchedulesData,
     toggleCalendarViewMode,
+    filterMode,
+    disableFilterMode,
   } = useScheduleContext();
 
   // data atual
@@ -52,6 +54,13 @@ export function useSchedulesPageClient(serverData: SchedulesDataType[]) {
 
   function handleToggleCalendarViewMode(e: MouseEvent<HTMLButtonElement>) {
     e.stopPropagation();
+
+    if (filterMode) {
+      disableFilterMode();
+      toggleCalendarViewMode();
+      return;
+    }
+
     toggleCalendarViewMode();
   }
 

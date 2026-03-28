@@ -3,8 +3,8 @@
 import { styles } from "@/features/schedule/styles/schedulesPageClient.styles";
 import scrollStyles from "@/styles/sidebar/scroll.module.css";
 
-import { Stack, Grid, Flex, Button, Text, IconButton, Select } from "@chakra-ui/react"
-import { ChevronLeft, ChevronRight, Eye, EyeOff, Plus } from "lucide-react";
+import { Stack, Grid, Flex, Button, Text, IconButton } from "@chakra-ui/react"
+import { ChevronLeft, ChevronRight, Eye, EyeOff } from "lucide-react";
 import { PageCreateScheduleDialog } from "@/features/schedule/components/PageCreateScheduleDialog";
 import { Column } from "@/features/schedule/components/Column";
 import { SchedulesPageClientFilter } from "@/features/schedule/components/SchedulesPageClientFilter";

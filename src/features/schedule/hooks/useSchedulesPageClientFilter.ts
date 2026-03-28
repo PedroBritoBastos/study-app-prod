@@ -14,6 +14,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     filterMode,
     enableFilterMode,
     disableFilterMode,
+    calendarViewMode,
   } = useScheduleContext();
 
   const [openMonthInput, setOpenMonthInput] = useState(false);
@@ -22,6 +23,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   const [year, setYear] = useState(new Date().getFullYear());
   const [date, setDate] = useState("");
   const [all, setAll] = useState(false);
+  const [selectedFilter, setSelectedFilter] = useState<string[]>(["none"]);
 
   function filterByMonth(month: string, year: number): SchedulesDataType[] {
     const monthsMap: Record<string, number> = {
@@ -137,6 +139,18 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     }
   }, [date]);
 
+  useEffect(() => {
+    if (calendarViewMode) {
+      setSelectedFilter(["none"]);
+      setOpenDateInput(false);
+      setOpenMonthInput(false);
+      setAll(false);
+      setMonth("");
+      setDate("");
+      updateFilteredGlobalSchedulesData([]);
+    }
+  }, [calendarViewMode]);
+
   return {
     handleFilter,
     handleSelectMonth,
@@ -147,5 +161,6 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     openDateInput,
     year,
     date,
+    selectedFilter,
   };
 }

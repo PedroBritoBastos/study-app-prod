@@ -49,6 +49,7 @@ export function SchedulesPageClientFilter({ serverData, isInCalendarViewMode }: 
       handleNextYear,
       handlePrevYear,
       handleDateInputChange,
+      selectedFilter
    } = useSchedulesPageClientFilter(serverData);
 
    return (
@@ -60,6 +61,7 @@ export function SchedulesPageClientFilter({ serverData, isInCalendarViewMode }: 
             onValueChange={handleFilter}
             defaultValue={["none"]}
             disabled={isInCalendarViewMode}
+            value={selectedFilter}
          >
             <Select.HiddenSelect />
             <Select.Control>
