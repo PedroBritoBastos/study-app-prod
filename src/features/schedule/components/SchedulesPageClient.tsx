@@ -35,19 +35,15 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
 
    return (
       <Stack {...styles.container}>
-         {/* Criar Schedule */}
          <Flex {...styles.headerContainer}>
-            {/* create actions */}
             <Flex gap={5}>
                <PageCreateScheduleDialog />
 
-               {/* filtro */}
                <SchedulesPageClientFilter
                   serverData={serverData}
                   isInCalendarViewMode={calendarViewMode}
                />
 
-               {/* botao para ativar calendarViewMode */}
                <Button
                   colorPalette={"purple"}
                   variant={calendarViewMode ? "solid" : "surface"}
@@ -62,7 +58,6 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
                </Button>
             </Flex>
 
-            {/* month control */}
             {
                !filterMode && (
                   <Flex {...styles.monthControlContainer}>
@@ -78,32 +73,35 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
             }
          </Flex>
 
+         {
+            calendarViewMode ? (
+               <SchedulesPageClientCalendarView />
+            ) : (
+               <Grid {...styles.grid} className={scrollStyles["scrollbar"]}>
+                  {filterMode ?
+                     filteredGlobalSchedulesData.map((schedule, index) => (
+                        <Column
+                           key={index}
+                           day={formatDate(schedule.schedule.scheduleDay.toISOString())}
+                           dayOfWeek={schedule.schedule.scheduleDay.toLocaleDateString("pt-BR", { weekday: "long" }).slice(0, 3).toUpperCase()}
+                           schedule={schedule ? schedule : null}
+                        />
+                     )) : monthDays.map((day, index) => {
 
-         {/* Grid de colunas */}
-         <Grid {...styles.grid} className={scrollStyles["scrollbar"]}>
-            {filterMode ?
-               filteredGlobalSchedulesData.map((schedule, index) => (
-                  <Column
-                     key={index}
-                     day={formatDate(schedule.schedule.scheduleDay.toISOString())}
-                     dayOfWeek={schedule.schedule.scheduleDay.toLocaleDateString("pt-BR", { weekday: "long" }).slice(0, 3).toUpperCase()}
-                     schedule={schedule ? schedule : null}
-                  />
-               )) : monthDays.map((day, index) => {
+                        const schedule = globalSchedulesData.find((item) => formatDate(item.schedule.scheduleDay.toISOString()) === formatDate(day.toISOString()));
 
-                  // verificando se o dia da coluna possui algum cronograma correspondente
-                  const schedule = globalSchedulesData.find((item) => formatDate(item.schedule.scheduleDay.toISOString()) === formatDate(day.toISOString()));
-
-                  return (
-                     <Column
-                        key={index}
-                        day={formatDate(day.toISOString())}
-                        dayOfWeek={day.toLocaleDateString("pt-BR", { weekday: "long" }).slice(0, 3).toUpperCase()}
-                        schedule={schedule ? schedule : null}
-                     />)
-               })
-            }
-         </Grid>
+                        return (
+                           <Column
+                              key={index}
+                              day={formatDate(day.toISOString())}
+                              dayOfWeek={day.toLocaleDateString("pt-BR", { weekday: "long" }).slice(0, 3).toUpperCase()}
+                              schedule={schedule ? schedule : null}
+                           />)
+                     })
+                  }
+               </Grid>
+            )
+         }
 
       </Stack>
    )
