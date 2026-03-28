@@ -17,9 +17,10 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   } = useScheduleContext();
 
   const [openMonthInput, setOpenMonthInput] = useState(false);
+  const [openDateInput, setOpenDateInput] = useState(false);
   const [month, setMonth] = useState("");
   const [year, setYear] = useState(new Date().getFullYear());
-  const [inputDate, setInputDate] = useState("");
+  const [date, setDate] = useState("");
 
   function filterByMonth(month: string, year: number): SchedulesDataType[] {
     const monthsMap: Record<string, number> = {
@@ -52,7 +53,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   function filterByDate(date: string): void {
     const targetDate = new Date(date);
 
-    const filtered = serverData.filter((item) => {
+    const filtered = globalSchedulesData.filter((item) => {
       const scheduleDate = new Date(item.schedule.scheduleDay);
 
       return (
@@ -65,8 +66,10 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     updateFilteredGlobalSchedulesData(filtered.length > 0 ? filtered : []);
   }
 
+  // filtra os meses de acordo com a option selecionada
   function handleFilter(details: { value: string[] }): void {
     setOpenMonthInput(false);
+    setOpenDateInput(false);
     setMonth("");
 
     switch (details.value[0]) {
@@ -80,6 +83,8 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
         setOpenMonthInput(true);
         break;
       case "date":
+        enableFilterMode();
+        setOpenDateInput(true);
         break;
     }
   }
@@ -87,12 +92,6 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   function handleSelectMonth(details: { value: string[] }): void {
     setMonth(details.value[0]);
   }
-
-  useEffect(() => {
-    if (filterMode && month) {
-      updateFilteredGlobalSchedulesData(filterByMonth(month, year));
-    }
-  }, [month, year, globalSchedulesData]);
 
   function handleNextYear() {
     setYear((prev) => prev + 1);
@@ -102,12 +101,30 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     setYear((prev) => prev - 1);
   }
 
+  function handleDateInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
+    setDate(e.target.value);
+  }
+
+  // filtra as schedules de globalSchedulesData toda vez que o mês ou o ano muda
+  // filtra as schedules de globalSchedulesData sempre que uma schedula é adicionada ou removida
+  useEffect(() => {
+    if (filterMode && month) {
+      updateFilteredGlobalSchedulesData(filterByMonth(month, year));
+    }
+  }, [month, year, globalSchedulesData]);
+
+  // filtra as schedules de globalSchedulesData toda vez que a data do input mudar
+  useEffect(() => {}, [date]);
+
   return {
     handleFilter,
     handleSelectMonth,
     handlePrevYear,
     handleNextYear,
+    handleDateInputChange,
     openMonthInput,
+    openDateInput,
     year,
+    date,
   };
 }

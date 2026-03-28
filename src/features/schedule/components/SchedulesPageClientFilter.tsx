@@ -1,6 +1,6 @@
 "use client";
 
-import { Select, Portal, createListCollection, IconButton, Flex, Text } from "@chakra-ui/react";
+import { Select, Portal, createListCollection, IconButton, Text, Input } from "@chakra-ui/react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { SchedulesDataType } from "@/features/schedule/types/GlobalScheduleData";
 
@@ -39,11 +39,14 @@ export function SchedulesPageClientFilter({ serverData }: SchedulesPageClientFil
 
    const {
       openMonthInput,
+      openDateInput,
       year,
+      date,
       handleFilter,
       handleSelectMonth,
       handleNextYear,
-      handlePrevYear
+      handlePrevYear,
+      handleDateInputChange,
    } = useSchedulesPageClientFilter(serverData);
 
    return (
@@ -115,6 +118,11 @@ export function SchedulesPageClientFilter({ serverData }: SchedulesPageClientFil
                      <ChevronRight />
                   </IconButton>
                </>
+            )
+         }
+         {
+            openDateInput && (
+               <Input type="date" value={date} onChange={handleDateInputChange} />
             )
          }
       </>
