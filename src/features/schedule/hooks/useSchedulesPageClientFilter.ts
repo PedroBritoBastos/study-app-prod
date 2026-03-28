@@ -50,7 +50,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     return filtered;
   }
 
-  function filterByDate(date: string): void {
+  function filterByDate(date: string): SchedulesDataType[] {
     const targetDate = new Date(date);
 
     const filtered = globalSchedulesData.filter((item) => {
@@ -63,7 +63,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
       );
     });
 
-    updateFilteredGlobalSchedulesData(filtered.length > 0 ? filtered : []);
+    return filtered;
   }
 
   // filtra os meses de acordo com a option selecionada
@@ -71,6 +71,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     setOpenMonthInput(false);
     setOpenDateInput(false);
     setMonth("");
+    setDate("");
 
     switch (details.value[0]) {
       case "all":
@@ -114,7 +115,11 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   }, [month, year, globalSchedulesData]);
 
   // filtra as schedules de globalSchedulesData toda vez que a data do input mudar
-  useEffect(() => {}, [date]);
+  useEffect(() => {
+    if (filterMode && date) {
+      updateFilteredGlobalSchedulesData(filterByDate(date));
+    }
+  }, [date]);
 
   return {
     handleFilter,
