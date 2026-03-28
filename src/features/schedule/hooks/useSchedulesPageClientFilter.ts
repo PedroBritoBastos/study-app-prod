@@ -3,10 +3,13 @@
 import { SchedulesDataType } from "@/features/schedule/types/GlobalScheduleData";
 import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
+  const router = useRouter();
+
   const {
-    updateGlobalSchedulesData,
+    updateFilteredGlobalSchedulesData,
     globalSchedulesData,
     filterMode,
     enableFilterMode,
@@ -49,7 +52,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   function filterByDate(date: string): void {
     const targetDate = new Date(date);
 
-    const filtered = globalSchedulesData.filter((item) => {
+    const filtered = serverData.filter((item) => {
       const scheduleDate = new Date(item.schedule.scheduleDay);
 
       return (
@@ -59,7 +62,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
       );
     });
 
-    updateGlobalSchedulesData(filtered.length > 0 ? filtered : []);
+    updateFilteredGlobalSchedulesData(filtered.length > 0 ? filtered : []);
   }
 
   function handleFilter(details: { value: string[] }): void {
@@ -68,7 +71,8 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
 
     switch (details.value[0]) {
       case "all":
-        updateGlobalSchedulesData(serverData);
+        router.refresh();
+        updateFilteredGlobalSchedulesData([]);
         disableFilterMode();
         break;
       case "month":
@@ -85,10 +89,10 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   }
 
   useEffect(() => {
-    if (filterMode) {
-      updateGlobalSchedulesData(filterByMonth(month, year));
+    if (filterMode && month) {
+      updateFilteredGlobalSchedulesData(filterByMonth(month, year));
     }
-  }, [month, year]);
+  }, [month, year, globalSchedulesData]);
 
   function handleNextYear() {
     setYear((prev) => prev + 1);

@@ -29,7 +29,7 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
       handlePreviousMonth
    } = useSchedulesPageClient(serverData);
 
-   const { filterMode } = useScheduleContext();
+   const { filterMode, filteredGlobalSchedulesData } = useScheduleContext();
 
    return (
       <Stack {...styles.container}>
@@ -63,7 +63,7 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
          {/* Grid de colunas */}
          <Grid {...styles.grid} className={scrollStyles["scrollbar"]}>
             {filterMode ?
-               globalSchedulesData.map((schedule, index) => (
+               filteredGlobalSchedulesData.map((schedule, index) => (
                   <Column
                      key={index}
                      day={formatDate(schedule.schedule.scheduleDay.toISOString())}
