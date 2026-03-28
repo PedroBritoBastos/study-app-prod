@@ -34,9 +34,10 @@ const months = createListCollection({
 
 type SchedulesPageClientFilterProps = {
    serverData: SchedulesDataType[];
+   isInCalendarViewMode: boolean;
 }
 
-export function SchedulesPageClientFilter({ serverData }: SchedulesPageClientFilterProps) {
+export function SchedulesPageClientFilter({ serverData, isInCalendarViewMode }: SchedulesPageClientFilterProps) {
 
    const {
       openMonthInput,
@@ -58,6 +59,7 @@ export function SchedulesPageClientFilter({ serverData }: SchedulesPageClientFil
             variant={"outline"}
             onValueChange={handleFilter}
             defaultValue={["none"]}
+            disabled={isInCalendarViewMode}
          >
             <Select.HiddenSelect />
             <Select.Control>

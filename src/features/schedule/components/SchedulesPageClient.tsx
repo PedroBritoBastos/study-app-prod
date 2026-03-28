@@ -41,7 +41,10 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
                <PageCreateScheduleDialog />
 
                {/* filtro */}
-               <SchedulesPageClientFilter serverData={serverData} />
+               <SchedulesPageClientFilter
+                  serverData={serverData}
+                  isInCalendarViewMode={calendarViewMode}
+               />
 
                {/* botao para ativar calendarViewMode */}
                <Button
