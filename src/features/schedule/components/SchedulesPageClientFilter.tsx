@@ -1,16 +1,17 @@
 "use client";
 
-import { Select, Portal, createListCollection, IconButton, Text, Input } from "@chakra-ui/react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Select, Portal, createListCollection, IconButton, Text, Input, Icon } from "@chakra-ui/react";
+import { ChevronLeft, ChevronRight, ListFilter } from "lucide-react";
 import { SchedulesDataType } from "@/features/schedule/types/GlobalScheduleData";
 
 import { useSchedulesPageClientFilter } from "@/features/schedule/hooks/useSchedulesPageClientFilter";
 
 const options = createListCollection({
    items: [
-      { label: "Todos", value: "all" },
+      { label: "Sem filtro", value: "none" },
       { label: "Mês", value: "month" },
-      { label: "Data", value: "date" }
+      { label: "Data", value: "date" },
+      { label: "Cronogramas", value: "all" }
    ],
 })
 
@@ -56,11 +57,15 @@ export function SchedulesPageClientFilter({ serverData }: SchedulesPageClientFil
             width="200px"
             variant={"outline"}
             onValueChange={handleFilter}
+            defaultValue={["none"]}
          >
             <Select.HiddenSelect />
             <Select.Control>
-               <Select.Trigger>
-                  <Select.ValueText placeholder="Filtrar por:" />
+               <Select.Trigger display={"flex"} justifyContent={"start"} width={"200px"} >
+                  <Icon size={"sm"}>
+                     <ListFilter />
+                  </Icon>
+                  <Select.ValueText />
                </Select.Trigger>
                <Select.IndicatorGroup>
                   <Select.Indicator />

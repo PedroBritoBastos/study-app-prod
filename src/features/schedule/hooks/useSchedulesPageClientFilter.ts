@@ -68,15 +68,14 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
 
   // filtra os meses de acordo com a option selecionada
   function handleFilter(details: { value: string[] }): void {
+    updateFilteredGlobalSchedulesData([]);
     setOpenMonthInput(false);
     setOpenDateInput(false);
     setMonth("");
     setDate("");
 
     switch (details.value[0]) {
-      case "all":
-        router.refresh();
-        updateFilteredGlobalSchedulesData([]);
+      case "none":
         disableFilterMode();
         break;
       case "month":
@@ -86,6 +85,10 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
       case "date":
         enableFilterMode();
         setOpenDateInput(true);
+        break;
+      case "all":
+        enableFilterMode();
+        updateFilteredGlobalSchedulesData(globalSchedulesData);
         break;
     }
   }
@@ -105,6 +108,10 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   function handleDateInputChange(e: React.ChangeEvent<HTMLInputElement>): void {
     setDate(e.target.value);
   }
+
+  useEffect(() => {
+    disableFilterMode();
+  }, []);
 
   // filtra as schedules de globalSchedulesData toda vez que o mês ou o ano muda
   // filtra as schedules de globalSchedulesData sempre que uma schedula é adicionada ou removida
