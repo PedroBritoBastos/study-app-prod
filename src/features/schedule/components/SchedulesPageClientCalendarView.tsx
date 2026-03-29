@@ -5,6 +5,7 @@ import ScrollStyles from "@/styles/sidebar/scroll.module.css";
 
 import { Grid, Text } from "@chakra-ui/react";
 import { SchedulesPageCalendarDay } from "@/features/schedule/components/SchedulesPageClientCalendarDay";
+import { SchedulesPageCalendarEmptyDay } from "@/features/schedule/components/SchedulesPageClientCalendarEmptyDay";
 
 import { formatDate } from "@/src/utilities/dateUtils";
 
@@ -17,6 +18,10 @@ type SchedulesPageClientCalendarViewProps = {
 export function SchedulesPageClientCalendarView({
    monthDays
 }: SchedulesPageClientCalendarViewProps) {
+
+   const firstDayOfWeek = monthDays[0]?.getDay() ?? 0;
+   const emptyDays = Array.from({ length: firstDayOfWeek });
+
    return (
       <>
          <Grid {...styles.dayOfWeekGrid}>
@@ -26,17 +31,23 @@ export function SchedulesPageClientCalendarView({
                </Text>
             ))}
          </Grid>
+
          <Grid {...styles.monthDaysGrid} className={ScrollStyles["scrollbar"]}>
-            {
-               monthDays.map((day, index) => (
-                  <SchedulesPageCalendarDay
-                     key={index}
-                     day={formatDate(day.toISOString()).slice(0, 2)}
-                  />
-               ))
-            }
+
+            {/* espaços vazios */}
+            {emptyDays.map((_, index) => (
+               <SchedulesPageCalendarEmptyDay key={`empty-${index}`} />
+            ))}
+
+            {/* dias do mês */}
+            {monthDays.map((day, index) => (
+               <SchedulesPageCalendarDay
+                  key={index}
+                  day={formatDate(day.toISOString()).slice(0, 2)}
+               />
+            ))}
+
          </Grid>
       </>
-
    );
 }
