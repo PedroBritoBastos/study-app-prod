@@ -75,7 +75,8 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
 
          {
             calendarViewMode ? (
-               <SchedulesPageClientCalendarView />
+               <SchedulesPageClientCalendarView
+                  monthDays={monthDays} />
             ) : (
                <Grid {...styles.grid} className={scrollStyles["scrollbar"]}>
                   {filterMode ?
