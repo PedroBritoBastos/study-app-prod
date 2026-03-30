@@ -8,21 +8,37 @@ import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext
 import { createScheduleAction } from "@/features/schedule/actions/schedules/createSchedule";
 import { CreateScheduleActionReturn } from "../types/scheduleActions/CreateScheduleActionReturn";
 
+import {
+  formatToYearMonthDay,
+  formatDateForInput,
+} from "@/src/utilities/dateUtils";
+
 export function usePageCreateScheduleDialog() {
   const { handleOpenSaveCreateScheduleDialog, isSaveDialogOpen } =
     useSaveScheduleWarning();
 
-  const { addScheduleToGlobalSchedulesData } = useScheduleContext();
+  const { addScheduleToGlobalSchedulesData, globalSchedulesData } =
+    useScheduleContext();
 
   const [open, setOpen] = useState<boolean>(false);
   const [scheduleDay, setScheduleDay] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [executionTime, setExecutionTime] = useState<string>("");
   const [invalid, setInvalid] = useState<boolean>(false);
+  const [scheduleDayError, setScheduleDayError] = useState<boolean>(false);
 
   const [tasks, setTasks] = useState<
     { title: string; executionTime: string }[]
   >([]);
+
+  function verifyIfScheduleDayAlreadyExists(input: string) {
+    // verificando se existe alguma schedule com essa data
+    const scheduleDayAlreadyExists = globalSchedulesData.some((item) => {
+      return formatToYearMonthDay(item.schedule.scheduleDay) === input;
+    });
+
+    return scheduleDayAlreadyExists;
+  }
 
   function handleOpenDialog(e: MouseEvent<HTMLButtonElement>): void {
     setOpen((prev) => !prev);
@@ -32,6 +48,13 @@ export function usePageCreateScheduleDialog() {
     e: ChangeEvent<HTMLInputElement>,
   ): void {
     e.stopPropagation();
+
+    setScheduleDayError(false);
+
+    if (verifyIfScheduleDayAlreadyExists(e.target.value)) {
+      setScheduleDayError(true);
+    }
+
     setScheduleDay(e.target.value);
   }
 
@@ -73,6 +96,8 @@ export function usePageCreateScheduleDialog() {
   ): Promise<void> {
     e.stopPropagation();
 
+    if (scheduleDayError) return;
+
     if (tasks.length === 0) {
       handleOpenSaveCreateScheduleDialog();
       return;
@@ -107,6 +132,7 @@ export function usePageCreateScheduleDialog() {
     executionTime,
     invalid,
     tasks,
+    scheduleDayError,
     handleOpenDialog,
     handleScheduleDayInputChange,
     handleCreateSchedule,

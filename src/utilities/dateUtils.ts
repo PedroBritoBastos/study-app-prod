@@ -18,20 +18,6 @@ type DaysSinceCreationProps = {
   currentDate: Date;
 };
 
-/**
- * Returns the number of calendar days that have passed since a given date.
- * Time information is ignored (dates are normalized to midnight).
- *
- * @param createdAt Initial date (creation date)
- * @param currentDate Current date to compare
- * @returns Number of days passed since creation
- *
- * @example
- * daysSinceCreation({
- *   createdAt: new Date(2026, 0, 25),
- *   currentDate: new Date(2026, 1, 8)
- * }) // 14
- */
 export function daysSinceCreation(
   createdAt: Date | null,
   currentDate: Date,
@@ -101,4 +87,12 @@ export function parseDateToDatabase(inputDate: string | undefined) {
 
   const [year, month, day] = inputDate.split("-").map(Number);
   return new Date(year, month - 1, day);
+}
+
+export function formatToYearMonthDay(date: Date) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 }

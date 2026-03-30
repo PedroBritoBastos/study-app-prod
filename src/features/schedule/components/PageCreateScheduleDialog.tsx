@@ -28,6 +28,7 @@ export function PageCreateScheduleDialog() {
       executionTime,
       invalid,
       tasks,
+      scheduleDayError,
       handleOpenDialog,
       handleScheduleDayInputChange,
       handleCreateSchedule,
@@ -66,8 +67,9 @@ export function PageCreateScheduleDialog() {
                   </Dialog.Header>
 
                   <Dialog.Body>
-                     <Field.Root mb={5}>
+                     <Field.Root mb={5} invalid={scheduleDayError}>
                         <Field.Label>Data</Field.Label>
+                        <Field.ErrorText>Já existe um cronograma para esta data.</Field.ErrorText>
                         <Input
                            type="date"
                            w={"fit-content"}
