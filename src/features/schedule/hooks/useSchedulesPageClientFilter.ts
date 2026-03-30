@@ -5,6 +5,8 @@ import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
+import { formatToYearMonthDay } from "@/src/utilities/dateUtils";
+
 export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   const router = useRouter();
 
@@ -15,6 +17,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     enableFilterMode,
     disableFilterMode,
     calendarViewMode,
+    filteredGlobalSchedulesData,
   } = useScheduleContext();
 
   const [openMonthInput, setOpenMonthInput] = useState(false);
@@ -57,13 +60,8 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     const targetDate = new Date(date);
 
     const filtered = globalSchedulesData.filter((item) => {
-      const scheduleDate = new Date(item.schedule.scheduleDay);
-
-      return (
-        scheduleDate.getFullYear() === targetDate.getFullYear() &&
-        scheduleDate.getMonth() === targetDate.getMonth() &&
-        scheduleDate.getDate() === targetDate.getDate()
-      );
+      const itemScheduleDay = formatToYearMonthDay(item.schedule.scheduleDay);
+      if (itemScheduleDay === date) return item;
     });
 
     return filtered;
