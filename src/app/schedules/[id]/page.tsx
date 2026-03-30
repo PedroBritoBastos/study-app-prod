@@ -18,6 +18,8 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
    const { id } = await params;
    const schedule = await getScheduleByIdAction(id);
 
+   console.log(schedule.schedule.scheduleDay)
+
    return (
       <>
          <Navbar />
@@ -50,7 +52,7 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
                   color={"gray.600"}
                >
                   {
-                     schedule && (schedule.schedule.scheduleDay.toLocaleDateString("pt-BR", { weekday: "long" }))?.charAt(0).toUpperCase() + (schedule.schedule.scheduleDay.toLocaleDateString("pt-BR", { weekday: "long" }))?.slice(1)
+                     schedule && (schedule.schedule.scheduleDay.toLocaleDateString("pt-BR", { weekday: "long" }))
                   }
                </Text>
             </Flex>

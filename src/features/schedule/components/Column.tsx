@@ -17,12 +17,14 @@ type ColumnProps = {
    day: string;
    dayOfWeek: string;
    schedule?: SchedulesDataType | null;
+   dayWeekFull: string
 }
 
 export function Column({
    day,
    dayOfWeek,
-   schedule
+   schedule,
+   dayWeekFull
 }: ColumnProps) {
 
    const {
@@ -31,6 +33,8 @@ export function Column({
       handleCloseDialog,
       closeDialog
    } = useColumn(schedule);
+
+   console.log("dia na coluna: " + dayOfWeek + " dia sem formatar: " + dayWeekFull)
 
    return (
       <Stack {...styles.container} onClick={handleOpenDialog}>
@@ -52,6 +56,7 @@ export function Column({
                <ColumnTask
                   key={task.id}
                   title={task.title}
+                  executionTime={task.executionTime}
                />
             ))}
 

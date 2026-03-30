@@ -97,6 +97,7 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
                               day={formatDate(day.toISOString())}
                               dayOfWeek={day.toLocaleDateString("pt-BR", { weekday: "long" }).slice(0, 3).toUpperCase()}
                               schedule={schedule ? schedule : null}
+                              dayWeekFull={day.toLocaleDateString("pt-BR", { weekday: "long" })}
                            />)
                      })
                   }

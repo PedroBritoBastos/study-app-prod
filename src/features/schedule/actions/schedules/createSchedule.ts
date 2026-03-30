@@ -19,8 +19,10 @@ export async function createScheduleAction(
     throw new Error("Não autorizado");
   }
 
-  // recuperando os dados do FormData
-  const scheduleDay = new Date(formData.get("scheduleDay") as string);
+  const rawDate = formData.get("scheduleDay") as string;
+
+  const [year, month, day] = rawDate.split("-").map(Number);
+  const scheduleDay = new Date(year, month - 1, day);
 
   const tasks = JSON.parse(formData.get("tasks") as string) as {
     title: string;

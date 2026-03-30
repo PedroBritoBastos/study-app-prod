@@ -8,6 +8,7 @@ import { SchedulesPageCalendarDay } from "@/features/schedule/components/Schedul
 import { SchedulesPageCalendarEmptyDay } from "@/features/schedule/components/SchedulesPageClientCalendarEmptyDay";
 
 import { formatDate } from "@/src/utilities/dateUtils";
+import { isSameDay } from "@/features/schedule/utils/date";
 
 import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
 
