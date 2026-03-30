@@ -4,14 +4,12 @@ import { MouseEvent, ChangeEvent, useState } from "react";
 
 import { useSaveScheduleWarning } from "@/features/schedule/hooks/useSaveScheduleWarning";
 import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
+import { useEffect } from "react";
 
 import { createScheduleAction } from "@/features/schedule/actions/schedules/createSchedule";
 import { CreateScheduleActionReturn } from "../types/scheduleActions/CreateScheduleActionReturn";
 
-import {
-  formatToYearMonthDay,
-  formatDateForInput,
-} from "@/src/utilities/dateUtils";
+import { formatToYearMonthDay } from "@/src/utilities/dateUtils";
 
 export function usePageCreateScheduleDialog() {
   const { handleOpenSaveCreateScheduleDialog, isSaveDialogOpen } =
@@ -31,6 +29,15 @@ export function usePageCreateScheduleDialog() {
     { title: string; executionTime: string }[]
   >([]);
 
+  function resetStates() {
+    setScheduleDay("");
+    setTitle("");
+    setExecutionTime("");
+    setInvalid(false);
+    setScheduleDayError(false);
+    setTasks([]);
+  }
+
   function verifyIfScheduleDayAlreadyExists(input: string) {
     // verificando se existe alguma schedule com essa data
     const scheduleDayAlreadyExists = globalSchedulesData.some((item) => {
@@ -41,7 +48,15 @@ export function usePageCreateScheduleDialog() {
   }
 
   function handleOpenDialog(e: MouseEvent<HTMLButtonElement>): void {
-    setOpen((prev) => !prev);
+    setOpen((prev) => {
+      const newState = !prev;
+
+      if (newState) {
+        resetStates();
+      }
+
+      return newState;
+    });
   }
 
   function handleScheduleDayInputChange(
