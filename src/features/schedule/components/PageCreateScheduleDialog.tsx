@@ -121,7 +121,7 @@ export function PageCreateScheduleDialog() {
                            _hover={{ bg: "purple.500" }}
                            size="sm"
                            flex={1}
-                           disabled={scheduleDay ? false : true}
+                           disabled={scheduleDay || scheduleDayError ? false : true}
                            onClick={handleCreateTask}
                         >
                            Adicionar tarefa
@@ -136,7 +136,7 @@ export function PageCreateScheduleDialog() {
                            flex={1}
                            boxShadow={"md"}
                            onClick={handleCreateSchedule}
-                           disabled={scheduleDay ? false : true}
+                           disabled={(!scheduleDay || scheduleDayError) ? true : false}
                         >
                            Salvar
                         </Button>
