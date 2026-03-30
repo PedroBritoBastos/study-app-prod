@@ -6,6 +6,8 @@ import { Card } from "@chakra-ui/react";
 
 export function SchedulesPageCalendarEmptyDay() {
    return (
-      <Card.Root {...styles.cardRoot}></Card.Root>
+      <Card.Root {...styles.cardRoot}>
+
+      </Card.Root>
    )
 }

@@ -9,6 +9,8 @@ import { SchedulesPageCalendarEmptyDay } from "@/features/schedule/components/Sc
 
 import { formatDate } from "@/src/utilities/dateUtils";
 
+import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
+
 const daysOfWeek = ["DOM", "SEG", "TER", "QUA", "QUI", "SEX", "SÁB"];
 
 type SchedulesPageClientCalendarViewProps = {
@@ -18,6 +20,8 @@ type SchedulesPageClientCalendarViewProps = {
 export function SchedulesPageClientCalendarView({
    monthDays
 }: SchedulesPageClientCalendarViewProps) {
+
+   const { globalSchedulesData } = useScheduleContext();
 
    const firstDayOfWeek = monthDays[0]?.getDay() ?? 0;
    const emptyDays = Array.from({ length: firstDayOfWeek });
@@ -40,14 +44,28 @@ export function SchedulesPageClientCalendarView({
             ))}
 
             {/* dias do mês */}
-            {monthDays.map((day, index) => (
-               <SchedulesPageCalendarDay
-                  key={index}
-                  day={formatDate(day.toISOString()).slice(0, 2)}
-               />
-            ))}
+            {monthDays.map((day, index) => {
+               const scheduleForDay = globalSchedulesData.find((item) => {
+                  const scheduleDate = new Date(item.schedule.scheduleDay);
+
+                  return (
+                     scheduleDate.getFullYear() === day.getFullYear() &&
+                     scheduleDate.getMonth() === day.getMonth() &&
+                     scheduleDate.getDate() === day.getDate()
+                  );
+               });
+
+               return (
+                  <SchedulesPageCalendarDay
+                     key={index}
+                     day={formatDate(day.toISOString()).slice(0, 2)}
+                     schedule={scheduleForDay}
+                  />
+               );
+            })}
 
          </Grid>
       </>
    );
 }
+

@@ -17,7 +17,7 @@ export const styles = {
   },
   monthDaysGrid: {
     templateColumns: "repeat(7, 1fr)",
-    gridAutoRows: "150px",
+    gridAutoRows: "160px",
     gap: 2,
     height: "100%",
     minH: 0,
