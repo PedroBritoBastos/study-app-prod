@@ -89,7 +89,7 @@ export function GoalsSidebar({
                   {checkedTasks} de {allTasks}
                </Text>
 
-               <Progress.Root value={(checkedTasks / allTasks) * 100}>
+               <Progress.Root value={Number((checkedTasks / allTasks) * 100)}>
                   <Progress.Track {...styles.progressBar.track}>
                      <Progress.Range
                         {...styles.progressBar.range}
