@@ -34,7 +34,7 @@ export function SchedulePageTasks({ currentScheduleTasks, scheduleId }: Schedule
             <Text
                fontSize={"md"}
                color={"purple.800"}
-               ml={6}
+               ml={"3rem"}
             >
                Tarefas
             </Text>

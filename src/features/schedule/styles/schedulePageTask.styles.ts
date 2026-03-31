@@ -8,8 +8,6 @@ export const styles = {
     alignItems: "center",
     justifyContent: "center",
     gap: 2,
-    bg: "purple.600",
-    color: "white",
     borderRadius: "md",
     flex: 1,
   },

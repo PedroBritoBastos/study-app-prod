@@ -27,7 +27,7 @@ export function SchedulePageTask({ scheduleTask, onDeleteTask }: SchedulePageTas
       <Flex {...styles.container} bg={isChecked ? "gray.100" : "white"}>
 
          {/* horario */}
-         <Flex {...styles.timeContainer}>
+         <Flex {...styles.timeContainer} color={isChecked ? "gray.400" : "white"} bg={isChecked ? "purple.700" : "purple.600"}>
             <Icon size={"md"}>
                <Clock />
             </Icon>

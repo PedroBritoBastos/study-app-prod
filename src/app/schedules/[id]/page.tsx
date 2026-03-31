@@ -18,8 +18,6 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
    const { id } = await params;
    const schedule = await getScheduleByIdAction(id);
 
-   console.log(schedule.schedule.scheduleDay)
-
    return (
       <>
          <Navbar />
