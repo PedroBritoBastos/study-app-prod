@@ -13,7 +13,7 @@ export default function RootLayout({
 }>) {
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body>
         <Provider>
           <div style={{ display: "flex", height: "100vh", width: "100vw" }}>
