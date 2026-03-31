@@ -7,10 +7,13 @@ import { Flex } from "@chakra-ui/react"
 import { GoalsClient } from "@/src/features/goal/components/GoalsClient";
 
 import { getUserGoalsAction } from "@/src/features/goal/actions/goals/getUserGoals";
+import { getUserTasksAction } from "@/src/features/goal/actions/tasks/getUserTasks";
 import { GoalType } from "@/src/features/goal/types/Goal";
+import { TaskType } from "@/src/features/goal/types/Task";
 
 export default async function GoalsPage() {
    const goals: GoalType[] = await getUserGoalsAction();
+   const tasks: TaskType[] = await getUserTasksAction();
 
    return (
       <Flex {...styles.container}>

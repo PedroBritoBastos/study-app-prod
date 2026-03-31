@@ -5,11 +5,13 @@ import { ObjectId } from "mongoose";
 export async function createTask(
   title: string,
   goalId: string,
+  userId: string,
 ): Promise<TaskType> {
   const task = await TaskModel.create({
     title,
     goalId,
     isChecked: false,
+    userId,
   });
 
   const obj = task.toObject();
@@ -19,6 +21,7 @@ export async function createTask(
     title: obj.title,
     isChecked: obj.isChecked,
     goalId: obj.goalId.toString(),
+    userId: obj.userId.toString(),
   };
 }
 
@@ -28,16 +31,39 @@ export async function getTasks(goalId: string): Promise<TaskType[]> {
     title: string;
     isChecked: boolean;
     goalId: ObjectId;
+    userId: ObjectId;
   }) {
     return {
       id: task._id.toString(),
       title: task.title,
       isChecked: task.isChecked,
       goalId: task.goalId.toString(),
+      userId: task.userId.toString(),
     };
   }
 
   const tasks = await TaskModel.find({ goalId: goalId }).lean();
+  return tasks.map(mapTaskModel);
+}
+
+export async function getUserTasks(userId: string): Promise<TaskType[]> {
+  function mapTaskModel(task: {
+    _id: ObjectId;
+    title: string;
+    isChecked: boolean;
+    goalId: ObjectId;
+    userId: ObjectId;
+  }) {
+    return {
+      id: task._id.toString(),
+      title: task.title,
+      isChecked: task.isChecked,
+      goalId: task.goalId.toString(),
+      userId: task.userId.toString(),
+    };
+  }
+
+  const tasks = await TaskModel.find({ userId: userId }).lean();
   return tasks.map(mapTaskModel);
 }
 

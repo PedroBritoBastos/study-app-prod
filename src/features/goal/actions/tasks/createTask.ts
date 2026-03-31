@@ -29,6 +29,6 @@ export async function createTaskAction(formData: FormData) {
     throw new Error("Não autorizado.");
   }
 
-  const task: TaskType = await createTask(title, goalId);
+  const task: TaskType = await createTask(title, goalId, user.id);
   return task;
 }

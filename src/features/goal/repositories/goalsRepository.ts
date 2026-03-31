@@ -1,9 +1,9 @@
 import { GoalModel } from "@/features/goal/models/Goal";
-import { GoalType } from "../types/Goal";
+import { GoalType } from "@/features/goal/types/Goal";
 import { ObjectId } from "mongoose";
 import { deleteTasksByGoalId } from "@/features/goal/repositories/tasksRepository";
 
-export async function getUserGoals(userId: string) {
+export async function getUserGoals(userId: string): Promise<GoalType[]> {
   function mapGoalModel(goal: {
     _id: ObjectId;
     title: string;

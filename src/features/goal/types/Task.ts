@@ -3,4 +3,5 @@ export type TaskType = {
   title: string;
   goalId: string;
   isChecked: boolean;
+  userId: string;
 };

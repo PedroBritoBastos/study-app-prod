@@ -16,6 +16,11 @@ const TaskSchema = new Schema({
     ref: "Goal",
     required: true,
   },
+
+  userId: {
+    type: Types.ObjectId,
+    required: true,
+  },
 });
 
 export const TaskModel = models.Task || model("Task", TaskSchema);
