@@ -21,7 +21,7 @@ export async function createScheduleAction(
 
   const rawDate = formData.get("scheduleDay") as string;
   const [year, month, day] = rawDate.split("-").map(Number);
-  const scheduleDay = new Date(year, month - 1, day);
+  const scheduleDay = new Date(year, month - 1, day, 12, 0, 0);
 
   const tasks = JSON.parse(formData.get("tasks") as string) as {
     title: string;
