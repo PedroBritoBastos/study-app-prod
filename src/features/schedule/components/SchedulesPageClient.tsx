@@ -83,8 +83,8 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
                      filteredGlobalSchedulesData.map((schedule, index) => (
                         <Column
                            key={index}
-                           day={formatDateString(schedule.schedule.scheduleDay)}
-                           dayOfWeek={getWeekDay(schedule.schedule.scheduleDay)}
+                           day={formatDateString(schedule.schedule.scheduleDay).slice(0, 5)}
+                           dayOfWeek={getWeekDay(schedule.schedule.scheduleDay).slice(0, 3).toUpperCase()}
                            schedule={schedule ? schedule : null}
                         />
                      )) : monthDays.map((day, index) => {

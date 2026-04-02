@@ -103,8 +103,8 @@ export function getWeekDay(dateString: string): string {
 }
 
 export function formatDateString(dateString: string): string {
-  const [year, month, day] = dateString.split("-").map(Number);
-  return `${day}/${month}`;
+  const [year, month, day] = dateString.split("-");
+  return `${day}/${month}/${year}`;
 }
 
 export function getDayFromFormatedDateString(dateString: string): string {

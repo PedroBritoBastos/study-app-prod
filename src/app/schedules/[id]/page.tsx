@@ -6,7 +6,7 @@ import { Navbar } from "@/src/components/ui/navbar/Navbar";
 import { SchedulePageTasks } from "@/src/features/schedule/components/SchedulePageTasks";
 import { SchedulePageReturnButton } from "@/src/features/schedule/components/SchedulePageReturnButton";
 
-import { formatDate } from "@/src/utilities/dateUtils";
+import { getWeekDay, formatDateString } from "@/src/utilities/dateUtils";
 import { Flex, Text, Box } from "@chakra-ui/react";
 
 
@@ -40,7 +40,7 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
                   fontWeight={"bold"}
                   color={"gray.700"}
                >
-                  {schedule && formatDate(schedule.schedule.scheduleDay.toISOString())}
+                  {schedule && formatDateString(schedule.schedule.scheduleDay)}
                </Text>
                <Text
                   mt={2}
@@ -50,7 +50,7 @@ export default async function SchedulePage({ params }: SchedulePageProps) {
                   color={"gray.600"}
                >
                   {
-                     schedule && (schedule.schedule.scheduleDay.toLocaleDateString("pt-BR", { weekday: "long" }))
+                     schedule && getWeekDay(schedule.schedule.scheduleDay)
                   }
                </Text>
             </Flex>
