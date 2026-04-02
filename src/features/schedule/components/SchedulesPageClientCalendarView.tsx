@@ -7,8 +7,7 @@ import { Grid, Text } from "@chakra-ui/react";
 import { SchedulesPageCalendarDay } from "@/features/schedule/components/SchedulesPageClientCalendarDay";
 import { SchedulesPageCalendarEmptyDay } from "@/features/schedule/components/SchedulesPageClientCalendarEmptyDay";
 
-import { formatDate } from "@/src/utilities/dateUtils";
-import { isSameDay } from "@/features/schedule/utils/date";
+import { formatDate, formatDay } from "@/src/utilities/dateUtils";
 
 import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
 
@@ -47,14 +46,8 @@ export function SchedulesPageClientCalendarView({
             {/* dias do mês */}
             {monthDays.map((day, index) => {
                const scheduleForDay = globalSchedulesData.find((item) => {
-                  const scheduleDate = new Date(item.schedule.scheduleDay);
-
-                  return (
-                     scheduleDate.getFullYear() === day.getFullYear() &&
-                     scheduleDate.getMonth() === day.getMonth() &&
-                     scheduleDate.getDate() === day.getDate()
-                  );
-               });
+                  return item.schedule.scheduleDay === formatDay(formatDate(day))
+               })
 
                return (
                   <SchedulesPageCalendarDay
@@ -64,7 +57,6 @@ export function SchedulesPageClientCalendarView({
                   />
                );
             })}
-
          </Grid>
       </>
    );

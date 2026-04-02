@@ -17,7 +17,6 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
     enableFilterMode,
     disableFilterMode,
     calendarViewMode,
-    filteredGlobalSchedulesData,
   } = useScheduleContext();
 
   const [openMonthInput, setOpenMonthInput] = useState(false);

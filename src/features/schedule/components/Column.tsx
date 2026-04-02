@@ -37,7 +37,7 @@ export function Column({
          {/* date container */}
          <Box {...styles.dateContainer}>
             <Separator {...styles.separator} />
-            <Text {...styles.date}>{day}</Text>
+            <Text {...styles.date}>{day.slice(0, 5)}</Text>
             <Box {...styles.decorativeCircle} {...styles.decorativeCircleLeft}></Box>
             <Box {...styles.decorativeCircle} {...styles.decorativeCircleRight}></Box>
          </Box>
