@@ -96,3 +96,12 @@ export function formatToYearMonthDay(date: Date) {
 
   return `${year}-${month}-${day}`;
 }
+
+export function getWeekDay(dateString: string): string {
+  const [year, month, day] = dateString.split("-").map(Number);
+  const date = new Date(year, month - 1, day);
+
+  return date.toLocaleDateString("pt-BR", {
+    weekday: "long",
+  });
+}
