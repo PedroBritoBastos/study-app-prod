@@ -2,7 +2,7 @@ import { ScheduleModel } from "../models/Schedule";
 import { ScheduleType } from "../types/Schedule";
 
 export async function createSchedule(
-  scheduleDay: Date,
+  scheduleDay: string,
   userId: string,
 ): Promise<ScheduleType> {
   const schedule = await ScheduleModel.create({

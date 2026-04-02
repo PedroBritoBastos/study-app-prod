@@ -12,7 +12,7 @@ import { SchedulesPageClientCalendarView } from "@/features/schedule/components/
 
 import { useSchedulesPageClient } from "@/features/schedule/hooks/useSchedulesPageClient";
 import { useScheduleContext } from "@/features/schedule/hooks/useScheduleContext";
-import { formatDate } from "@/src/utilities/dateUtils";
+import { formatDateString, getWeekDay, formatDate, getDayFromFormatedDateString, formatDay } from "@/src/utilities/dateUtils";
 
 import { SchedulesDataType } from "../types/GlobalScheduleData";
 
@@ -83,19 +83,19 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
                      filteredGlobalSchedulesData.map((schedule, index) => (
                         <Column
                            key={index}
-                           day={formatDate(schedule.schedule.scheduleDay.toISOString())}
-                           dayOfWeek={schedule.schedule.scheduleDay.toLocaleDateString("pt-BR", { weekday: "long" }).slice(0, 3).toUpperCase()}
+                           day={formatDateString(schedule.schedule.scheduleDay)}
+                           dayOfWeek={getWeekDay(schedule.schedule.scheduleDay)}
                            schedule={schedule ? schedule : null}
                         />
                      )) : monthDays.map((day, index) => {
 
-                        const schedule = globalSchedulesData.find((item) => formatDate(item.schedule.scheduleDay.toISOString()) === formatDate(day.toISOString()));
+                        const schedule = globalSchedulesData.find((item) => getDayFromFormatedDateString(item.schedule.scheduleDay) === formatDate(day.toISOString()).slice(0, 2));
 
                         return (
                            <Column
                               key={index}
-                              day={formatDate(day.toISOString())}
-                              dayOfWeek={day.toLocaleDateString("pt-BR", { weekday: "long" }).slice(0, 3).toUpperCase()}
+                              day={formatDate(day.toISOString()).slice(0, 5)}
+                              dayOfWeek={getWeekDay(formatDay(formatDate(day))).slice(0, 3).toUpperCase()}
                               schedule={schedule ? schedule : null}
                            />)
                      })

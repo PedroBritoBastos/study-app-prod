@@ -41,7 +41,7 @@ export function usePageCreateScheduleDialog() {
   function verifyIfScheduleDayAlreadyExists(input: string) {
     // verificando se existe alguma schedule com essa data
     const scheduleDayAlreadyExists = globalSchedulesData.some((item) => {
-      return formatToYearMonthDay(item.schedule.scheduleDay) === input;
+      return item.schedule.scheduleDay === input;
     });
 
     return scheduleDayAlreadyExists;

@@ -13,11 +13,7 @@ export function getDaysOfMonth(year: number, month: number): Date[] {
   return days;
 }
 
-type DaysSinceCreationProps = {
-  createdAt: Date;
-  currentDate: Date;
-};
-
+// retorna a quantidade de dias desde a o dia de criação
 export function daysSinceCreation(
   createdAt: Date | null,
   currentDate: Date,
@@ -104,4 +100,19 @@ export function getWeekDay(dateString: string): string {
   return date.toLocaleDateString("pt-BR", {
     weekday: "long",
   });
+}
+
+export function formatDateString(dateString: string): string {
+  const [year, month, day] = dateString.split("-").map(Number);
+  return `${day}/${month}`;
+}
+
+export function getDayFromFormatedDateString(dateString: string): string {
+  const [year, month, day] = dateString.split("-");
+  return day;
+}
+
+export function formatDay(dateString: string): string {
+  const [day, month, year] = dateString.split("/");
+  return `${year}-${month}-${day}`;
 }

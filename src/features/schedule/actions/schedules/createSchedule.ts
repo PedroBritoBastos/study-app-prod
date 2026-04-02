@@ -19,10 +19,7 @@ export async function createScheduleAction(
     throw new Error("Não autorizado");
   }
 
-  const rawDate = formData.get("scheduleDay") as string;
-  const [year, month, day] = rawDate.split("-").map(Number);
-  const scheduleDay = new Date(year, month - 1, day, 12, 0, 0);
-
+  const scheduleDay = formData.get("scheduleDay") as string;
   const tasks = JSON.parse(formData.get("tasks") as string) as {
     title: string;
     executionTime: string;

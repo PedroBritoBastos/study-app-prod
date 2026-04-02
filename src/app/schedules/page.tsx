@@ -8,7 +8,7 @@ import { getUserScheduleTasksAction } from "@/src/features/schedule/actions/sche
 import { ScheduleType } from "@/src/features/schedule/types/Schedule";
 import { ScheduleTaskType } from "@/src/features/schedule/types/ScheduleTask";
 
-import { getWeekDay } from "@/src/utilities/dateUtils";
+import { getWeekDay, formatDate, getDaysOfMonth } from "@/src/utilities/dateUtils";
 
 export default async function SchedulesPage() {
    const schedules: ScheduleType[] = await getUserSchedulesAction();
@@ -22,8 +22,6 @@ export default async function SchedulesPage() {
       });
       return { schedule, currentScheduleTasks }
    })
-
-   console.log(getWeekDay("2026-02-28"))
 
    return (
       <>
