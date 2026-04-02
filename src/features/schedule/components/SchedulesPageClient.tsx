@@ -88,8 +88,7 @@ export function SchedulesPageClient({ serverData }: SchedulesPageClientProps) {
                            schedule={schedule ? schedule : null}
                         />
                      )) : monthDays.map((day, index) => {
-
-                        const schedule = globalSchedulesData.find((item) => getDayFromFormatedDateString(item.schedule.scheduleDay) === formatDate(day.toISOString()).slice(0, 2));
+                        const schedule = globalSchedulesData.find((item) => item.schedule.scheduleDay === formatDay(formatDate(day.toISOString())));
 
                         return (
                            <Column

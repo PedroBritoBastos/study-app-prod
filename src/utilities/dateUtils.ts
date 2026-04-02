@@ -109,7 +109,7 @@ export function formatDateString(dateString: string): string {
 
 export function getDayFromFormatedDateString(dateString: string): string {
   const [year, month, day] = dateString.split("-");
-  return day;
+  return `${day}-${month}-${year}`;
 }
 
 export function formatDay(dateString: string): string {
