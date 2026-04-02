@@ -2,12 +2,13 @@ import { Schema, model, models, Types } from "mongoose";
 
 const ScheduleSchema = new Schema({
   scheduleDay: {
-    type: Date,
+    type: String,
     required: true,
   },
 
   createdAt: {
-    type: String,
+    type: Date,
+    default: Date.now,
   },
 
   userId: {

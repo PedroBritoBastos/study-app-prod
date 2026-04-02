@@ -1,6 +1,6 @@
 export type ScheduleType = {
   id: string;
-  scheduleDay: Date;
+  scheduleDay: string;
   createdAt: Date;
   userId: string;
 };
