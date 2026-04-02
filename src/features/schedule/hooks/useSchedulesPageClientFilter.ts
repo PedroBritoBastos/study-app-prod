@@ -29,28 +29,28 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   const [selectedFilter, setSelectedFilter] = useState<string[]>(["none"]);
 
   function filterByMonth(month: string, year: number): SchedulesDataType[] {
-    const monthsMap: Record<string, number> = {
-      janeiro: 0,
-      fevereiro: 1,
-      março: 2,
-      marco: 2,
-      abril: 3,
-      maio: 4,
-      junho: 5,
-      julho: 6,
-      agosto: 7,
-      setembro: 8,
-      outubro: 9,
-      novembro: 10,
-      dezembro: 11,
+    const monthsMap: Record<string, string> = {
+      janeiro: "01",
+      fevereiro: "02",
+      março: "03",
+      abril: "04",
+      maio: "05",
+      junho: "06",
+      julho: "07",
+      agosto: "08",
+      setembro: "09",
+      outubro: "10",
+      novembro: "11",
+      dezembro: "12",
     };
 
     const monthIndex = monthsMap[month.toLowerCase()];
+    const yearString = String(year);
 
     const filtered = globalSchedulesData.filter((item) => {
-      const date = new Date(item.schedule.scheduleDay);
+      const [itemYear, itemMonth] = item.schedule.scheduleDay.split("-");
 
-      return date.getMonth() === monthIndex && date.getFullYear() === year;
+      return itemYear === yearString && itemMonth === monthIndex;
     });
 
     return filtered;
