@@ -1,12 +1,11 @@
 "use client"
 
-import { Dialog, Button, IconButton, Portal, Field, Input, Flex, Presence } from "@chakra-ui/react"
+import { Dialog, Button, IconButton, Portal, Field, Input, Flex } from "@chakra-ui/react"
 import { Plus } from "lucide-react"
 
 import { useSchedulePageTasksCreateDialog } from "@/features/schedule/hooks/useSchedulePageTasksCreateDialog"
 
 import { ScheduleTaskType } from "@/features/schedule/types/ScheduleTask"
-import { parseTimeToDate } from "@/src/utilities/dateUtils"
 
 type SchedulePageTasksCreateDialogProps = {
    scheduleId: string;

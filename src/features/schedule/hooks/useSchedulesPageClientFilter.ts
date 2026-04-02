@@ -57,8 +57,6 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   }
 
   function filterByDate(date: string): SchedulesDataType[] {
-    const targetDate = new Date(date);
-
     const filtered = globalSchedulesData.filter((item) => {
       const itemScheduleDay = formatToYearMonthDay(item.schedule.scheduleDay);
       if (itemScheduleDay === date) return item;
@@ -137,6 +135,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
   // filtra as schedules de globalSchedulesData toda vez que a data do input mudar
   useEffect(() => {
     if (filterMode && date) {
+      console.log(filterByDate(date));
       updateFilteredGlobalSchedulesData(filterByDate(date));
     }
   }, [date]);
