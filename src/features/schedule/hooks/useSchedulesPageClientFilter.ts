@@ -58,8 +58,7 @@ export function useSchedulesPageClientFilter(serverData: SchedulesDataType[]) {
 
   function filterByDate(date: string): SchedulesDataType[] {
     const filtered = globalSchedulesData.filter((item) => {
-      const itemScheduleDay = formatToYearMonthDay(item.schedule.scheduleDay);
-      if (itemScheduleDay === date) return item;
+      if (item.schedule.scheduleDay === date) return item;
     });
 
     return filtered;
